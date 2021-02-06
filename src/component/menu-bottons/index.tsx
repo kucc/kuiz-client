@@ -8,7 +8,7 @@ const MenuButtons = () => {
     <S.ButtonsContainer>
       <MenuButton
         color="#595965"
-        link={"/quiz-category"}
+        link={"/category"}
         icon={STATIC_URL.PLAYBUTTON}
         text="플레이"
       />
@@ -28,7 +28,7 @@ const MenuButtons = () => {
         color="#595965"
         link={"game"}
         icon={STATIC_URL.MINIGAME}
-        text="미니게임"
+        text="문제집 만들기"
       />
     </S.ButtonsContainer>
   );
