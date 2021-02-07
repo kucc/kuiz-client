@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { THEME_COLOR } from "../../../asset/constant";
+import { THEME_COLOR } from "@asset/constant";
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;

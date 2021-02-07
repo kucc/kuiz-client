@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CategoryModel from "../../common/model/category";
-import QuizCategoryItem from "../../component/quiz-category-item/index";
-import QuizCategoryTitle from "../../component/quiz-category-title/index";
+import CategoryModel from "@common/model/category";
+import QuizCategoryItem from "@component/quiz-category-item/index";
+import QuizCategoryTitle from "@component/quiz-category-title/index";
 import { getMokdata } from "./mok-data";
 import { CategoryListType } from "./types";
 import * as S from "./styles";

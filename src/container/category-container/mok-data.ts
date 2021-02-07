@@ -1,4 +1,4 @@
-import CategoryModel from "../../common/model/category";
+import CategoryModel from "@common/model/category";
 
 export const getMokdata = (): Promise<CategoryModel[]> => {
   return new Promise((res) => {

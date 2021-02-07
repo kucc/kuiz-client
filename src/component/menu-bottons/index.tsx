@@ -1,6 +1,6 @@
 import React from "react";
 import MenuButton from "../menu-button/index";
-import { STATIC_URL } from "../../asset/constant";
+import { STATIC_URL } from "@asset/constant";
 import * as S from "./styles";
 
 const MenuButtons = () => {

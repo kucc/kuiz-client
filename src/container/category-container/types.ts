@@ -1,4 +1,4 @@
-import CategoryModel from "../../common/model/category";
+import CategoryModel from "@common/model/category";
 
 export interface CategoryListType {
   [key: string]: CategoryModel[];

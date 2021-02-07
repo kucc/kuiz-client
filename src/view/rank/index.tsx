@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../../component/common/layout/index";
+import Layout from "@component/common/layout/index";
 
 const RankPage = () => {
   return (

@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
-import { THEME_COLOR } from "../../asset/constant";
+import { THEME_COLOR } from "@asset/constant";
 
 export const QuizCategoryItem = styled.div`
   margin-bottom: 0.5rem;
