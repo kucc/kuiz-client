@@ -26,7 +26,7 @@ const MenuButtons = () => {
       />
       <MenuButton
         color="#595965"
-        link={"game"}
+        link={"/workbook"}
         icon={STATIC_URL.MINIGAME}
         text="문제집 만들기"
       />
