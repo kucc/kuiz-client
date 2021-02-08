@@ -5,6 +5,7 @@
     "jsx": "react",
     "sourceMap": true,
     "noEmit": true,
+    "moduleResolution": "node",
     "isolatedModules": true,
     "strict": true,
     "noImplicitAny": true,
@@ -15,7 +16,8 @@
       "@common/*": ["common/*"],
       "@component/*": ["component/*"],
       "@container/*": ["container/*"],
-      "@view/*": ["view/*"]
+      "@view/*": ["view/*"],
+      "@modules/*": ["modules/*"]
     },
     "esModuleInterop": true,
     "skipLibCheck": true,
