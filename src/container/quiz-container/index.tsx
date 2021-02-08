@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import QuizModel from "@common/model/quiz";
+import QuizImage from "@/component/quiz-image/index";
 import QuizOption from "@/component/quiz-option/index";
 import QuizQuestion from "@/component/quiz-question/index";
 import { getMokdata } from "./mok-data";
@@ -21,10 +22,11 @@ const QuizContainer = () => {
     <S.QuizContainer>
       <S.QuizWrapper>
         {quizData.map((quiz) => (
-          <QuizQuestion key={quiz.id} question={quiz.question} />
-        ))}
-        {quizData.map((quiz) => (
-          <QuizOption key={quiz.id} quiz={quiz} />
+          <>
+            <QuizImage key={quiz.id} imageURL={quiz.imageURL} />
+            <QuizQuestion key={quiz.id} question={quiz.question} />
+            <QuizOption key={quiz.id} quiz={quiz} />
+          </>
         ))}
       </S.QuizWrapper>
     </S.QuizContainer>

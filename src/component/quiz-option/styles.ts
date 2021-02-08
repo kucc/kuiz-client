@@ -4,7 +4,7 @@ import { THEME_COLOR } from "@asset/constant";
 export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
 `;
 
 export const Option = styled.div`
