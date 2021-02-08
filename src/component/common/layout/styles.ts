@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { THEME_COLOR } from "@asset/constant";
 export const Layout = styled.div`
   display: flex;
