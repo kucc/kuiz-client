@@ -2,12 +2,6 @@ import styled from "styled-components";
 import { THEME_COLOR } from "@asset/constant";
 import { Link } from "react-router-dom";
 
-interface StartButtonProps {
-  text: string;
-  icon: string;
-  color: string;
-}
-
 export const StartButton = styled.div`
   margin-bottom: 1.5rem;
   width: 100%;
