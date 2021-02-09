@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 const KuccLoginButton = () => {
   const clickHandler = () => {
-    window.location.href = `${endpoints.API_BASE_URL}/auth`;
+    window.location.href = `${endpoints.API_BASE_URL}/auth/kucc`;
   };
 
   return (

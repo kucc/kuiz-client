@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 const GoogleLoginButton = () => {
   const clickHandler = () => {
-    window.location.href = `${endpoints.API_BASE_URL}/auth`;
+    window.location.href = `${endpoints.API_BASE_URL}/auth/google`;
   };
 
   return (
