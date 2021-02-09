@@ -1,9 +1,8 @@
 import axios from "axios";
-
-const endpoints = `http://localhost:3000`;
+import endpoints from "../endpoints";
 
 const instance = axios.create({
-  baseURL: endpoints,
+  baseURL: endpoints.API_BASE_URL,
   withCredentials: true,
 });
 
