@@ -7,7 +7,7 @@ const QuizOption = ({ quiz }: QuizOptionProps) => {
   const [solved, setSolved] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const getSelectedOption = (e: any) => {
+  const checkAnswer = (e: any) => {
     const selected = e.target.value;
     setSolved(true);
     setSelectedOption(selected);
@@ -21,7 +21,7 @@ const QuizOption = ({ quiz }: QuizOptionProps) => {
         {optionArray.map((option, idx) => (
           <S.Option
             key={idx}
-            onClick={getSelectedOption}
+            onClick={checkAnswer}
             value={option}
             disabled={solved ? true : false}
             color={
