@@ -20,15 +20,13 @@ const QuizContainer = () => {
 
   return (
     <S.QuizContainer>
-      <S.QuizWrapper>
-        {quizData.map((quiz) => (
-          <>
-            <QuizImage key={quiz.id} imageURL={quiz.imageURL} />
-            <QuizQuestion key={quiz.id} question={quiz.question} />
-            <QuizOption key={quiz.id} quiz={quiz} />
-          </>
-        ))}
-      </S.QuizWrapper>
+      {quizData.map((quiz, idx) => (
+        <S.QuizWrapper key={idx}>
+          <QuizImage imageURL={quiz.imageURL} />
+          <QuizQuestion question={quiz.question} />
+          <QuizOption quiz={quiz} />
+        </S.QuizWrapper>
+      ))}
     </S.QuizContainer>
   );
 };

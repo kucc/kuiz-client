@@ -7,20 +7,19 @@ export const OptionContainer = styled.div`
   align-items: center;
 `;
 
-export const Option = styled.div`
+export const Option = styled.option`
   text-decoration: none;
   display: flex;
   width: 20rem;
   height: 4.3rem;
-  background-color: ${THEME_COLOR.GRAY};
+  background-color: ${(props) => props.color};
   margin-bottom: 2rem;
   font-size: 1.4rem;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   &:hover {
-    background-color: ${THEME_COLOR.PRIMARY};
-    transform: scale(1.2) perspective(0.7rem);
+    background-color: ${(props) => !props.disabled && "#c4c4c4"};
   }
   &:active {
     transform: translateY(-1px);
