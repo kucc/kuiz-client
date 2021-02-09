@@ -4,9 +4,9 @@ import MenuButtons from "@component/menu-bottons/index";
 
 const MainPage = () => {
   return (
-    <Layout>
+    <>
       <MenuButtons />
-    </Layout>
+    </>
   );
 };
 

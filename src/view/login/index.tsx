@@ -7,14 +7,14 @@ import * as S from "./styles";
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <>
       <Logo />
       <S.ServiceTitle>KUCC Quiz</S.ServiceTitle>
       <S.LoginButtonContainer>
         <GoogleLoginButton />
         <KuccLoginButton />
       </S.LoginButtonContainer>
-    </Layout>
+    </>
   );
 };
 
