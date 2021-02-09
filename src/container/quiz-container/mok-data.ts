@@ -20,7 +20,7 @@ export const mokData: QuizModel[] = [
     option4: "새우깡",
     imageURL:
       "https://user-images.githubusercontent.com/46309902/107244451-5f70aa80-6a71-11eb-8dfc-d3eb17b8749c.jpg",
-    description: "",
+    description: "현채의 별명은 초코송이이다.",
     isChoice: 1,
   },
 ];
