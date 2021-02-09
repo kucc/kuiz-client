@@ -56,15 +56,15 @@ width: 9rem;
 `;
 
 export const DesktopProfileImg = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
-  border: 1px solid ${THEME_COLOR.GRAYER};
+  border: 2px solid black;
 `;
 
 export const MobileProfileImg = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  border: 1px solid ${THEME_COLOR.GRAYER};
+  border: 2px solid black;
 `;

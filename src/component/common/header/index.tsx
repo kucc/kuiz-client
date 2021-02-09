@@ -13,11 +13,11 @@ const Header = () => {
       </S.MobileLink>
 
       <S.DesktopLink to="/profile">
-        <S.DesktopProfileImg src={STATIC_URL.PROFILE} alt="profile"/>
+        <S.DesktopProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile"/>
       </S.DesktopLink>
 
       <S.MobileLink to="/profile">
-        <S.MobileProfileImg src={STATIC_URL.PROFILE} alt="profile"/>
+        <S.MobileProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile"/>
       </S.MobileLink>
     </S.Header>
   );

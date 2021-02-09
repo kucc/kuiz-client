@@ -15,6 +15,7 @@ export const LayoutBorder = styled.div`
 
 export const LayoutContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 6rem;
   align-items: center;
