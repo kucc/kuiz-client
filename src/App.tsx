@@ -18,7 +18,6 @@ const App = () => {
         <Route path="/category" component={CategoryPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/makequiz" component={MakeQuizPage} />
-
         <Route path="/rank" component={RankPage} />
         <Redirect from="*" to="/" />
       </Switch>
