@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router-dom";
+import Layout from "./component/common/layout";
 
 import CategoryPage from "@view/category/index";
 import LoginPage from "@view/login";
@@ -11,16 +12,18 @@ import QuizPage from "./view/quiz/index";
 
 const App = () => {
   return (
-    <Switch>
-      <Route path="/" exact component={MainPage} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/category" component={CategoryPage} />
-      <Route path="/profile" component={ProfilePage} />
-      <Route path="/rank" component={RankPage} />
-      <Route path="/quiz" component={QuizPage} />
-      <Route path="/makequiz" component={MakeQuizPage} />
-      <Redirect from="*" to="/" />
-    </Switch>
+    <Layout>
+      <Switch>
+        <Route path="/" exact component={MainPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/category" component={CategoryPage} />
+        <Route path="/profile" component={ProfilePage} />
+        <Route path="/makequiz" component={MakeQuizPage} />
+        <Route path="/quiz" component={QuizPage} />
+        <Route path="/rank" component={RankPage} />
+        <Redirect from="*" to="/" />
+      </Switch>
+    </Layout>
   );
 };
 
