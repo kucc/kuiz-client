@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { QuizOptionProps } from "./types";
 import { THEME_COLOR } from "@asset/constant";
 import * as S from "./styles";
 
-const QuizOption = ({ quiz }: QuizOptionProps) => {
+const QuizOption = (props: QuizOptionProps) => {
+  const { quiz, clickEvent } = props;
   const [solved, setSolved] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -12,6 +13,8 @@ const QuizOption = ({ quiz }: QuizOptionProps) => {
     setSolved(true);
     setSelectedOption(selected);
   };
+
+  useEffect(() => {}), [solved, selectedOption];
 
   const optionArray = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
 
@@ -46,7 +49,7 @@ const QuizOption = ({ quiz }: QuizOptionProps) => {
             <S.Description>{quiz.description}</S.Description>
           </S.DescriptionContainer>
           <S.NextButtonContainer>
-            <S.NextButton to="/">다음 문제로</S.NextButton>
+            <S.NextButton onClick={clickEvent}>다음 문제로</S.NextButton>
           </S.NextButtonContainer>
         </>
       ) : null}

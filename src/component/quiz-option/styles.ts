@@ -49,7 +49,7 @@ export const NextButtonContainer = styled.div`
   align-items: center;
 `;
 
-export const NextButton = styled(Link)`
+export const NextButton = styled.div`
   text-decoration: none;
   color: white;
   display: flex;

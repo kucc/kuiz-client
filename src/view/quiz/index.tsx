@@ -1,11 +1,12 @@
 import React from "react";
 import Layout from "@component/common/layout/index";
 import QuizContainer from "@container/quiz-container/index";
+import { RouteComponentProps } from "react-router-dom";
 
-const QuizPage = () => {
+const QuizPage = (props: RouteComponentProps<{}>) => {
   return (
     <Layout>
-      <QuizContainer />
+      <QuizContainer {...props} />
     </Layout>
   );
 };
