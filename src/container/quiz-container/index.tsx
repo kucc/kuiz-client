@@ -3,6 +3,7 @@ import QuizModel from "@common/model/quiz";
 import QuizImage from "@/component/quiz-image/index";
 import QuizOption from "@/component/quiz-option/index";
 import QuizQuestion from "@/component/quiz-question/index";
+import QuizProgressBar from "@/component/quiz-progress-bar/index";
 import { getMokdata } from "./mok-data";
 import { QuizListType } from "./types";
 import * as S from "./styles";
@@ -63,6 +64,7 @@ const QuizContainer = ({
               <QuizImage imageURL={currentQuiz.imageURL} />
               <QuizQuestion question={currentQuiz.question} />
               <QuizOption clickEvent={goToNextQuiz} quiz={currentQuiz} />
+              <QuizProgressBar />
             </S.QuizWrapper>
           ) : null}
         </div>
