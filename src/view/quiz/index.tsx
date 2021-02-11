@@ -4,11 +4,7 @@ import QuizContainer from "@container/quiz-container/index";
 import { RouteComponentProps } from "react-router-dom";
 
 const QuizPage = (props: RouteComponentProps<{}>) => {
-  return (
-    <Layout>
-      <QuizContainer {...props} />
-    </Layout>
-  );
+  return <QuizContainer {...props} />;
 };
 
 export default QuizPage;
