@@ -8,6 +8,7 @@ import ProfilePage from "@view/profile/index";
 import RankPage from "@view/rank/index";
 import MakeQuizPage from "./view/make-quiz/index";
 import Layout from "./component/common/layout";
+import QuizBookListPage from "./view/quizbook-list";
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={MainPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/category" component={CategoryPage} />
+        <Route path="/category/:categoryId" component={QuizBookListPage} />
+        <Route path="/category" exact component={CategoryPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/makequiz" component={MakeQuizPage} />
         <Route path="/rank" component={RankPage} />
