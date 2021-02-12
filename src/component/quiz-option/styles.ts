@@ -28,6 +28,10 @@ export const Option = styled.option`
     transform: translateY(-1px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   }
+  &:disabled {
+    /* font-size: 2rem; */
+    color: black;
+  }
 `;
 
 export const DescriptionContainer = styled.div`
@@ -51,7 +55,6 @@ export const Description = styled.div`
   margin-top: 3rem;
   margin-bottom: 3rem;
   line-height: 2.5rem;
-  /* letter-spacing: 0.1rem; */
 `;
 
 export const NextButtonContainer = styled.div`

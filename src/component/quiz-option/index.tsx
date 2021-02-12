@@ -30,12 +30,12 @@ const QuizOption = (props: QuizOptionProps) => {
             color={
               solved
                 ? selectedOption === quiz.answer && selectedOption === option
-                  ? "green"
+                  ? "#03c75a"
                   : selectedOption != quiz.answer && selectedOption === option
-                  ? "red"
+                  ? "#c4042a"
                   : option === quiz.answer
-                  ? "green"
-                  : THEME_COLOR.GRAY
+                  ? "#03c75a"
+                  : "#c4c4c4"
                 : THEME_COLOR.GRAY
             }
           >
