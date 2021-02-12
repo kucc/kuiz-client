@@ -2,14 +2,24 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
 
-export const OptionContainer = styled.div`
+export const ChoiceOptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 `;
 
-export const Option = styled.option`
+export const WriteOptionContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  margin: 3rem 0rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 30%;
+  }
+`;
+
+export const ChoiceOption = styled.option`
   text-decoration: none;
   display: flex;
   width: 20rem;
@@ -29,9 +39,41 @@ export const Option = styled.option`
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   }
   &:disabled {
-    /* font-size: 2rem; */
     color: black;
   }
+`;
+
+export const InputBox = styled.input`
+  width: 80%;
+  font-size: 1.5rem;
+  height: 3.8rem;
+  outline: none;
+  border: 1px solid ${THEME_COLOR.GRAYER};
+  background-color: ${THEME_COLOR.GRAY};
+  border-radius: 0.5rem;
+  padding: 1rem 1rem;
+  margin-right: 1rem;
+`;
+
+export const SubmitButton = styled.button`
+  display: block;
+  position: relative;
+  width: 20%;
+  height: 3.8rem;
+  background-color: ${THEME_COLOR.PRIMARY};
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.4rem;
+  letter-spacing: 0.2rem;
+`;
+
+export const CorrectSign = styled.div`
+  display: block;
+  font-size: 7rem;
+  font-weight: 800;
+  line-height: 2.5rem;
+  color: ${(props) => props.color};
 `;
 
 export const DescriptionContainer = styled.div`

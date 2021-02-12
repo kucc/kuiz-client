@@ -67,4 +67,14 @@ export const mokData: QuizModel[] = [
     description: "확인된 것만 약 1만 8천 개의 섬이 존재한다고 한다.",
     isChoice: 1,
   },
+  {
+    id: 5,
+    quizBookId: 1,
+    question: "현채의 별명은?",
+    answer: "초코송이",
+    imageURL:
+      "https://user-images.githubusercontent.com/46309902/107244451-5f70aa80-6a71-11eb-8dfc-d3eb17b8749c.jpg",
+    description: "현채의 별명은 초코송이이다.",
+    isChoice: 0,
+  },
 ];

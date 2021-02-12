@@ -11,6 +11,6 @@ export const QuestionContainer = styled.div`
 
 export const Question = styled.div`
   display: block;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
 `;
