@@ -1,12 +1,15 @@
 import styled from "styled-components";
-import { THEME_COLOR } from "@asset/constant";
+import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
 
 export const ProgressBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 70%;
   height: 100%;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 30%;
+  }
 `;
 
 export const ProgressBarIcon = styled.div`

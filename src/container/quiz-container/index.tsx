@@ -56,9 +56,9 @@ const QuizContainer = ({
   };
 
   return currentQuiz ? (
-    <S.QuizContainer>
+    <>
       {quizBookIdList.map((quizBookId, idx) => (
-        <div key={idx}>
+        <S.QuizContainer key={idx}>
           {Number(quizBookId) === givenQuizBookId ? (
             <S.QuizWrapper key={idx}>
               <QuizImage imageURL={currentQuiz.imageURL} />
@@ -67,9 +67,9 @@ const QuizContainer = ({
               <QuizProgressBar />
             </S.QuizWrapper>
           ) : null}
-        </div>
+        </S.QuizContainer>
       ))}
-    </S.QuizContainer>
+    </>
   ) : (
     <div>Loading ...</div>
   );

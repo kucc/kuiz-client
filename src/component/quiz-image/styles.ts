@@ -10,6 +10,6 @@ export const ImageContainer = styled.div`
 export const QuizImage = styled.img`
   padding: 0.2rem;
   margin-top: 5rem;
-  width: 28rem;
-  height: 20rem;
+  width: 30rem;
+  height: 25rem;
 `;
