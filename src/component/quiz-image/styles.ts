@@ -4,9 +4,7 @@ import { THEME_COLOR } from "@asset/constant";
 export const ImageContainer = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 2rem;
   justify-content: center;
-  background-color: "green";
 `;
 
 export const QuizImage = styled.img`

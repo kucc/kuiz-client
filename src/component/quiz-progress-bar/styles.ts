@@ -5,9 +5,8 @@ export const ProgressBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 80%;
   height: 100%;
-  margin-top: 5rem;
 `;
 
 export const ProgressBarIcon = styled.div`

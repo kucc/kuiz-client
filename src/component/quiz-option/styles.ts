@@ -29,7 +29,7 @@ export const Option = styled.option`
 `;
 
 export const DescriptionContainer = styled.div`
-  width: 100%;
+  width: 30rem;
   display: flex;
   margin-bottom: 2rem;
   justify-content: center;
@@ -56,16 +56,16 @@ export const NextButton = styled.div`
   width: 10rem;
   height: 3.5rem;
   background-color: ${THEME_COLOR.PRIMARY};
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
   font-size: 1.4rem;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 1rem;
   &:hover {
     background-color: ${THEME_COLOR.PRIMARY};
   }
   &:active {
     transform: translateY(-1px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   }
 `;
