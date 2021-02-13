@@ -4,26 +4,16 @@ import { THEME_COLOR } from "@asset/constant";
 import * as S from "./styles";
 
 const QuizOption = (props: QuizOptionProps) => {
-  const { quiz, clickEvent } = props;
-  const [solved, setSolved] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [userAnswer, setUserAnswer] = useState("");
-  const [correct, setCorrect] = useState(false);
-
-  const checkChoiceAnswer = (e: any) => {
-    const selected = e.target.value;
-    setSolved(true);
-    setSelectedOption(selected);
-  };
-
-  const checkWriteAnswer = (e: any) => {
-    if (userAnswer === quiz.answer) {
-      setCorrect(true);
-    } else {
-      setCorrect(false);
-    }
-    setSolved(true);
-  };
+  const {
+    quiz,
+    selectedOption,
+    solved,
+    correct,
+    getUserAnswer,
+    checkWriteAnswer,
+    checkChoiceAnswer,
+    goToNextQuiz,
+  } = props;
 
   useEffect(() => {}), [solved, selectedOption];
 
@@ -68,9 +58,7 @@ const QuizOption = (props: QuizOptionProps) => {
             <>
               <S.InputBox
                 placeholder={"정답을 입력하세요"}
-                onChange={(e) => {
-                  setUserAnswer(e.target.value);
-                }}
+                onChange={getUserAnswer}
               />
               <S.SubmitButton onClick={checkWriteAnswer}>제출</S.SubmitButton>
             </>
@@ -84,7 +72,7 @@ const QuizOption = (props: QuizOptionProps) => {
             <S.Description>{quiz.description}</S.Description>
           </S.DescriptionContainer>
           <S.NextButtonContainer>
-            <S.NextButton onClick={clickEvent}>다음 문제로</S.NextButton>
+            <S.NextButton onClick={goToNextQuiz}>다음 문제로</S.NextButton>
           </S.NextButtonContainer>
         </>
       ) : null}

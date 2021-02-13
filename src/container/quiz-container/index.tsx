@@ -23,6 +23,11 @@ const QuizContainer = ({
   const givenQuizBookId = 1; // id가 1인 문제집 클릭한 경우로 가정
   const [currentQuiz, setcurrentQuiz] = useState(mokData[0]);
 
+  const [selectedOption, setSelectedOption] = useState("");
+  const [userAnswer, setUserAnswer] = useState("");
+  const [solved, setSolved] = useState(false);
+  const [correct, setCorrect] = useState(false);
+
   const getQuizList = async () => {
     const mokData = await getMokdata();
     setQuizData(mokData);
@@ -44,6 +49,25 @@ const QuizContainer = ({
 
   const quizBookIdList = Object.keys(quizList);
 
+  const getUserAnswer = (e: any) => {
+    setUserAnswer(e.target.value);
+  };
+
+  const checkChoiceAnswer = (e: any) => {
+    const selected = e.target.value;
+    setSolved(true);
+    setSelectedOption(selected);
+  };
+
+  const checkWriteAnswer = (e: any) => {
+    if (userAnswer === currentQuiz.answer) {
+      setCorrect(true);
+    } else {
+      setCorrect(false);
+    }
+    setSolved(true);
+  };
+
   const goToNextQuiz = () => {
     if (quizList[givenQuizBookId]) {
       const currentQuizIdx = quizList[givenQuizBookId].indexOf(currentQuiz);
@@ -52,6 +76,7 @@ const QuizContainer = ({
         setcurrentQuiz(nextQuizIdx);
         history.push(`/quiz/${currentQuiz.id}`);
       }
+      setSolved(false);
     }
   };
 
@@ -63,7 +88,16 @@ const QuizContainer = ({
             <S.QuizWrapper key={idx}>
               <QuizImage imageURL={currentQuiz.imageURL} />
               <QuizQuestion question={currentQuiz.question} />
-              <QuizOption clickEvent={goToNextQuiz} quiz={currentQuiz} />
+              <QuizOption
+                quiz={currentQuiz}
+                selectedOption={selectedOption}
+                solved={solved}
+                correct={correct}
+                getUserAnswer={getUserAnswer}
+                checkChoiceAnswer={checkChoiceAnswer}
+                checkWriteAnswer={checkWriteAnswer}
+                goToNextQuiz={goToNextQuiz}
+              />
               <QuizProgressBar />
             </S.QuizWrapper>
           ) : null}
