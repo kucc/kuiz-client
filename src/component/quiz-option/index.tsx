@@ -20,6 +20,19 @@ const QuizOption = (props: QuizOptionProps) => {
   const optionArray = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
   const isChoice = quiz.isChoice;
 
+  const getOptionColor = (solved: boolean, option?: string) => {
+    const CORRECT_ANSWER = option === quiz.answer;
+
+    const SELECTED_BUT_WRONG =
+      option === selectedOption && option != quiz.answer;
+
+    if (solved) {
+      if (CORRECT_ANSWER) return "#03c75a";
+      else if (SELECTED_BUT_WRONG) return "#c4042a";
+      else return "#c4c4c4";
+    } else return THEME_COLOR.GRAY;
+  };
+
   return (
     <>
       {isChoice ? (
@@ -30,17 +43,7 @@ const QuizOption = (props: QuizOptionProps) => {
               onClick={checkChoiceAnswer}
               value={option}
               disabled={solved ? true : false}
-              color={
-                solved
-                  ? selectedOption === quiz.answer && selectedOption === option
-                    ? "#03c75a"
-                    : selectedOption != quiz.answer && selectedOption === option
-                    ? "#c4042a"
-                    : option === quiz.answer
-                    ? "#03c75a"
-                    : "#c4c4c4"
-                  : THEME_COLOR.GRAY
-              }
+              color={getOptionColor(solved, option)}
             >
               {option}
             </S.ChoiceOption>
