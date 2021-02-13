@@ -22,6 +22,9 @@ export const STATIC_URL = {
   Level5_Icon: `https://user-images.githubusercontent.com/60877502/87768110-a0476e80-c856-11ea-8d42-fae61866c846.png`,
   Coin: `https://user-images.githubusercontent.com/60877502/87688838-73497c00-c7c2-11ea-949b-d0c85fa07097.png`,
   DataStructure: `https://user-images.githubusercontent.com/60877502/87900458-5c8b7980-ca8f-11ea-851b-793ec15dba92.jpg`,
+  FLAG: `https://user-images.githubusercontent.com/46309902/107686315-69501300-6ce8-11eb-8ce0-f34fd36c3248.jpg`,
+  RUNNING_MAN: `https://user-images.githubusercontent.com/46309902/107687612-0bbcc600-6cea-11eb-898e-23b080570143.png`,
+  FALL_DOWN_MAN: `https://user-images.githubusercontent.com/46309902/107687739-373fb080-6cea-11eb-8421-c9432c32ac1b.png`,
 };
 
 export const THEME_COLOR = {
