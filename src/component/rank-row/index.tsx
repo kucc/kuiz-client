@@ -2,6 +2,7 @@ import React from "react";
 import * as S from "./styles";
 import { STATIC_URL } from "@asset/constant";
 import { RankRowProps } from "./types";
+import getUserLevelIcon from "@/common/lib/get-user-level-icon";
 
 const RankRow = ({ rank, user, isSelfRank }: RankRowProps) => {
   return (
@@ -10,7 +11,7 @@ const RankRow = ({ rank, user, isSelfRank }: RankRowProps) => {
         <S.RankText>{rank}</S.RankText>
       </S.RankNumberColumn>
       <S.RankIconColumn>
-        <S.RankIcon src={STATIC_URL.Level4_Icon} />
+        <S.RankIcon src={getUserLevelIcon(user.level)} />
       </S.RankIconColumn>
       <S.RankUserNameColumn>
         <S.UserName>{user.name}</S.UserName>
