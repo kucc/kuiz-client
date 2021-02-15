@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { spin } from "@common/keyframe";
+import { UserRankContainerProps } from "./types";
 
-export const UserRankContainer = styled.div`
+export const UserRankContainer = styled.div<UserRankContainerProps>`
   display: flex;
   flex-direction: row;
   justify-content: absolute;
   align-items: center;
   border-radius: 10px;
-  background-color: #f6fbf7;
+  background-color: ${(props) => (props.isSelfRank ? "#ffe783" : "#f6fbf7")};
   width: 35rem;
   height: 7rem;
   padding: 0.8rem 2.5rem 0.8rem 1.5rem;

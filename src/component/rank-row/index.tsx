@@ -3,9 +3,9 @@ import * as S from "./styles";
 import { STATIC_URL } from "@asset/constant";
 import { RankRowProps } from "./types";
 
-const RankRow = ({ rank, user }: RankRowProps) => {
+const RankRow = ({ rank, user, isSelfRank }: RankRowProps) => {
   return (
-    <S.UserRankContainer>
+    <S.UserRankContainer isSelfRank={isSelfRank}>
       <S.RankNumberColumn>
         <S.RankText>{rank}</S.RankText>
       </S.RankNumberColumn>
