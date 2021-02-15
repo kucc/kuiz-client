@@ -10,7 +10,7 @@ export const UserRankContainer = styled.div<UserRankContainerProps>`
   border-radius: 10px;
   background-color: ${(props) => (props.isSelfRank ? "#ffe783" : "#f6fbf7")};
   width: 35rem;
-  height: 7rem;
+  height: ${(props) => (props.isSelfRank ? "7.6rem" : "7rem")};
   padding: 0.8rem 2.5rem 0.8rem 1.5rem;
   border-bottom: 0.5px groove;
 `;
