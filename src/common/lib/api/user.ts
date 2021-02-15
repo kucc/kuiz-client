@@ -4,8 +4,7 @@ import axios from "../axios";
 
 const userAPI = {
   getUserInfo: async () => {
-    const userInfo = await axios.get<UserModel>(endpoints.USER_API);
-    console.log("실행");
+    const { data: userInfo } = await axios.get<UserModel>(endpoints.USER_API);
     return userInfo;
   },
 };
