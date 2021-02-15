@@ -6,5 +6,5 @@ export const StyledLogo = styled.div`
   img {
     height: 100%;
   }
-  margin: 4rem 0rem 3rem 0rem;
+  margin: 10rem 0rem 3rem 0rem;
 `;
