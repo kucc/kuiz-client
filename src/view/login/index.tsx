@@ -9,9 +9,7 @@ import { getUserInfoAsync } from "@/modules/user";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { data: userData } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+  const { data: userData } = useSelector((state: RootState) => state.user);
 
   const redirect = useCallback(() => {
     if (userData) {
