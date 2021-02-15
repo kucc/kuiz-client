@@ -9,3 +9,10 @@ export const TotalRankContainer = styled.div`
   flex-direction: column;
   height: 100%;
 `;
+
+export const TopThreeContainer = styled.div`
+  display: flex;
+  margin-top: 0.3rem;
+  margin-bottom: 3rem;
+  flex-direction: row;
+`;

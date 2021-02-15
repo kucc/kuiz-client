@@ -10,15 +10,15 @@ export const getRankListMokData = (): Promise<UserModel[]> => {
 
 export const mokData: UserModel[] = [
   {
-    name: "박재하",
-    email: "parjackdaw@naver.com",
-    point: 1000,
-    level: 1,
+    name: "16 이수영",
+    email: "swim@naver.com",
+    point: 3000,
+    level: 3,
     isMember: false,
   },
   {
-    name: "이건수",
-    email: "parjackdaw@naver.com",
+    name: "최지현",
+    email: "jihyun@naver.com",
     point: 2000,
     level: 2,
     isMember: false,
@@ -26,14 +26,14 @@ export const mokData: UserModel[] = [
   {
     name: "박진용",
     email: "namda@naver.com",
-    point: 3000,
-    level: 2,
+    point: 1000,
+    level: 1,
     isMember: false,
   },
   {
     name: "jyp",
     email: "parjackdaw@naver.com",
-    point: 1000,
+    point: 900,
     level: 1,
     isMember: false,
   },
