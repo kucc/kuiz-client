@@ -8,7 +8,6 @@ const ProfilePage = () => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.user
   );
-  const [userData, setUserData] = useState({} as UserModel);
   const dispatch = useDispatch();
 
   const getUserINfo = () => {
