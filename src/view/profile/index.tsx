@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const { data, loading, error } = useSelector(
-    (state: RootState) => state.userReducer
+    (state: RootState) => state.user
   );
   const [userData, setUserData] = useState({} as UserModel);
   const dispatch = useDispatch();

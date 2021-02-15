@@ -20,7 +20,10 @@ const App = () => {
         <Route path="/category/:categoryId" component={QuizBookListPage} />
         <Route path="/category" exact component={CategoryPage} />
         <Route path="/profile" component={ProfilePage} />
-        <Route path="/makequiz" component={MakeQuizPage} />
+        <Route
+          path="/quiz-book/:quizbookId/makequiz"
+          component={MakeQuizPage}
+        />
         <Route path="/quiz" component={QuizPage} />
         <Route path="/rank" component={RankPage} />
         <Redirect from="*" to="/" />
