@@ -1,3 +1,4 @@
+import quizAPI from "@/common/lib/api/quiz";
 import React, { useEffect, useState } from "react";
 import QuizModel from "@common/model/quiz";
 import QuizImage from "@/component/quiz-image/index";
@@ -9,45 +10,37 @@ import { QuizListType } from "./types";
 import * as S from "./styles";
 import { mokData } from "../quiz-container/mok-data";
 import { RouteComponentProps } from "react-router-dom";
-interface MatchParams {
-  quizId?: string;
+import LoadingSpinner from "@/component/common/loading-spinner";
+
+export interface MatchParams {
+  quizbookId: string;
 }
 
-const QuizContainer = ({
+const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
-  history,
-}: RouteComponentProps<MatchParams>) => {
-  const quizList = {} as QuizListType;
-  const [quizData, setQuizData] = useState([] as QuizModel[]);
+}) => {
+  const [loading, setLoading] = useState(true);
+  const [quiz, setQuiz] = useState({} as QuizModel);
+  const quizbookId = Number(match.params.quizbookId);
 
-  const givenQuizBookId = 1; // id가 1인 문제집 클릭한 경우로 가정
-  const [currentQuiz, setcurrentQuiz] = useState(mokData[0]);
+  const [order, setOrder] = useState(1);
+
+  const getQuiz = async () => {
+    const quiz = await quizAPI.getQuiz(quizbookId, order);
+    setQuiz(quiz);
+    setLoading(false);
+  };
+
+  const [currentQuiz, setcurrentQuiz] = useState(quiz);
 
   const [selectedOption, setSelectedOption] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
   const [solved, setSolved] = useState(false);
   const [correct, setCorrect] = useState(false);
 
-  const getQuizList = async () => {
-    const mokData = await getMokdata();
-    setQuizData(mokData);
-  };
-
   useEffect(() => {
-    getQuizList();
-    goToNextQuiz();
+    getQuiz();
   }, []);
-
-  quizData.forEach((quiz) => {
-    const quizArray = quizList[quiz.quizBookId];
-    if (Array.isArray(quizArray)) {
-      quizList[quiz.quizBookId] = [...quizArray, quiz];
-    } else {
-      quizList[quiz.quizBookId] = [quiz];
-    }
-  });
-
-  const quizBookIdList = Object.keys(quizList);
 
   const getUserAnswer = (e: any) => {
     setUserAnswer(e.target.value);
@@ -57,6 +50,7 @@ const QuizContainer = ({
     const selected = e.target.value;
     setSolved(true);
     setSelectedOption(selected);
+    setOrder(order + 1);
   };
 
   const checkWriteAnswer = (e: any) => {
@@ -66,46 +60,38 @@ const QuizContainer = ({
       setCorrect(false);
     }
     setSolved(true);
+    setOrder(order + 1);
   };
 
   const goToNextQuiz = () => {
-    if (quizList[givenQuizBookId]) {
-      const currentQuizIdx = quizList[givenQuizBookId].indexOf(currentQuiz);
-      const nextQuizIdx = quizList[givenQuizBookId][currentQuizIdx + 1];
-      if (nextQuizIdx) {
-        setcurrentQuiz(nextQuizIdx);
-        history.push(`/quiz/${currentQuiz.id}`);
-      }
-      setSolved(false);
-    }
+    setSolved(false);
+    getQuiz();
   };
 
-  return currentQuiz ? (
+  return (
     <>
-      {quizBookIdList.map((quizBookId, idx) => (
-        <S.QuizContainer key={idx}>
-          {Number(quizBookId) === givenQuizBookId ? (
-            <S.QuizWrapper key={idx}>
-              <QuizImage imageURL={currentQuiz.imageURL} />
-              <QuizQuestion question={currentQuiz.question} />
-              <QuizOption
-                quiz={currentQuiz}
-                selectedOption={selectedOption}
-                solved={solved}
-                correct={correct}
-                getUserAnswer={getUserAnswer}
-                checkChoiceAnswer={checkChoiceAnswer}
-                checkWriteAnswer={checkWriteAnswer}
-                goToNextQuiz={goToNextQuiz}
-              />
-              <QuizProgressBar />
-            </S.QuizWrapper>
-          ) : null}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <S.QuizContainer>
+          <S.QuizWrapper>
+            <QuizImage imageURL={quiz.imageURL} />
+            <QuizQuestion question={quiz.question} />
+            <QuizOption
+              quiz={quiz}
+              selectedOption={selectedOption}
+              solved={solved}
+              correct={correct}
+              getUserAnswer={getUserAnswer}
+              checkChoiceAnswer={checkChoiceAnswer}
+              checkWriteAnswer={checkWriteAnswer}
+              goToNextQuiz={goToNextQuiz}
+            />
+            <QuizProgressBar />
+          </S.QuizWrapper>
         </S.QuizContainer>
-      ))}
+      )}
     </>
-  ) : (
-    <div>Loading ...</div>
   );
 };
 

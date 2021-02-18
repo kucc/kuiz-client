@@ -25,7 +25,7 @@ const App = () => {
           path="/quiz-book/:quizbookId/makequiz"
           component={MakeQuizPage}
         />
-        <Route path="/quiz" component={QuizPage} />
+        <Route path="/quiz-book/:quizbookId/quiz/" component={QuizPage} />
         <Route path="/rank" component={RankPage} />
         <Redirect from="*" to="/" />
       </Switch>
