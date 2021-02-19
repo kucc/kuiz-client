@@ -14,7 +14,7 @@ const QuizBookListPage = ({ history, match }: RouteComponentProps) => {
       <S.QuizBookContainer>
         <S.QuizBookButton to={`/quiz-book/2/quiz`}>문제집 2</S.QuizBookButton>
         <S.QuizBookButton to={`/quiz-book/4/quiz`}>문제집 4</S.QuizBookButton>
-        <S.QuizBookButton to={`/quiz-book/5/quiz`}>문제집 5</S.QuizBookButton>
+        <S.QuizBookButton to={`/quiz-book/16/quiz`}>문제집16</S.QuizBookButton>
       </S.QuizBookContainer>
     </>
   );

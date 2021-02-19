@@ -1,4 +1,5 @@
 import quizAPI from "@/common/lib/api/quiz";
+import quizbookAPI from "@/common/lib/api/quizbook";
 import React, { useEffect, useState } from "react";
 import QuizModel from "@common/model/quiz";
 import QuizImage from "@/component/quiz-image/index";
@@ -24,6 +25,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const quizbookId = Number(match.params.quizbookId);
 
   const [order, setOrder] = useState(1);
+  const [quizCount, setQuizCount] = useState(0);
 
   const getQuiz = async () => {
     const quiz = await quizAPI.getQuiz(quizbookId, order);
@@ -31,7 +33,15 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     setLoading(false);
   };
 
-  const [currentQuiz, setcurrentQuiz] = useState(quiz);
+  const postSolveQuizBook = async () => {
+    const solveQuizBook = await quizbookAPI.postSolveQuizBook(
+      quizbookId,
+      order,
+      quiz.id,
+      correct
+    );
+    return solveQuizBook;
+  };
 
   const [selectedOption, setSelectedOption] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
@@ -40,7 +50,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
 
   useEffect(() => {
     getQuiz();
-  }, []);
+  }, [order]);
 
   const getUserAnswer = (e: any) => {
     setUserAnswer(e.target.value);
@@ -50,21 +60,30 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     const selected = e.target.value;
     setSolved(true);
     setSelectedOption(selected);
-    setOrder(order + 1);
+    if (selected === quiz.answer) {
+      setCorrect(true);
+    } else {
+      setCorrect(false);
+    }
+    setQuizCount(quizCount + 1);
   };
 
   const checkWriteAnswer = (e: any) => {
-    if (userAnswer === currentQuiz.answer) {
+    if (userAnswer === quiz.answer) {
       setCorrect(true);
     } else {
       setCorrect(false);
     }
     setSolved(true);
-    setOrder(order + 1);
+
+    setQuizCount(quizCount + 1);
   };
 
   const goToNextQuiz = () => {
+    postSolveQuizBook();
+    setOrder(order + 1);
     setSolved(false);
+    setCorrect(false);
     getQuiz();
   };
 
