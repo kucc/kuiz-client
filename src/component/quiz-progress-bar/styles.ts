@@ -9,7 +9,7 @@ export const ProgressBarContainer = styled.div`
   width: 70%;
   height: 100%;
   @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 30%;
+    width: 35%;
   }
 `;
 
@@ -47,8 +47,7 @@ export const ProgressBarFiller = styled.div`
   background-color: ${THEME_COLOR.SECONDARY};
   border-radius: inherit;
   text-align: right;
-  width: 30%;
-  /* width: ${(props: QuizProgressBarProps) => props.completed}%; */
+  width: ${(props: QuizProgressBarProps) => props.completed}%;
   display: flex;
   align-items: center;
   justify-content: flex-end;

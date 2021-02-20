@@ -97,11 +97,11 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       setCorrect(false);
     }
     setSolved(true);
-
     setQuizCount(quizCount + 1);
   };
 
   const goToNextQuiz = () => {
+    setCompleted(Math.round((quizCount / totalQuizCount) * 100));
     getSolvingQuizBook();
     postSolveQuizBook();
     setOrder(order + 1);
