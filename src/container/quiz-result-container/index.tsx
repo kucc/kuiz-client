@@ -20,9 +20,14 @@ const QuizResultContainer: React.FC<
   });
 
   return (
-    <div>
-      전체 문제 : {totalQuizCount}, 맞힌 문제 : {correctQuizCount}
-    </div>
+    <S.QuizResultContainer>
+      <S.QuizResultWrapper>
+        <S.QuizResultScore>
+          {correctQuizCount} / {totalQuizCount}
+        </S.QuizResultScore>
+        <S.MainPageButton to={"/"}>메인 화면으로</S.MainPageButton>
+      </S.QuizResultWrapper>
+    </S.QuizResultContainer>
   );
 };
 
