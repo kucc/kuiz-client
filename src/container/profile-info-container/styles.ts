@@ -2,16 +2,6 @@ import styled from "styled-components";
 import { BREAKPOINT, THEME_COLOR } from "../../asset/constant";
 import { PointBarProps } from "./types";
 
-export const ProfileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  height: 100%;
-
-  padding: 3rem 2rem 0rem 2rem;
-`;
-
 export const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,20 +10,6 @@ export const ProfileInfoContainer = styled.div`
   justify-content: center;
 
   padding: 1rem 2rem 1rem 2rem;
-`;
-export const ProfileMenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-
-  padding: 1rem 2rem 1rem 2rem;
-`;
-export const ProfileBorder = styled.div`
-  width: 50%;
-  height: 0.05rem;
-  background-color: #666666;
 `;
 
 export const UserInfoContainer = styled.div`
