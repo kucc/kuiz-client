@@ -6,10 +6,7 @@ import QuizImage from "@/component/quiz-image/index";
 import QuizOption from "@/component/quiz-option/index";
 import QuizQuestion from "@/component/quiz-question/index";
 import QuizProgressBar from "@/component/quiz-progress-bar/index";
-import { getMokdata } from "./mok-data";
-import { QuizListType } from "./types";
 import * as S from "./styles";
-import { mokData } from "../quiz-container/mok-data";
 import { RouteComponentProps } from "react-router-dom";
 import LoadingSpinner from "@/component/common/loading-spinner";
 
@@ -26,6 +23,8 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
 
   const [order, setOrder] = useState(1);
   const [quizCount, setQuizCount] = useState(0);
+  const [totalQuizCount, setTotalQuizCount] = useState(0);
+  const [completed, setCompleted] = useState(0);
 
   const getQuiz = async () => {
     const quiz = await quizAPI.getQuiz(quizbookId, order);
@@ -43,6 +42,26 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     return solveQuizBook;
   };
 
+  const getSolvingQuizBook = async () => {
+    const solvingQuizBookList = await quizbookAPI.getSolvingQuizBook(0);
+    const found = solvingQuizBookList.find((solvingQuizBook) => {
+      solvingQuizBook.quizBookId === quizbookId;
+    });
+    if (found != undefined) {
+      setTotalQuizCount(found.quizBook.quizCount);
+    } else {
+      const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(1);
+      const founded = solvedQuizBookList.find((solvedQuizBook) => {
+        if (solvedQuizBook.quizBookId === quizbookId) {
+          return solvedQuizBook;
+        }
+      });
+      if (founded != undefined) {
+        setTotalQuizCount(founded.quizBook.quizCount);
+      }
+    }
+  };
+
   const [selectedOption, setSelectedOption] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
   const [solved, setSolved] = useState(false);
@@ -50,6 +69,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
 
   useEffect(() => {
     getQuiz();
+    getSolvingQuizBook();
   }, [order]);
 
   const getUserAnswer = (e: any) => {
@@ -80,12 +100,14 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   };
 
   const goToNextQuiz = () => {
+    getSolvingQuizBook();
     postSolveQuizBook();
     setOrder(order + 1);
     setSolved(false);
     setCorrect(false);
     getQuiz();
   };
+  console.log(totalQuizCount);
 
   return (
     <>
@@ -106,7 +128,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
               checkWriteAnswer={checkWriteAnswer}
               goToNextQuiz={goToNextQuiz}
             />
-            <QuizProgressBar />
+            <QuizProgressBar completed={completed} />
           </S.QuizWrapper>
         </S.QuizContainer>
       )}

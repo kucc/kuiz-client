@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
+import { QuizProgressBarProps } from "./types";
 
 export const ProgressBarContainer = styled.div`
   display: flex;
@@ -47,10 +48,12 @@ export const ProgressBarFiller = styled.div`
   border-radius: inherit;
   text-align: right;
   width: 30%;
+  /* width: ${(props: QuizProgressBarProps) => props.completed}%; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 1rem;
+  transition: "width 1s ease-in-out";
 `;
 
 export const ProgressBarLabel = styled.span`

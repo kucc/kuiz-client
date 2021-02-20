@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { STATIC_URL } from "@asset/constant";
 import * as S from "./styles";
+import { QuizProgressBarProps } from "./types";
 
-const QuizProgressBar = () => {
+const QuizProgressBar = (props: QuizProgressBarProps) => {
   return (
     <S.ProgressBarContainer>
       <S.ProgressBarIcon>
@@ -11,8 +12,8 @@ const QuizProgressBar = () => {
       </S.ProgressBarIcon>
 
       <S.ProgressBarWrapper>
-        <S.ProgressBarFiller>
-          <S.ProgressBarLabel>20%</S.ProgressBarLabel>
+        <S.ProgressBarFiller completed={props.completed}>
+          <S.ProgressBarLabel>{props.completed}%</S.ProgressBarLabel>
         </S.ProgressBarFiller>
       </S.ProgressBarWrapper>
     </S.ProgressBarContainer>
