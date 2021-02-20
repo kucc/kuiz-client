@@ -4,13 +4,13 @@ import { QuizBookRowProps, QuizTextProps } from "./types";
 export const QuizBookWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 24rem;
-  height: 7rem;
+  width: 30rem;
+  height: 8rem;
   border-radius: 10px;
   background-color: #f2f2f2;
   border: 0.5px solid #969696;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
-  padding: 0.5rem 1.2rem;
+  padding: 0.5rem 1.2rem 0rem 1.2rem;
 `;
 
 export const QuizBookRow = styled.div<QuizBookRowProps>`
@@ -60,7 +60,7 @@ export const QuizBookOwner = styled.div`
 export const QuizText = styled.div<QuizTextProps>`
   text-align: center;
   vertical-align: middle;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: ${(props) => (props.bold ? "bold" : "normal")};
 `;
 
@@ -68,5 +68,5 @@ export const QuizBoldText = styled.div`
   text-align: center;
   vertical-align: middle;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `;

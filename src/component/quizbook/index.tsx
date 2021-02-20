@@ -5,7 +5,7 @@ import * as S from "./styles";
 const QuizBook = ({ quizBook }: QuizBookProps) => {
   return (
     <S.QuizBookWrapper>
-      <S.QuizBookRow height={3}>
+      <S.QuizBookRow height={4}>
         <S.QuizBookName>
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
         </S.QuizBookName>
