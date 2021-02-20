@@ -10,6 +10,8 @@ import MakeQuizPage from "./view/make-quiz/index";
 import QuizPage from "./view/quiz/index";
 import Layout from "./component/common/layout";
 import QuizBookListPage from "./view/quizbook-list";
+import Auth from "./component/common/auth";
+import QuizBookPage from "./view/quiz-book/index";
 
 const App = () => {
   return (
@@ -19,13 +21,14 @@ const App = () => {
         <Route path="/login" component={LoginPage} />
         <Route path="/category/:categoryId" component={QuizBookListPage} />
         <Route path="/category" exact component={CategoryPage} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route path="/profile" component={Auth(ProfilePage)} />
         <Route
           path="/quiz-book/:quizbookId/makequiz"
           component={MakeQuizPage}
         />
         <Route path="/quiz" component={QuizPage} />
         <Route path="/rank" component={RankPage} />
+        <Route path="/quiz-book" component={QuizBookPage} />
         <Redirect from="*" to="/" />
       </Switch>
     </Layout>

@@ -11,3 +11,8 @@ export const getUserInfoAsync = createAsyncAction(
   GET_USER_INFO_SUCCESS,
   GET_USER_INFO_ERROR
 )<undefined, UserModel, AxiosError>();
+
+export const insetUserInfo = (userInfo: UserModel) => ({
+  type: GET_USER_INFO_SUCCESS,
+  payload: userInfo,
+});

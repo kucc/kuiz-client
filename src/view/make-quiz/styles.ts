@@ -110,6 +110,7 @@ export const ImageBox = styled.div`
 
   outline: none;
   border: 1px solid ${THEME_COLOR.GRAYER};
+  background-color: white;
 
   border-radius: 0.7rem;
   margin-top: 2rem;
