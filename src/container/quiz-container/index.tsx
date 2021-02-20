@@ -44,20 +44,20 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
 
   const getSolvingQuizBook = async () => {
     const solvingQuizBookList = await quizbookAPI.getSolvingQuizBook(0);
-    const found = solvingQuizBookList.find((solvingQuizBook) => {
+    const solvingQuizBook = solvingQuizBookList.find((solvingQuizBook) => {
       solvingQuizBook.quizBookId === quizbookId;
     });
-    if (found != undefined) {
-      setTotalQuizCount(found.quizBook.quizCount);
+    if (solvingQuizBook != undefined) {
+      setTotalQuizCount(solvingQuizBook.quizBook.quizCount);
     } else {
       const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(1);
-      const founded = solvedQuizBookList.find((solvedQuizBook) => {
+      const solvedQuizBook = solvedQuizBookList.find((solvedQuizBook) => {
         if (solvedQuizBook.quizBookId === quizbookId) {
           return solvedQuizBook;
         }
       });
-      if (founded != undefined) {
-        setTotalQuizCount(founded.quizBook.quizCount);
+      if (solvedQuizBook != undefined) {
+        setTotalQuizCount(solvedQuizBook.quizBook.quizCount);
       }
     }
   };
@@ -107,7 +107,6 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     setCorrect(false);
     getQuiz();
   };
-  console.log(totalQuizCount);
 
   return (
     <>
