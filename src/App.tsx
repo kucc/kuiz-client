@@ -11,6 +11,7 @@ import QuizPage from "./view/quiz/index";
 import Layout from "./component/common/layout";
 import QuizBookListPage from "./view/quizbook-list";
 import Auth from "./component/common/auth";
+import QuizBookPage from "./view/quiz-book/index";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         />
         <Route path="/quiz" component={QuizPage} />
         <Route path="/rank" component={RankPage} />
+        <Route path="/quiz-book" component={QuizBookPage} />
         <Redirect from="*" to="/" />
       </Switch>
     </Layout>

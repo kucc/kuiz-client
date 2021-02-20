@@ -26,7 +26,15 @@ const MenuButtons = () => {
       />
       <MenuButton
         color="#595965"
+<<<<<<< HEAD
+<<<<<<< HEAD
+        link={"/quiz-book"}
+=======
         link={"/quiz-book/1/makequiz"}
+>>>>>>> 899137b84e1f9dbda5aed1826e8910598ed7554d
+=======
+        link={"/quiz-book"}
+>>>>>>> d92e6d6a28980bf352297f77336b821bbe3ba5f3
         icon={STATIC_URL.MINIGAME}
         text="문제집 만들기"
       />
