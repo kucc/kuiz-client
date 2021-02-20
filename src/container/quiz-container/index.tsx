@@ -10,12 +10,13 @@ import * as S from "./styles";
 import { RouteComponentProps } from "react-router-dom";
 import LoadingSpinner from "@/component/common/loading-spinner";
 
-export interface MatchParams {
+export interface QuizProps {
   quizbookId: string;
 }
 
-const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
+const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   match,
+  history,
 }) => {
   const [loading, setLoading] = useState(true);
   const [quiz, setQuiz] = useState({} as QuizModel);
@@ -25,6 +26,11 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const [quizCount, setQuizCount] = useState(0);
   const [totalQuizCount, setTotalQuizCount] = useState(0);
   const [completed, setCompleted] = useState(0);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [userAnswer, setUserAnswer] = useState("");
+  const [solved, setSolved] = useState(false);
+  const [correct, setCorrect] = useState(false);
+  const [correctQuizCount, setCorrectQuizCount] = useState(0);
 
   const getQuiz = async () => {
     const quiz = await quizAPI.getQuiz(quizbookId, order);
@@ -64,16 +70,6 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState("");
-  const [userAnswer, setUserAnswer] = useState("");
-  const [solved, setSolved] = useState(false);
-  const [correct, setCorrect] = useState(false);
-
-  useEffect(() => {
-    getQuiz();
-    getSolvingQuizBook();
-  }, [order]);
-
   const getUserAnswer = (e: any) => {
     setUserAnswer(e.target.value);
   };
@@ -84,6 +80,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     setSelectedOption(selected);
     if (selected === quiz.answer) {
       setCorrect(true);
+      setCorrectQuizCount(correctQuizCount + 1);
     } else {
       setCorrect(false);
     }
@@ -93,6 +90,7 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const checkWriteAnswer = (e: any) => {
     if (userAnswer === quiz.answer) {
       setCorrect(true);
+      setCorrectQuizCount(correctQuizCount + 1);
     } else {
       setCorrect(false);
     }
@@ -100,15 +98,34 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     setQuizCount(quizCount + 1);
   };
 
-  const goToNextQuiz = () => {
-    setCompleted(Math.round((quizCount / totalQuizCount) * 100));
-    getSolvingQuizBook();
-    postSolveQuizBook();
-    setOrder(order + 1);
-    setSolved(false);
-    setCorrect(false);
-    getQuiz();
+  const getResultPage = () => {
+    history.push({
+      pathname: "/result",
+      state: {
+        totalQuizCount: totalQuizCount,
+        correctQuizCount: correctQuizCount,
+      },
+    });
   };
+
+  const goToNextQuiz = () => {
+    if (quizCount === totalQuizCount) {
+      getResultPage();
+    } else {
+      setCompleted(Math.round((quizCount / totalQuizCount) * 100));
+      getSolvingQuizBook();
+      postSolveQuizBook();
+      setOrder(order + 1);
+      setSolved(false);
+      setCorrect(false);
+      getQuiz();
+    }
+  };
+
+  useEffect(() => {
+    getQuiz();
+    getSolvingQuizBook();
+  }, [order, history]);
 
   return (
     <>
