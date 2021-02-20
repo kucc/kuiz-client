@@ -13,11 +13,6 @@ const QuizResultContainer: React.FC<
   RouteComponentProps<{}, StaticContext, LocationState>
 > = ({ location }) => {
   const { totalQuizCount, correctQuizCount } = location.state;
-  const getQuizResult = () => {};
-
-  useEffect(() => {
-    getQuizResult();
-  });
 
   return (
     <S.QuizResultContainer>
