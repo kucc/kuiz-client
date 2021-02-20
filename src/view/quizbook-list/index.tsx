@@ -13,7 +13,7 @@ const QuizBookListPage = ({ history, match }: RouteComponentProps) => {
       {/* 문제집 링크 임시 구현 - 삭제 예정*/}
       <S.QuizBookContainer>
         <S.QuizBookButton to={`/quiz-book/2/quiz`}>문제집 2</S.QuizBookButton>
-        <S.QuizBookButton to={`/quiz-book/4/quiz`}>문제집 4</S.QuizBookButton>
+        <S.QuizBookButton to={`/quiz-book/12/quiz`}>문제집 12</S.QuizBookButton>
         <S.QuizBookButton to={`/quiz-book/16/quiz`}>문제집16</S.QuizBookButton>
       </S.QuizBookContainer>
     </>

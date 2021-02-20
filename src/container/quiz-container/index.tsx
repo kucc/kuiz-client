@@ -45,7 +45,9 @@ const QuizContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const getSolvingQuizBook = async () => {
     const solvingQuizBookList = await quizbookAPI.getSolvingQuizBook(0);
     const solvingQuizBook = solvingQuizBookList.find((solvingQuizBook) => {
-      solvingQuizBook.quizBookId === quizbookId;
+      if (solvingQuizBook.quizBookId === quizbookId) {
+        return solvingQuizBook;
+      }
     });
     if (solvingQuizBook != undefined) {
       setTotalQuizCount(solvingQuizBook.quizBook.quizCount);
