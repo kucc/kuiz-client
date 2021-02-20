@@ -53,7 +53,7 @@ export const ProgressBarFiller = styled.div`
   align-items: center;
   justify-content: flex-end;
   padding: 1rem;
-  transition: "width 1s ease-in-out";
+  transition: width 1s;
 `;
 
 export const ProgressBarLabel = styled.span`
