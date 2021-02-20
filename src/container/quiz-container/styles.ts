@@ -14,4 +14,5 @@ export const QuizWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 5rem 0rem;
 `;

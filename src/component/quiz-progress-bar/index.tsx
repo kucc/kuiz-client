@@ -25,7 +25,7 @@ const QuizProgressBar = (props: QuizProgressBarProps) => {
 
       <S.ProgressBarWrapper>
         {isZero ? (
-          <S.ProgressBarFiller completed={10}>
+          <S.ProgressBarFiller completed={15}>
             <S.ProgressBarLabel>{props.completed}%</S.ProgressBarLabel>
           </S.ProgressBarFiller>
         ) : (
