@@ -17,6 +17,7 @@ export const ProgressBarIcon = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding-left: ${(props: QuizProgressBarProps) => props.completed}%;
 `;
 
 export const ProgressBarMan = styled.img`

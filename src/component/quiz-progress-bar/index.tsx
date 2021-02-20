@@ -18,7 +18,7 @@ const QuizProgressBar = (props: QuizProgressBarProps) => {
 
   return (
     <S.ProgressBarContainer>
-      <S.ProgressBarIcon>
+      <S.ProgressBarIcon completed={props.completed}>
         <S.ProgressBarMan src={STATIC_URL.RUNNING_MAN}></S.ProgressBarMan>
         <S.ProgressBarFlag src={STATIC_URL.FLAG}></S.ProgressBarFlag>
       </S.ProgressBarIcon>
