@@ -11,7 +11,7 @@ export const QuizBookWrapper = styled.div`
   border: 0.5px solid #969696;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
   padding: 0.5rem 1.2rem 0rem 1.2rem;
-
+  cursor: pointer;
   & + & {
     margin-top: 0.5rem;
   }
