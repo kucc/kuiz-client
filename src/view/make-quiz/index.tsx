@@ -1,18 +1,37 @@
 import React, { useCallback, useState } from "react";
 import { STATIC_URL } from "@/asset/constant";
+import { RouteComponentProps } from "react-router-dom";
 
 import * as S from "./styles";
+import { useMakeQuiz } from './hooks';
 
-const MakeQuizPage = () => {
-  const [isText, setIsText] = useState(true);
-  const [isChoice, setIsChoice] = useState(true);
-  const [quiz, setQuiz] = useState("");
-  const [option1, setOption1] = useState("");
-  const [option2, setOption2] = useState("");
-  const [option3, setOption3] = useState("");
-  const [option4, setOption4] = useState("");
-  const [checked, setChecked] = useState(true);
-  const [description, setDescription] = useState("");
+
+const MakeQuizPage = ({history, match}: RouteComponentProps) => {
+  const quizBookId = match.params["quizbookId"];
+  if (!parseInt(quizBookId)) throw new Error("잘못된 URL");
+  
+  const {
+    question,
+    setQuestion,
+    answer,
+    setAnswer,
+    option1,
+    setOption1,
+    option2,
+    setOption2,
+    option3,
+    setOption3,
+    option4,
+    setOption4,
+    description,
+    setDescription,
+    isChoice,
+    setIsChoice,
+    isText,
+    setIsText,
+    handleUpload,
+  } = useMakeQuiz(quizBookId);
+
 
   return (
     <S.Wrapper>
@@ -55,7 +74,7 @@ const MakeQuizPage = () => {
             <S.InputBox
               placeholder="문제를 입력해 주세요."
               onChange={(e) => {
-                setQuiz(e.target.value);
+                setQuestion(e.target.value);
               }}
             />
             <S.InputWarning>
@@ -67,7 +86,7 @@ const MakeQuizPage = () => {
             <S.InputBox
               placeholder="문제를 입력해 주세요."
               onChange={(e) => {
-                setQuiz(e.target.value);
+                setQuestion(e.target.value);
               }}
             />
 
@@ -100,9 +119,10 @@ const MakeQuizPage = () => {
                 }}
               />
               <S.CheckBox
-                type="checkbox"
-                defaultChecked={false}
-                onChange={() => setChecked(!checked)}
+                type="radio"
+                value="1"
+                checked= {answer === "1"}
+                onChange={(e) => setAnswer(e.target.value)}
               />
             </S.InputContainer>
             <S.InputContainer>
@@ -113,9 +133,10 @@ const MakeQuizPage = () => {
                 }}
               />
               <S.CheckBox
-                type="checkbox"
-                defaultChecked={false}
-                onChange={() => setChecked(!checked)}
+                type="radio"
+                value="2"
+                checked= {answer === "2"}
+                onChange={(e) => setAnswer(e.target.value)}
               />
             </S.InputContainer>
             <S.InputContainer>
@@ -126,9 +147,10 @@ const MakeQuizPage = () => {
                 }}
               />
               <S.CheckBox
-                type="checkbox"
-                defaultChecked={false}
-                onChange={() => setChecked(!checked)}
+                type="radio"
+                value="3"
+                checked= {answer === "3"}
+                onChange={(e) => setAnswer(e.target.value)}
               />
             </S.InputContainer>
             <S.InputContainer>
@@ -139,9 +161,10 @@ const MakeQuizPage = () => {
                 }}
               />
               <S.CheckBox
-                type="checkbox"
-                defaultChecked={false}
-                onChange={() => setChecked(!checked)}
+                type="radio"
+                value="4"
+                checked= {answer === "4"}
+                onChange={(e) => setAnswer(e.target.value)}
               />
             </S.InputContainer>
             <S.InputWarning>
@@ -153,7 +176,7 @@ const MakeQuizPage = () => {
           <S.InputBox
             placeholder="답을 입력해 주세요."
             onChange={(e) => {
-              setDescription(e.target.value);
+              setAnswer(e.target.value);
             }}
           />
         )}
@@ -171,7 +194,7 @@ const MakeQuizPage = () => {
         />
       </S.Container>
       <S.ButtonContainer>
-        <S.SubmitButton>퀴즈 만들기</S.SubmitButton>
+        <S.SubmitButton onClick={handleUpload}>퀴즈 만들기</S.SubmitButton>
       </S.ButtonContainer>
     </S.Wrapper>
   );

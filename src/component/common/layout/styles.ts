@@ -5,15 +5,15 @@ export const Layout = styled.div`
   flex-direction: column;
   width: 100%;
   min-height: 100%;
+  height: 100vh;
   background-image: url(${STATIC_URL.BACKGROUND});
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 `;
 
 export const LayoutBorder = styled.div`
   width: 100%;
-  height: 0.5rem;
+  height: 5px;
   background-color: ${THEME_COLOR.PRIMARY};
 `;
 

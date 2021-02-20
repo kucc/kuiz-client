@@ -32,4 +32,5 @@ export const THEME_COLOR = {
   SECONDARY: "#F19296",
   GRAY: "#F1F1F1",
   GRAYER: "#EDEDED",
+  BLACK: "#5e5e5d",
 };
