@@ -1,3 +1,4 @@
+import QuizBookContainer from "@/container/quizbook-container/index";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -7,7 +8,7 @@ const QuizBookListPage = ({ history, match }: RouteComponentProps) => {
 
   return (
     <>
-      <h1>퀴즈북 페이지</h1>
+      <QuizBookContainer />
     </>
   );
 };
