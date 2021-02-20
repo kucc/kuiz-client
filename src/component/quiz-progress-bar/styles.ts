@@ -18,6 +18,7 @@ export const ProgressBarIcon = styled.div`
   width: 100%;
   justify-content: space-between;
   padding-left: ${(props: QuizProgressBarProps) => props.completed}%;
+  transition: padding-left 1s;
 `;
 
 export const ProgressBarMan = styled.img`
