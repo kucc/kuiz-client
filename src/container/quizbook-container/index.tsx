@@ -2,49 +2,28 @@ import QuizBookModel from "@/common/model/quiz-book";
 import CommonButton from "@/component/buttons/common-button";
 import InputBox from "@/component/input-box";
 import QuizBook from "@/component/quizbook";
-import React from "react";
+import { RootState } from "@/modules";
+import { getQuizBookListAsync } from "@/modules/quiz-book";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
+import { QuizBookContainerProps } from "./types";
 
-const quizBookModelArray: QuizBookModel[] = [
-  {
-    id: 1,
-    categoryId: 1,
-    title: "동아리원 별명 맞추기",
-    ownerId: 1,
-    ownerName: "진용박",
-    quizCount: 3,
-    solvedCount: 14,
-    createdAt: new Date(),
-    completed: true,
-    likeCount: 5,
-  },
-  {
-    id: 2,
-    categoryId: 1,
-    title: "네트워크 상식퀴즈",
-    ownerId: 1,
-    ownerName: "진용박",
-    quizCount: 3,
-    solvedCount: 14,
-    createdAt: new Date(),
-    completed: true,
-    likeCount: 3,
-  },
-  {
-    id: 3,
-    categoryId: 1,
-    title: "무야호~",
-    ownerId: 1,
-    ownerName: "16 박진용",
-    quizCount: 3,
-    solvedCount: 14,
-    createdAt: new Date(),
-    completed: true,
-    likeCount: 3,
-  },
-];
+const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.quizbook
+  );
 
-const QuizBookContainer = () => {
+  const dispatch = useDispatch();
+
+  const getQuizBookList = () => {
+    dispatch(getQuizBookListAsync.request({ categoryId, page: 1 }));
+  };
+
+  useEffect(() => {
+    getQuizBookList();
+  }, [dispatch]);
+
   return (
     <S.QuizBookContainer>
       <S.SearchColumn>
@@ -66,11 +45,15 @@ const QuizBookContainer = () => {
       <S.FilterColumn align={"flex-end"}>
         <S.Filter>최신순 ▽</S.Filter>
       </S.FilterColumn>
-      {quizBookModelArray.map((quizBook) => {
-        return (
-          <QuizBook key={`quiz${quizBook.id}`} quizBook={quizBook}></QuizBook>
-        );
-      })}
+      {data ? (
+        data.map((quizBook) => {
+          return (
+            <QuizBook key={`quiz${quizBook.id}`} quizBook={quizBook}></QuizBook>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </S.QuizBookContainer>
   );
 };

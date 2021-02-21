@@ -6,7 +6,7 @@ export default interface QuizBookModel {
   ownerName: string;
   quizCount: number;
   solvedCount: number;
-  likeCount: number;
+  likedCount: number;
   createdAt: Date;
   completed: boolean;
 }
