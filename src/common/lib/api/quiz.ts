@@ -3,9 +3,9 @@ import QuizModel from "@/common/model/quiz";
 import axios from "../axios";
 
 const quizAPI = {
-  getQuiz: async (quizbookId, order) => {
+  getQuiz: async (quizbookId) => {
     const { data: quiz } = await axios.get<QuizModel>(
-      `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz?order=${order}`
+      `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`
     );
     return quiz;
   },

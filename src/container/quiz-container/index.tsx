@@ -3,8 +3,8 @@ import quizbookAPI from "@/common/lib/api/quizbook";
 import React, { useEffect, useState } from "react";
 import QuizModel from "@common/model/quiz";
 import QuizImage from "@/component/quiz-image/index";
-import QuizOption from "@/component/quiz-option/index";
 import QuizQuestion from "@/component/quiz-question/index";
+import QuizOption from "@/component/quiz-option/index";
 import QuizProgressBar from "@/component/quiz-progress-bar/index";
 import * as S from "./styles";
 import { RouteComponentProps } from "react-router-dom";
@@ -18,11 +18,12 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   match,
   history,
 }) => {
-  const [loading, setLoading] = useState(true);
-  const [quiz, setQuiz] = useState({} as QuizModel);
   const quizbookId = Number(match.params.quizbookId);
 
-  const [order, setOrder] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [quizList, setQuizList] = useState({} as QuizModel);
+  const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [quizCount, setQuizCount] = useState(0);
   const [totalQuizCount, setTotalQuizCount] = useState(0);
   const [completed, setCompleted] = useState(0);
@@ -32,42 +33,25 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   const [correct, setCorrect] = useState(false);
   const [correctQuizCount, setCorrectQuizCount] = useState(0);
 
-  const getQuiz = async () => {
-    const quiz = await quizAPI.getQuiz(quizbookId, order);
-    setQuiz(quiz);
+  const getQuizList = async () => {
+    const quizList = await quizAPI.getQuiz(quizbookId);
+    setQuizList(quizList);
+    setTotalQuizCount(Object.keys(quizList).length);
+    setCurrentQuiz(quizList[0]);
     setLoading(false);
   };
+
+  useEffect(() => {
+    getQuizList();
+  }, []);
 
   const postSolveQuizBook = async () => {
     const solveQuizBook = await quizbookAPI.postSolveQuizBook(
       quizbookId,
-      order,
-      quiz.id,
+      currentQuiz.id,
       correct
     );
     return solveQuizBook;
-  };
-
-  const getSolvingQuizBook = async () => {
-    const solvingQuizBookList = await quizbookAPI.getSolvingQuizBook(0);
-    const solvingQuizBook = solvingQuizBookList.find((solvingQuizBook) => {
-      if (solvingQuizBook.quizBookId === quizbookId) {
-        return solvingQuizBook;
-      }
-    });
-    if (solvingQuizBook != undefined) {
-      setTotalQuizCount(solvingQuizBook.quizBook.quizCount);
-    } else {
-      const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(1);
-      const solvedQuizBook = solvedQuizBookList.find((solvedQuizBook) => {
-        if (solvedQuizBook.quizBookId === quizbookId) {
-          return solvedQuizBook;
-        }
-      });
-      if (solvedQuizBook != undefined) {
-        setTotalQuizCount(solvedQuizBook.quizBook.quizCount);
-      }
-    }
   };
 
   const getUserAnswer = (e: any) => {
@@ -78,7 +62,7 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
     const selected = e.target.value;
     setSolved(true);
     setSelectedOption(selected);
-    if (selected === quiz.answer) {
+    if (selected === currentQuiz.answer) {
       setCorrect(true);
       setCorrectQuizCount(correctQuizCount + 1);
     } else {
@@ -88,7 +72,7 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   };
 
   const checkWriteAnswer = (e: any) => {
-    if (userAnswer === quiz.answer) {
+    if (userAnswer === currentQuiz.answer) {
       setCorrect(true);
       setCorrectQuizCount(correctQuizCount + 1);
     } else {
@@ -96,6 +80,19 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
     }
     setSolved(true);
     setQuizCount(quizCount + 1);
+  };
+
+  const goToNextQuiz = () => {
+    postSolveQuizBook();
+    if (quizCount === totalQuizCount) {
+      getResultPage();
+    } else {
+      setCompleted(Math.round((quizCount / totalQuizCount) * 100));
+      setSolved(false);
+      setCorrect(false);
+      setCurrentQuiz(quizList[currentIdx + 1]);
+      setCurrentIdx(currentIdx + 1);
+    }
   };
 
   const getResultPage = () => {
@@ -108,25 +105,6 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
     });
   };
 
-  const goToNextQuiz = () => {
-    if (quizCount === totalQuizCount) {
-      getResultPage();
-    } else {
-      setCompleted(Math.round((quizCount / totalQuizCount) * 100));
-      getSolvingQuizBook();
-      postSolveQuizBook();
-      setOrder(order + 1);
-      setSolved(false);
-      setCorrect(false);
-      getQuiz();
-    }
-  };
-
-  useEffect(() => {
-    getQuiz();
-    getSolvingQuizBook();
-  }, [order, history]);
-
   return (
     <>
       {loading ? (
@@ -134,10 +112,10 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
       ) : (
         <S.QuizContainer>
           <S.QuizWrapper>
-            <QuizImage imageURL={quiz.imageURL} />
-            <QuizQuestion question={quiz.question} />
+            <QuizImage imageURL={currentQuiz.imageURL} />
+            <QuizQuestion question={currentQuiz.question} />
             <QuizOption
-              quiz={quiz}
+              quiz={currentQuiz}
               selectedOption={selectedOption}
               solved={solved}
               correct={correct}

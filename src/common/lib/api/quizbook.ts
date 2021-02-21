@@ -19,10 +19,10 @@ const quizbookAPI = {
     return solveQuizBook;
   },
 
-  postSolveQuizBook: async (quizbookId, quizOrder, quizId, isCorrect) => {
+  postSolveQuizBook: async (quizbookId, quizId, isCorrect) => {
     const { data: solveQuizBook } = await axios.post<SolveQuizBookModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/solve`,
-      { quizOrder: quizOrder, quizId: quizId, isCorrect: isCorrect }
+      { quizId: quizId, isCorrect: isCorrect }
     );
     return solveQuizBook;
   },
