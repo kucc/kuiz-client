@@ -9,7 +9,7 @@ const QuizBookListPage = ({ history, match }: RouteComponentProps) => {
 
   return (
     <>
-      <QuizBookContainer />
+      <QuizBookContainer categoryId={categoryId} />
     </>
   );
 };

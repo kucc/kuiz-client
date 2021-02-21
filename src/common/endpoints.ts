@@ -3,6 +3,7 @@ const endpoints = {
   USER_API: "/user",
   QUIZBOOK_API: "/quiz-book",
   QUIZ_API: "/quiz",
+  CATEGORY_API: "/category",
 };
 
 export default endpoints;

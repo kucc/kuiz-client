@@ -10,7 +10,7 @@ const QuizBook = ({ quizBook }: QuizBookProps) => {
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
         </S.QuizBookName>
         <S.QuizBookLike>
-          <S.QuizText bold>👍 {quizBook.likeCount}</S.QuizText>
+          <S.QuizText bold>👍 {quizBook.likedCount}</S.QuizText>
         </S.QuizBookLike>
       </S.QuizBookRow>
       <S.QuizBookRow height={3}>
