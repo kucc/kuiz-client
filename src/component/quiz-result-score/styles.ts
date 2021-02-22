@@ -3,6 +3,7 @@ import { QuizScoreProps } from "./types";
 export const ScoreContainer = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
 `;
 
 export const DefaultCircle = styled.circle`
