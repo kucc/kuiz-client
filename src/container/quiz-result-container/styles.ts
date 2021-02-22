@@ -18,7 +18,7 @@ export const QuizResultContainer = styled.div`
 
 export const QuizResultWrapper = styled.div`
   width: 80%;
-  padding: 5rem;
+  padding: 3rem;
   height: 60%;
   border-radius: 5rem;
   background-color: #eaeaea;
@@ -31,6 +31,7 @@ export const QuizResultWrapper = styled.div`
   @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 40%;
     height: 85%;
+    padding: 7rem;
   }
 `;
 

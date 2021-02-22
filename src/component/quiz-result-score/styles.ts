@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { QuizScoreProps } from "./types";
+
 export const ScoreContainer = styled.div`
   width: 100%;
   display: flex;

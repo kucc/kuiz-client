@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 import QuizScore from "@component/quiz-result-score";
+import QuizPoint from "@component/quiz-result-point";
 import { QuizScoreProps } from "@component/quiz-result-score/types";
 
 export type LocationState = {
@@ -41,6 +42,7 @@ const QuizResultContainer: React.FC<
           correctQuizCount={correctQuizCount}
           totalQuizCount={totalQuizCount}
         />
+        <QuizPoint correctQuizCount={correctQuizCount} />
         <S.MainPageButton to={"/"}>메인 화면으로</S.MainPageButton>
       </S.QuizResultWrapper>
     </S.QuizResultContainer>
