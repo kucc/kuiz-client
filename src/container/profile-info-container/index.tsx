@@ -21,42 +21,38 @@ const ProfileInfoContainer = () => {
     getUserINfo();
   }, [dispatch]);
 
-  const { name, email, point, level } = data
-    ? data
-    : { name: "", email: "", point: 0, level: 1 };
-
   const findLevelIcon = (level: number) => {
     const queryIcon = "Level" + String(level) + "_Icon";
     return STATIC_URL[queryIcon];
   };
-  const maxPoint = level ? MAX_LEVEL_POINT[level] : MAX_LEVEL_POINT[1];
 
-  return (
+  return data ? (
     <S.ProfileInfoContainer>
       <S.UserInfoContainer>
         <S.UserBasicInfoWrapper>
-          <S.UserName>{name ? name : "이름"}</S.UserName>
-          <S.UserEmail>{email ? email : "이메일"}</S.UserEmail>
+          <S.UserName>{data.name}</S.UserName>
+          <S.UserEmail>{data.email}</S.UserEmail>
         </S.UserBasicInfoWrapper>
         <S.UserLevelWrapper>
-          <S.LevelLogo
-            src={level ? findLevelIcon(level) : STATIC_URL.Level1_Icon}
-            alt="Icon"
-          ></S.LevelLogo>
+          <S.LevelLogo src={findLevelIcon(data.level)} alt="Icon"></S.LevelLogo>
         </S.UserLevelWrapper>
       </S.UserInfoContainer>
       <S.ProfilePointBarContainer>
         <S.PointBarWrapper>
-          <S.UserPoint> {point ? point : "포인트"} P</S.UserPoint>
+          <S.UserPoint> {data.point} P</S.UserPoint>
           <S.BackgroundBar>
-            <S.PointBar width={point ? (point * 100) / maxPoint : 0} />
+            <S.PointBar
+              width={(data.point * 100) / MAX_LEVEL_POINT[data.level]}
+            />
           </S.BackgroundBar>
         </S.PointBarWrapper>
         <S.Point>
-          ( {point ? point : "포인트"} / {maxPoint} )
+          ( {data.point} / {MAX_LEVEL_POINT[data.level]} )
         </S.Point>
       </S.ProfilePointBarContainer>
     </S.ProfileInfoContainer>
+  ) : (
+    <></>
   );
 };
 
