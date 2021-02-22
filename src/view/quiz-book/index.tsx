@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { STATIC_URL } from "@/asset/constant";
 import Logo from "@component/logo";
 import * as S from "./styles";
-import NextButton from "@component/buttons/next-button/index";
+import AddButton from "@component/buttons/next-button/index";
 import QuizCategorySelect from "../../component/option";
 import InputBox from "@component/input-box/index";
 import CheckBox from "@component/checkbox/index";
@@ -33,7 +33,7 @@ const QuizBookPage = () => {
         </S.NameContainer>
 
         <S.ButtonContainer>
-          <NextButton color="white" link={"/makebook"} text="다음으로" />
+          <AddButton color="white" link={"/addquiz"} text="다음으로" />
         </S.ButtonContainer>
       </S.Container>
     </S.Wrapper>

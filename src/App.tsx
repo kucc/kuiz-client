@@ -12,6 +12,7 @@ import Layout from "./component/common/layout";
 import QuizBookListPage from "./view/quizbook-list";
 import Auth from "./component/common/auth";
 import QuizBookPage from "./view/quiz-book/index";
+import AddQuizPage from "./view/add-quiz/index";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/quiz" component={QuizPage} />
         <Route path="/rank" component={RankPage} />
         <Route path="/quiz-book" component={QuizBookPage} />
+        <Route path="/addquiz" component={AddQuizPage} />
         <Redirect from="*" to="/" />
       </Switch>
     </Layout>
