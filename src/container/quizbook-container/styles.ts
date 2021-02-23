@@ -44,6 +44,11 @@ export const ButtonFilter = styled.div`
   cursor: pointer;
 `;
 
+export const DropDownFilterContainer = styled.div`
+  align-items: center;
+  justify-content: flex-end;
+`;
+
 export const Filter = styled.div`
   font-size: large;
   font-weight: bold;

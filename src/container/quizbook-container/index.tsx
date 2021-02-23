@@ -2,6 +2,8 @@ import QuizBookModel from "@/common/model/quiz-book";
 import CommonButton from "@/component/buttons/common-button";
 import InputBox from "@/component/input-box";
 import QuizBook from "@/component/quizbook";
+import DropDown from "@/component/drop-down";
+import DropDownProps from "@/component/drop-down/types";
 import { RootState } from "@/modules";
 import { getQuizBookListAsync } from "@/modules/quiz-book";
 import React, { useEffect, useState } from "react";
@@ -9,7 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 
-const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
+const QuizBookContainer = (
+  { categoryId }: QuizBookContainerProps,
+  props: DropDownProps
+) => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.quizbook
   );
@@ -18,6 +23,12 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const getQuizBookList = () => {
     dispatch(getQuizBookListAsync.request({ categoryId, page: 1 }));
+  };
+
+  const [show, setShow] = useState(false);
+
+  const toggleDropDown = () => {
+    setShow(!show);
   };
 
   useEffect(() => {
@@ -42,9 +53,13 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
           <S.FilterText>안푼 문제집</S.FilterText>
         </S.ButtonFilter>
       </S.FilterColumn>
-      <S.FilterColumn align={"flex-end"}>
-        <S.Filter>최신순 ▽</S.Filter>
-      </S.FilterColumn>
+      <S.DropDownFilterContainer>
+        <S.FilterColumn align={"flex-end"}>
+          <S.Filter onClick={toggleDropDown}>최신순 ▽</S.Filter>
+        </S.FilterColumn>
+        <DropDown show={show} />
+      </S.DropDownFilterContainer>
+
       {data ? (
         data.map((quizBook) => {
           return (
