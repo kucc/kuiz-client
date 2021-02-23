@@ -8,6 +8,7 @@ export default interface QuizModel {
   option3?: string;
   option4?: string;
   imageURL: string;
+  order: number;
   description: string;
   isChoice: number;
 }

@@ -1,3 +1,5 @@
 import QuizProgressBar from ".";
 
-export interface QuizProgressBarProps {}
+export interface QuizProgressBarProps {
+  completed: number;
+}

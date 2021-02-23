@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 const QuizBook = ({ quizBook }: QuizBookProps) => {
   return (
-    <S.QuizBookWrapper>
+    <S.QuizBookWrapper to={`/quiz-book/${quizBook.id}/quiz`}>
       <S.QuizBookRow height={4}>
         <S.QuizBookName>
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>

@@ -7,7 +7,6 @@ export const Layout = styled.div`
   min-height: 100%;
   height: 100vh;
   background-image: url(${STATIC_URL.BACKGROUND});
-  /* position: fixed; */
   background-position: center;
   background-size: cover;
 `;

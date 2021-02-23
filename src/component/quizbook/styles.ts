@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { QuizBookRowProps, QuizTextProps } from "./types";
+import { Link } from "react-router-dom";
 
-export const QuizBookWrapper = styled.div`
+export const QuizBookWrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 30rem;
@@ -15,6 +16,8 @@ export const QuizBookWrapper = styled.div`
   & + & {
     margin-top: 0.5rem;
   }
+  text-decoration: none;
+  color: black;
 `;
 
 export const QuizBookRow = styled.div<QuizBookRowProps>`
