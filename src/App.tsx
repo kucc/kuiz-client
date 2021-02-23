@@ -8,6 +8,7 @@ import ProfilePage from "@view/profile/index";
 import RankPage from "@view/rank/index";
 import MakeQuizPage from "./view/make-quiz/index";
 import QuizPage from "./view/quiz/index";
+import QuizResultPage from "@view/quiz-result/index";
 import Layout from "./component/common/layout";
 import QuizBookListPage from "./view/quizbook-list";
 import Auth from "./component/common/auth";
@@ -26,7 +27,8 @@ const App = () => {
           path="/quiz-book/:quizbookId/makequiz"
           component={MakeQuizPage}
         />
-        <Route path="/quiz" component={QuizPage} />
+        <Route path="/quiz-book/:quizbookId/quiz/" component={QuizPage} />
+        <Route path="/result" component={QuizResultPage} />
         <Route path="/rank" component={RankPage} />
         <Route path="/quiz-book" component={QuizBookPage} />
         <Redirect from="*" to="/" />

@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import { THEME_COLOR } from "@asset/constant";
-import {BREAKPOINT} from "@asset/constant"
-
+import { BREAKPOINT } from "@asset/constant";
 
 export const Header = styled.div`
   display: flex;
@@ -49,10 +48,10 @@ export const DesktopLogo = styled.img`
 `;
 
 export const MobileLogo = styled.img`
-width: 9rem;
-@media only screen and (min-width: ${BREAKPOINT}px) {
-  display: none;
-}
+  width: 9rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    display: none;
+  }
 `;
 
 export const DesktopProfileImg = styled.img`

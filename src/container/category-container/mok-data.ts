@@ -11,26 +11,26 @@ export const mokData: CategoryModel[] = [
   {
     id: 1,
     name: "알고리즘",
-    classification: "Computer Science",
+    topic: "Computer Science",
   },
   {
     id: 2,
     name: "네트워크",
-    classification: "Computer Science",
+    topic: "Computer Science",
   },
   {
     id: 3,
     name: "유우머",
-    classification: "잡동사니",
+    topic: "잡동사니",
   },
   {
     id: 4,
     name: "알쓸신잡",
-    classification: "잡동사니",
+    topic: "잡동사니",
   },
   {
     id: 5,
     name: "hello",
-    classification: "기타",
+    topic: "기타",
   },
 ];

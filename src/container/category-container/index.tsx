@@ -1,33 +1,45 @@
-import React, { useEffect, useState } from "react";
-import CategoryModel from "@common/model/category";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import QuizCategoryItem from "@component/quiz-category-item/index";
 import QuizCategoryTitle from "@component/quiz-category-title/index";
-import { getMokdata } from "./mok-data";
 import { CategoryListType } from "./types";
 import * as S from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/modules";
+import { getCategoryAsync } from "@/modules/category";
 
 const CategoryContainer = () => {
-  const categoryList = {} as CategoryListType;
-  const [categoryData, setCategoryData] = useState([] as CategoryModel[]);
-
-  const getCategoryList = async () => {
-    const mokData = await getMokdata();
-    setCategoryData(mokData);
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.category
+  );
+  const [titles, setTitles] = useState([] as string[]);
+  const dispatch = useDispatch();
+  const getCategoryList = () => {
+    if (data) return;
+    dispatch(getCategoryAsync.request());
   };
+
+  const categoryList = useMemo(() => ({} as CategoryListType), []);
+
+  const makeCategoryList = useCallback(() => {
+    if (!data) return;
+    data.forEach((category) => {
+      const categoryArray = categoryList[category.topic];
+      if (Array.isArray(categoryArray)) {
+        categoryList[category.topic] = [...categoryArray, category];
+      } else {
+        categoryList[category.topic] = [category];
+      }
+    });
+    setTitles(Object.keys(categoryList));
+  }, [data]);
 
   useEffect(() => {
     getCategoryList();
-  }, []);
+  }, [dispatch]);
 
-  categoryData.forEach((category) => {
-    const categoryArray = categoryList[category.classification];
-    if (Array.isArray(categoryArray)) {
-      categoryList[category.classification] = [...categoryArray, category];
-    } else {
-      categoryList[category.classification] = [category];
-    }
-  });
-  const titles = Object.keys(categoryList);
+  useEffect(() => {
+    makeCategoryList();
+  }, [data]);
 
   return titles.length !== 0 ? (
     <S.CategoryContainer>
@@ -41,7 +53,7 @@ const CategoryContainer = () => {
       ))}
     </S.CategoryContainer>
   ) : (
-    <h1>로딩중</h1>
+    <></>
   );
 };
 

@@ -4,13 +4,13 @@ import * as S from "./styles";
 
 const QuizBook = ({ quizBook }: QuizBookProps) => {
   return (
-    <S.QuizBookWrapper>
+    <S.QuizBookWrapper to={`/quiz-book/${quizBook.id}/quiz`}>
       <S.QuizBookRow height={4}>
         <S.QuizBookName>
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
         </S.QuizBookName>
         <S.QuizBookLike>
-          <S.QuizText bold>👍 {quizBook.likeCount}</S.QuizText>
+          <S.QuizText bold>👍 {quizBook.likedCount}</S.QuizText>
         </S.QuizBookLike>
       </S.QuizBookRow>
       <S.QuizBookRow height={3}>
