@@ -6,7 +6,8 @@ import AddButton from "@component/buttons/next-button/index";
 import QuizCategorySelect from "../../component/option";
 import InputBox from "@component/input-box/index";
 import CheckBox from "@component/checkbox/index";
-import AddQuizList from "@component/add-quiz-list";
+import AddQuizList from "@component/add-quiz-list/index";
+
 const AddQuizPage = () => {
   return (
     <S.Wrapper>
