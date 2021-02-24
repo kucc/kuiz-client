@@ -34,3 +34,5 @@ export const THEME_COLOR = {
   GRAYER: "#EDEDED",
   BLACK: "#5e5e5d",
 };
+
+export const RANK_LIST_COUNT = 15;

@@ -5,7 +5,7 @@ module.exports = {
   entry: ["@babel/polyfill", "./src/index.tsx"],
   devtool: "eval-source-map",
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
     alias: {
       "@": path.resolve(__dirname, "src/"),
       "@asset": path.resolve(__dirname, "src/asset/"),
@@ -17,6 +17,9 @@ module.exports = {
     },
   },
   devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    hot: true,
+    compress: false,
     historyApiFallback: true,
   },
   module: {
@@ -28,9 +31,16 @@ module.exports = {
       },
     ],
   },
+  output: {
+    filename: "main.[hash].js",
+    path: path.join(__dirname, "dist"),
+    publicPath: "/",
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      path: path.resolve(__dirname, "./dist"),
       filename: "index.html",
     }),
   ],

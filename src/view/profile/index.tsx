@@ -1,27 +1,14 @@
-import UserModel from "@/common/model/user";
-import { RootState } from "@/modules";
-import { getUserInfoAsync } from "@/modules/user";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import ProfileInfoContainer from "../../container/profile-info-container";
+import ProfileMenuContainer from "../../container/profile-menu-container";
+import * as S from "./styles";
 
 const ProfilePage = () => {
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.user
-  );
-  const dispatch = useDispatch();
-
-  const getUserINfo = () => {
-    dispatch(getUserInfoAsync.request());
-  };
-
-  useEffect(() => {
-    getUserINfo();
-  }, [dispatch]);
   return (
-    <>
-      <h1>프로필</h1>
-      {loading ? <h1>로딩중</h1> : <h1>{data?.email}</h1>}
-    </>
+    <S.ProfileContainer>
+      <ProfileInfoContainer />
+      <ProfileMenuContainer />
+    </S.ProfileContainer>
   );
 };
 
