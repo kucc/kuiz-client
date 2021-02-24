@@ -20,9 +20,9 @@ export const DropDownOptionContainer = styled.div`
 
 export const DropDownOption = styled.div`
   color: black;
-  height: 3rem;
+  height: 4rem;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
   display: block;
 
   &:hover {
