@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import { QuizBookProps } from "./types";
 import * as S from "./styles";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { postQuizBookLikstAsync } from "@/modules/quiz-book";
 
 const QuizBook = ({ quizBook }: QuizBookProps) => {
+  const likeButton = useRef<HTMLDivElement>(null);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target !== likeButton.current) {
+      history.push(`/quiz-book/${quizBook.id}/quiz`);
+    } else {
+      dispatch(postQuizBookLikstAsync.request(quizBook.id));
+    }
+  };
+
   return (
-    <S.QuizBookWrapper to={`/quiz-book/${quizBook.id}/quiz`}>
+    <S.QuizBookWrapper onClick={onClick}>
       <S.QuizBookRow height={4}>
         <S.QuizBookName>
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
         </S.QuizBookName>
         <S.QuizBookLike>
-          <S.QuizText bold>👍 {quizBook.likedCount}</S.QuizText>
+          <S.QuizText bold ref={likeButton}>
+            👍 {quizBook.likedCount}
+          </S.QuizText>
         </S.QuizBookLike>
       </S.QuizBookRow>
       <S.QuizBookRow height={3}>

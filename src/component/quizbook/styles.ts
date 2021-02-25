@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { QuizBookRowProps, QuizTextProps } from "./types";
-import { Link } from "react-router-dom";
 
-export const QuizBookWrapper = styled(Link)`
+export const QuizBookWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 30rem;
