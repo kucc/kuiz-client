@@ -55,15 +55,11 @@ export const MobileLogo = styled.img`
 `;
 
 export const DesktopProfileImg = styled.img`
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  border: 2px solid black;
+  width: 3rem;
+  height: 3rem;
 `;
 
 export const MobileProfileImg = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 2px solid black;
+  width: 2rem;
+  height: 2rem;
 `;
