@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { STATIC_URL } from "../../asset/constant";
+import getUserLevelIcon from "../../common/lib/get-user-level-icon";
 import { RootState } from "../../modules";
 import { getUserInfoAsync } from "../../modules/user";
 import { MAX_LEVEL_POINT } from "./constants";
@@ -21,11 +21,6 @@ const ProfileInfoContainer = () => {
     getUserINfo();
   }, [dispatch]);
 
-  const findLevelIcon = (level: number) => {
-    const queryIcon = "Level" + String(level) + "_Icon";
-    return STATIC_URL[queryIcon];
-  };
-
   return data ? (
     <S.ProfileInfoContainer>
       <S.UserInfoContainer>
@@ -34,7 +29,10 @@ const ProfileInfoContainer = () => {
           <S.UserEmail>{data.email}</S.UserEmail>
         </S.UserBasicInfoWrapper>
         <S.UserLevelWrapper>
-          <S.LevelLogo src={findLevelIcon(data.level)} alt="Icon"></S.LevelLogo>
+          <S.LevelLogo
+            src={getUserLevelIcon(data.level)}
+            alt="Icon"
+          ></S.LevelLogo>
         </S.UserLevelWrapper>
       </S.UserInfoContainer>
       <S.ProfilePointBarContainer>
