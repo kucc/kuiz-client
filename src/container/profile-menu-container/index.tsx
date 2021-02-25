@@ -1,8 +1,13 @@
 import React from "react";
 import ProfileMenuItem from "@/component/profile-menu-item";
 import * as S from "./styles";
+import CommonButton from "../../component/buttons/common-button";
+import endpoints from "../../common/endpoints";
 
 const ProfileMenuContainer = () => {
+  const clickHandler = async () => {
+    window.location.href = `${endpoints.API_BASE_URL}/auth/logout`;
+  };
   return (
     <S.ProfileMenuContainer>
       <S.ProfileBorder />
@@ -22,6 +27,9 @@ const ProfileMenuContainer = () => {
         bool={true}
       />
       <S.ProfileBorder />
+      <S.ButtonWrapper>
+        <CommonButton onClick={clickHandler} text="로그아웃" />
+      </S.ButtonWrapper>
     </S.ProfileMenuContainer>
   );
 };
