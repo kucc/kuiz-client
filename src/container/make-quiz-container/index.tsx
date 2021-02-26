@@ -5,7 +5,6 @@ import quizbookAPI from "@/common/lib/api/quizbook";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import * as S from "./styles";
-
 export interface QuizProps {
     quizbookId: string;
 }
@@ -40,8 +39,16 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
             imageURL,
             description
         );
+        history.push("/addquiz")
         return quiz;
     }
+
+    let fileInput;
+    const fileHandler = (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        setImageURL(file);
+    };
 
     return (
     <S.Wrapper>
@@ -97,7 +104,15 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
             />
 
             <S.ImageBox>
-              <S.ImageButton>이미지 등록</S.ImageButton>
+              <label>
+                <S.ImageInput 
+                  type="file"
+                  accept="image/jpeg, image/jpg"
+                  onChange={fileHandler}
+                  ref={(f)=>{fileInput = f}}
+                />
+                <S.ImageButton onClick={() => fileInput.click()}>이미지 등록</S.ImageButton>
+              </label>
               <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
               <S.ImageWarning>
                 권장사이즈: 가로 335px, 세로 188px

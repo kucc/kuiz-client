@@ -192,3 +192,7 @@ export const SubmitButton = styled.button`
 
   font-size: 1.4rem;
 `;
+
+export const ImageInput = styled.input`
+  display: none;
+`;
