@@ -3,12 +3,16 @@ import InputProps from "./types";
 import * as S from "./styles";
 
 const InputBox = (props: InputProps) => {
-  const [quiz, setQuiz] = useState("");
+  const {
+    placeholder,
+    setData
+  } = props;
+
   return (
     <S.InputBox
-      placeholder={props.placeholder}
+      placeholder={placeholder}
       onChange={(e) => {
-        setQuiz(e.target.value);
+        setData(e.target.value);
       }}
     />
   );
