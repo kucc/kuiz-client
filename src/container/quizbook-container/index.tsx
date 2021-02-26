@@ -1,15 +1,18 @@
-import QuizBookModel from "@/common/model/quiz-book";
 import CommonButton from "@/component/buttons/common-button";
-import InputBox from "@/component/input-box";
 import QuizBook from "@/component/quizbook";
 import { RootState } from "@/modules";
-import { getQuizBookListAsync } from "@/modules/quiz-book";
-import React, { useEffect, useState } from "react";
+import {
+  getQuizBookListAsync,
+  searchQuizBookListAsync,
+} from "@/modules/quiz-book";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
+  const [keyword, setKeyword] = useState("");
+
   const { data, loading, error } = useSelector(
     (state: RootState) => state.quizbook
   );
@@ -20,21 +23,47 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     dispatch(getQuizBookListAsync.request({ categoryId, page: 1 }));
   };
 
+  const searchQuizBookList = () => {
+    dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
+  };
+
+  const mounted = useRef(false);
   useEffect(() => {
-    getQuizBookList();
+    if (!mounted.current) {
+      getQuizBookList();
+      mounted.current = true;
+    } else {
+      searchQuizBookList();
+    }
   }, [dispatch]);
+  let time;
+  const debounce = (func, delay) => {
+    return () => {
+      if (time) clearTimeout(time);
+      time = setTimeout(() => func, delay);
+    };
+  };
+
+  const onChangeHandler = (e) => {
+    setKeyword(e.target.value);
+    if (keyword == "") {
+      getQuizBookList();
+    } else {
+      debounce(searchQuizBookList(), 100000);
+    }
+  };
+
+  const onClickHandler = () => {
+    setKeyword(keyword);
+    searchQuizBookList();
+  };
 
   return (
     <S.QuizBookContainer>
       <S.SearchColumn>
-        <InputBox placeholder={"문제집 검색"} />
+        <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
         <S.CommonButtonWrapper>
-          <CommonButton
-            onClick={() => {
-              console.log("실행");
-            }}
-            text={"검색"}
-          />
+          <CommonButton onClick={() => onClickHandler} text={"검색"} />
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"}>
