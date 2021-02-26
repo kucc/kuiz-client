@@ -17,7 +17,7 @@ const quizbookAPI = {
   },
 
   getSolvingQuizBook: async (isDone) => {
-    const { data: solveQuizBook } = await axios.get<UserSolveQuizBookModel[]>(
+    const { data: solveQuizBook } = await axios.get<QuizBookModel[]>(
       `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}`
     );
     return solveQuizBook;

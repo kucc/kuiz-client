@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
+import quizbookAPI from "@/common/lib/api/quizbook";
 
 const QuizBookContainer = (
   { categoryId }: QuizBookContainerProps,
@@ -20,6 +21,15 @@ const QuizBookContainer = (
   );
 
   const dispatch = useDispatch();
+
+  const [quizBookData, setQuizBookData] = useState(data);
+  const [totalQuizBookList, setTotalQuizBookList] = useState(
+    [] as QuizBookModel[]
+  );
+  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
+    [] as QuizBookModel[]
+  );
+  const [show, setShow] = useState(false);
 
   const getQuizBookList = () => {
     dispatch(
@@ -35,14 +45,53 @@ const QuizBookContainer = (
     setShow(false);
   };
 
-  const [show, setShow] = useState(false);
   const toggleDropDown = () => {
     setShow(!show);
+  };
+
+  const getUnsolvedQuizBookList = async () => {
+    let idx = 1;
+    while (1) {
+      try {
+        const quizBookList = await quizbookAPI.getQuizBookList(
+          categoryId,
+          idx,
+          true
+        );
+        idx += 1;
+        totalQuizBookList.push(...quizBookList);
+      } catch {
+        break;
+      }
+    }
+
+    const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true);
+
+    totalQuizBookList.map((item1) => {
+      const found = solvedQuizBookList.find((item2) => {
+        if (item1.id === item2.id) {
+          return item2;
+        }
+      });
+      if (found === undefined) {
+        unsolvedQuizBookList.push(item1);
+      }
+    });
+  };
+
+  const changeFilter = (e) => {
+    const filter = e.target.value;
+    if (filter === "all") setQuizBookData(data);
+    if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
   };
 
   useEffect(() => {
     getQuizBookList();
   }, [dispatch]);
+
+  useEffect(() => {
+    getUnsolvedQuizBookList();
+  }, []);
 
   return (
     <S.QuizBookContainer>
@@ -57,9 +106,12 @@ const QuizBookContainer = (
           />
         </S.CommonButtonWrapper>
       </S.SearchColumn>
-      <S.FilterColumn align={"flex-start"}>
+      <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
         <S.ButtonFilter>
-          <S.FilterText>안푼 문제집</S.FilterText>
+          <S.FilterText value="all">전체 문제집</S.FilterText>
+        </S.ButtonFilter>
+        <S.ButtonFilter>
+          <S.FilterText value="unsolved">안 푼 문제집</S.FilterText>
         </S.ButtonFilter>
       </S.FilterColumn>
       <S.DropDownFilterContainer>
@@ -75,8 +127,8 @@ const QuizBookContainer = (
         />
       </S.DropDownFilterContainer>
 
-      {data ? (
-        data.map((quizBook) => {
+      {quizBookData ? (
+        quizBookData.map((quizBook) => {
           return (
             <QuizBook key={`quiz${quizBook.id}`} quizBook={quizBook}></QuizBook>
           );

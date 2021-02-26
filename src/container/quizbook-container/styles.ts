@@ -55,7 +55,7 @@ export const Filter = styled.div`
   cursor: pointer;
 `;
 
-export const FilterText = styled.div`
+export const FilterText = styled.option`
   text-align: center;
   font-size: 1.5rem;
 `;
