@@ -22,11 +22,18 @@ const QuizBookContainer = (
   const dispatch = useDispatch();
 
   const getQuizBookList = () => {
-    dispatch(getQuizBookListAsync.request({ categoryId, page: 1 }));
+    dispatch(
+      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: true })
+    );
+  };
+
+  const getQuizBookListByLikes = () => {
+    dispatch(
+      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: false })
+    );
   };
 
   const [show, setShow] = useState(false);
-
   const toggleDropDown = () => {
     setShow(!show);
   };
@@ -57,7 +64,13 @@ const QuizBookContainer = (
         <S.FilterColumn align={"flex-end"}>
           <S.Filter onClick={toggleDropDown}>최신순 ▽</S.Filter>
         </S.FilterColumn>
-        <DropDown show={show} />
+        <DropDown
+          show={show}
+          text1={"최신순"}
+          text2={"인기순"}
+          onClick1={getQuizBookList}
+          onClick2={getQuizBookListByLikes}
+        />
       </S.DropDownFilterContainer>
 
       {data ? (

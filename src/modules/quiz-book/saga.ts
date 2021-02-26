@@ -7,11 +7,12 @@ function* getQuizBookListSaga(
   action: ReturnType<typeof getQuizBookListAsync.request>
 ) {
   try {
-    const { categoryId, page } = action.payload;
+    const { categoryId, page, isSortByDate } = action.payload;
     const quizBookList: QuizBookModel[] = yield call(
       quizbookAPI.getQuizBookList,
       categoryId,
-      page
+      page,
+      isSortByDate
     );
     yield put(getQuizBookListAsync.success(quizBookList));
   } catch (e) {
