@@ -1,4 +1,5 @@
 import quizAPI from "@/common/lib/api/quiz";
+import InputBox from "@/component/input-box"
 import quizbookAPI from "@/common/lib/api/quizbook";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom"
@@ -80,11 +81,9 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
         </S.TitleContainer>
         {isText ? (
           <S.ProblemContainer>
-            <S.InputBox
+            <InputBox
               placeholder="문제를 입력해 주세요."
-              onChange={(e) => {
-                setQuestion(e.target.value);
-              }}
+              setData={setQuestion}
             />
             <S.InputWarning>
               문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
@@ -92,11 +91,9 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
           </S.ProblemContainer>
         ) : (
           <S.ProblemContainer>
-            <S.InputBox
+            <InputBox
               placeholder="문제를 입력해 주세요."
-              onChange={(e) => {
-                setQuestion(e.target.value);
-              }}
+              setData={setQuestion}
             />
 
             <S.ImageBox>
@@ -121,12 +118,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
         {isChoice ? (
           <S.AnswerContainer>
             <S.InputContainer>
-              <S.MultipleChoiceInputBox
-                placeholder="입력해 주세요."
-                onChange={(e) => {
-                  setOption1(e.target.value);
-                }}
-              />
+            <InputBox
+              placeholder="입력해 주세요."
+              setData={setOption1}
+            />
               <S.CheckBox
                 type="radio"
                 value="1"
@@ -135,12 +130,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
               />
             </S.InputContainer>
             <S.InputContainer>
-              <S.MultipleChoiceInputBox
-                placeholder="입력해 주세요."
-                onChange={(e) => {
-                  setOption2(e.target.value);
-                }}
-              />
+            <InputBox
+              placeholder="입력해 주세요."
+              setData={setOption2}
+            />
               <S.CheckBox
                 type="radio"
                 value="2"
@@ -149,12 +142,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
               />
             </S.InputContainer>
             <S.InputContainer>
-              <S.MultipleChoiceInputBox
-                placeholder="입력해 주세요."
-                onChange={(e) => {
-                  setOption3(e.target.value);
-                }}
-              />
+            <InputBox
+              placeholder="입력해 주세요."
+              setData={setOption3}
+            />
               <S.CheckBox
                 type="radio"
                 value="3"
@@ -163,12 +154,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
               />
             </S.InputContainer>
             <S.InputContainer>
-              <S.MultipleChoiceInputBox
-                placeholder="입력해 주세요."
-                onChange={(e) => {
-                  setOption4(e.target.value);
-                }}
-              />
+            <InputBox
+              placeholder="입력해 주세요."
+              setData={setOption4}
+            />
               <S.CheckBox
                 type="radio"
                 value="4"
@@ -182,12 +171,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
             </S.InputWarning>
           </S.AnswerContainer>
         ) : (
-          <S.InputBox
-            placeholder="답을 입력해 주세요."
-            onChange={(e) => {
-              setAnswer(e.target.value);
-            }}
-          />
+            <InputBox
+              placeholder="답을 입력해 주세요."
+              setData={setAnswer}
+            />      
         )}
       </S.Container>
 
@@ -195,12 +182,10 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
         <S.TitleContainer>
           <S.SubTitle>설명</S.SubTitle>
         </S.TitleContainer>
-        <S.InputBox
-          placeholder="퀴즈에 대한 설명을 입력해 주세요."
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
-        />
+        <InputBox
+              placeholder="퀴즈에 대한 설명을 입력해 주세요."
+              setData={setDescription}
+            />    
       </S.Container>
       <S.ButtonContainer>
         <S.SubmitButton>퀴즈 만들기</S.SubmitButton>

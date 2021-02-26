@@ -85,19 +85,6 @@ export const Option = styled.option`
   border: 1px solid ${THEME_COLOR.GRAYER};
 `;
 
-export const InputBox = styled.input`
-  width: 100%;
-  font-size: 1.4rem;
-  height: 4rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-
-  border-radius: 0.7rem;
-
-  padding: 0.8rem 1rem;
-`;
-
 export const ImageBox = styled.div`
   display: flex;
   align-items: center;
@@ -176,19 +163,6 @@ export const ImageWarning = styled.div`
   align-items: center;
 `;
 
-export const MultipleChoiceInputBox = styled.input`
-  width: 100%;
-  font-size: 1.4rem;
-  height: 4rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-
-  border-radius: 0.7rem;
-
-  padding: 0.8rem 1rem;
-  margin: 0.4rem;
-`;
 
 export const CheckBox = styled.input`
   width: 2rem;
