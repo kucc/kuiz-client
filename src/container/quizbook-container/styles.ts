@@ -32,11 +32,15 @@ export const FilterColumn = styled.div<FilterColumnProps>`
   }
 `;
 
-export const ButtonFilter = styled.div`
+interface QuizBookProps {
+  active?: boolean;
+}
+
+export const ButtonFilter = styled.div<QuizBookProps>`
   width: auto;
   padding: 0.5rem 1rem;
   height: 3rem;
-  background-color: #ffa18c;
+  background-color: ${(props) => (props.active ? "#d77e6a" : "#ffa18c")};
   align-items: center;
   justify-content: center;
   border-radius: 10px;

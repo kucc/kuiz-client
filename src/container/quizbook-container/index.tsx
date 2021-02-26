@@ -85,8 +85,9 @@ const QuizBookContainer = (
     });
   };
 
+  const [filter, setFilter] = useState("");
   const changeFilter = (e) => {
-    const filter = e.target.value;
+    setFilter(e.target.value);
     if (filter === "all") setQuizBookData(data);
     if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
   };
@@ -113,10 +114,10 @@ const QuizBookContainer = (
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
-        <S.ButtonFilter>
+        <S.ButtonFilter active={filter === "all"}>
           <S.FilterText value="all">전체 문제집</S.FilterText>
         </S.ButtonFilter>
-        <S.ButtonFilter>
+        <S.ButtonFilter active={filter === "unsolved"}>
           <S.FilterText value="unsolved">안 푼 문제집</S.FilterText>
         </S.ButtonFilter>
       </S.FilterColumn>
