@@ -25,12 +25,14 @@ const QuizBookContainer = (
     dispatch(
       getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: true })
     );
+    setShow(false);
   };
 
   const getQuizBookListByLikes = () => {
     dispatch(
       getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: false })
     );
+    setShow(false);
   };
 
   const [show, setShow] = useState(false);
