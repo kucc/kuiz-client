@@ -7,6 +7,7 @@ import QuizCategorySelect from "../../component/option";
 import InputBox from "@component/input-box/index";
 import CheckBox from "@component/checkbox/index";
 const QuizBookPage = () => {
+  const [title, setTitle] = useState("");
   return (
     <S.Wrapper>
       <S.Container>
@@ -25,7 +26,7 @@ const QuizBookPage = () => {
         </S.CategoryContainer>
         <S.NameContainer>
           <S.SubTitle>문제집 이름</S.SubTitle>
-          <InputBox placeholder="문제집 이름을 입력해주세요" />
+          <InputBox placeholder="문제집 이름을 입력해주세요" setData={setTitle}/>
         </S.NameContainer>
 
         <S.ButtonContainer>
