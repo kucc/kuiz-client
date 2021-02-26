@@ -110,10 +110,12 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 0.5rem;
 `;
 
 export const InputWarning = styled.div`
   width: 100%;
+  height: 100%;
   font-size: 1.2rem;
   height: 3rem;
 
@@ -161,18 +163,6 @@ export const ImageWarning = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-
-export const CheckBox = styled.input`
-  width: 2rem;
-  height: 2rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-  border-radius: 1rem;
-  background-color: ${(props) =>
-    props.checked ? THEME_COLOR.PRIMARY : "white"};
 `;
 
 export const ButtonContainer = styled.div`

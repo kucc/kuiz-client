@@ -1,9 +1,10 @@
 import quizAPI from "@/common/lib/api/quiz";
-import InputBox from "@/component/input-box"
+import InputBox from "@/component/input-box";
+import RadioButton from "@/component/radio-button";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom"
-import * as S from "./styles"
+import { RouteComponentProps } from "react-router-dom";
+import * as S from "./styles";
 
 export interface QuizProps {
     quizbookId: string;
@@ -15,7 +16,6 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
 }) => {
     const quizbookId = Number(match.params.quizbookId);
     
-    // const [order, setOrder] = useState(1);
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
     const [option1, setOption1] = useState("");
@@ -122,48 +122,44 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
               placeholder="입력해 주세요."
               setData={setOption1}
             />
-              <S.CheckBox
-                type="radio"
-                value="1"
-                checked= {answer === "1"}
-                onChange={(e) => setAnswer(e.target.value)}
-              />
+            <RadioButton
+                num="1"
+                answer={answer}
+                setAnswer={setAnswer}
+            />
             </S.InputContainer>
             <S.InputContainer>
             <InputBox
               placeholder="입력해 주세요."
               setData={setOption2}
             />
-              <S.CheckBox
-                type="radio"
-                value="2"
-                checked= {answer === "2"}
-                onChange={(e) => setAnswer(e.target.value)}
-              />
+            <RadioButton
+                num="2"
+                answer={answer}
+                setAnswer={setAnswer}
+            />
             </S.InputContainer>
             <S.InputContainer>
             <InputBox
               placeholder="입력해 주세요."
               setData={setOption3}
             />
-              <S.CheckBox
-                type="radio"
-                value="3"
-                checked= {answer === "3"}
-                onChange={(e) => setAnswer(e.target.value)}
-              />
+            <RadioButton
+                num="3"
+                answer={answer}
+                setAnswer={setAnswer}
+            />
             </S.InputContainer>
             <S.InputContainer>
             <InputBox
               placeholder="입력해 주세요."
               setData={setOption4}
             />
-              <S.CheckBox
-                type="radio"
-                value="4"
-                checked= {answer === "4"}
-                onChange={(e) => setAnswer(e.target.value)}
-              />
+            <RadioButton
+                num="4"
+                answer={answer}
+                setAnswer={setAnswer}
+            />
             </S.InputContainer>
             <S.InputWarning>
               답안의 내용이 모두 같거나, 정당한 풀이 행위 외 답을 암시하는
@@ -188,7 +184,7 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
             />    
       </S.Container>
       <S.ButtonContainer>
-        <S.SubmitButton>퀴즈 만들기</S.SubmitButton>
+        <S.SubmitButton onClick={postQuiz}>퀴즈 만들기</S.SubmitButton>
       </S.ButtonContainer>
     </S.Wrapper>
     )
