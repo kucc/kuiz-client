@@ -30,6 +30,14 @@ const quizbookAPI = {
     );
     return solveQuizBook;
   },
+
+  postQuizBookLike: async (quizbookId: number) => {
+    const { data: updatedQuizBook } = await axios.patch<QuizBookModel>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}/like`
+    );
+
+    return updatedQuizBook;
+  },
 };
 
 export default quizbookAPI;
