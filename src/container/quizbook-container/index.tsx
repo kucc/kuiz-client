@@ -122,8 +122,8 @@ const QuizBookContainer = (
           show={show}
           text1={"최신순"}
           text2={"인기순"}
-          onClick1={getQuizBookList}
-          onClick2={getQuizBookListByLikes}
+          clickEvent1={getQuizBookList}
+          clickEvent2={getQuizBookListByLikes}
         />
       </S.DropDownFilterContainer>
 
