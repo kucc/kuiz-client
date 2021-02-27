@@ -71,21 +71,21 @@ const QuizBookContainer = (
 
     const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true);
 
-    totalQuizBookList.map((item1) => {
-      const found = solvedQuizBookList.find((item2) => {
-        if (item1.id === item2.id) {
-          return item2;
+    totalQuizBookList.map((totalQuizBook) => {
+      const found = solvedQuizBookList.find((solvedQuizBook) => {
+        if (totalQuizBook.id === solvedQuizBook.id) {
+          return solvedQuizBook;
         }
       });
       if (found === undefined) {
-        unsolvedQuizBookList.push(item1);
+        unsolvedQuizBookList.push(totalQuizBook);
       }
     });
   };
 
   const [filter, setFilter] = useState("");
 
-  const changeFilter = async (e) => {
+  const changeFilter = (e) => {
     const filter = e.target.value;
     if (filter === "all") setQuizBookData(data);
     if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
