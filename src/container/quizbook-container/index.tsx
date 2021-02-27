@@ -86,10 +86,12 @@ const QuizBookContainer = (
   };
 
   const [filter, setFilter] = useState("");
-  const changeFilter = (e) => {
-    setFilter(e.target.value);
+
+  const changeFilter = async (e) => {
+    const filter = e.target.value;
     if (filter === "all") setQuizBookData(data);
     if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
+    setFilter(filter);
   };
 
   useEffect(() => {
