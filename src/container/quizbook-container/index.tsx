@@ -29,8 +29,11 @@ const QuizBookContainer = (
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
     [] as QuizBookModel[]
   );
+
+  const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
   const [text, setText] = useState("최신순");
+  const [finish, setFinish] = useState(false);
 
   const getQuizBookList = () => {
     dispatch(
@@ -53,7 +56,7 @@ const QuizBookContainer = (
     setShow(!show);
   };
 
-  const getUnsolvedQuizBookList = async () => {
+  const getTotalQuizBookList = async () => {
     let idx = 1;
     while (1) {
       try {
@@ -63,27 +66,30 @@ const QuizBookContainer = (
           true
         );
         idx += 1;
-        totalQuizBookList.push(...quizBookList);
+        setTotalQuizBookList([...totalQuizBookList, ...quizBookList]);
       } catch {
         break;
       }
     }
+    setFinish(true);
+  };
 
+  const getUnsolvedQuizBookList = async () => {
     const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true);
 
-    totalQuizBookList.map((totalQuizBook) => {
+    totalQuizBookList.map((quizBook) => {
       const found = solvedQuizBookList.find((solvedQuizBook) => {
-        if (totalQuizBook.id === solvedQuizBook.id) {
+        if (quizBook.id === solvedQuizBook.id) {
           return solvedQuizBook;
         }
       });
+
       if (found === undefined) {
-        unsolvedQuizBookList.push(totalQuizBook);
+        unsolvedQuizBookList.push(quizBook);
+        // setUnsolvedQuizBookList([...unsolvedQuizBookList, quizBook]);
       }
     });
   };
-
-  const [filter, setFilter] = useState("");
 
   const changeFilter = (e) => {
     const filter = e.target.value;
@@ -94,15 +100,16 @@ const QuizBookContainer = (
 
   useEffect(() => {
     getQuizBookList();
+    getTotalQuizBookList();
   }, [dispatch]);
-
-  useEffect(() => {
-    getUnsolvedQuizBookList();
-  }, []);
 
   useEffect(() => {
     setQuizBookData(data);
   }, [data]);
+
+  useEffect(() => {
+    getUnsolvedQuizBookList();
+  }, [finish]);
 
   return (
     <S.QuizBookContainer>
