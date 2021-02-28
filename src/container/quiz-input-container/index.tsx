@@ -71,8 +71,17 @@ const QuizInputContainer = ({
     setBody({ ...body, [key]: value });
   };
 
-  console.log(body);
+  // console.log(body);
 
+
+  let fileInput;
+  const [previewURL, setPreviewURL] = useState('');
+  const fileHandler = (e) => {
+      const file = e.target.files[0];
+      let preview = URL.createObjectURL(file);
+      setPreviewURL(preview);
+  };
+  
   return (
     <S.Wrapper>
       <S.Container>
@@ -116,13 +125,32 @@ const QuizInputContainer = ({
             defaultValue={data?.question}
           />
           {body?.imageURL && (
+          !previewURL ? (
             <S.ImageBox>
-              <S.ImageButton>이미지 등록</S.ImageButton>
+              <label>
+                <S.ImageInput
+                  type="file"
+                  accept="image/jpeg, image/jpg"
+                  onChange={fileHandler}
+                  ref={(f) => {fileInput = f}}/>
+                <S.ImageButton onClick={() => fileInput.click()}>이미지 등록</S.ImageButton>
+              </label>
               <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
-              <S.ImageWarning>
-                권장사이즈: 가로 335px, 세로 188px
-              </S.ImageWarning>
-            </S.ImageBox>
+              <S.ImageWarning>권장사이즈: 가로 335px, 세로 188px</S.ImageWarning>
+            </S.ImageBox>                
+          ) : (
+            <S.ImageBox>
+              <S.PreviewImg src={previewURL} />
+              <label>
+                <S.ImageInput
+                  type="file"
+                  accept="image/jpeg, image/jpg"
+                  onChange={fileHandler}
+                  ref={(f) => {fileInput = f}}/>
+                <S.ImageButton onClick={() => fileInput.click()}>이미지 등록</S.ImageButton>
+              </label>
+            </S.ImageBox>    
+          )
           )}
           <S.InputWarning>
             문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
