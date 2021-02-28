@@ -1,8 +1,7 @@
 import { createAsyncAction } from "typesafe-actions";
-import { GET_USER_INFO_ERROR, GET_USER_INFO_SUCCESS } from "../user";
 import QuizBookModel from "@common/model/quiz-book";
 import { AxiosError } from "axios";
-import { QuizBookAPIPayload } from "./types";
+import { QuizBookAPIPayload, SearchAPIPayload } from "./types";
 
 export const GET_QUIZBOOK_LIST = "quizbook/GET_QUIZBOOK_LIST" as const;
 export const GET_QUIZBOOK_LIST_SUCCESS = "quizbook/GET_QUIZBOOK_LIST_SUCCESS" as const;
@@ -11,6 +10,10 @@ export const GET_QUIZBOOK_LIST_ERROR = "quizbook/GET_QUIZBOOK_LIST_ERROR" as con
 export const POST_QUIZBOOK_LIKE = "quizbook/POST_QUIZBOOK_LIKE" as const;
 export const POST_QUIZBOOK_LIKE_SUCCESS = "quizbook/POST_QUIZBOOK_LIKE_SUCCESS" as const;
 export const POST_QUIZBOOK_LIKe_ERROR = "quizbook/POST_QUIZBOOK_LIKE_ERROR" as const;
+
+export const SEARCH_QUIZBOOK_LIST = "quizbook/SEARCH_QUIZBOOK_LIST" as const;
+export const SEARCH_QUIZBOOK_LIST_SUCCESS = "quizbook/SEARCH_QUIZBOOK_LIST_SUCCESS" as const;
+export const SEARCH_QUIZBOOK_LIST_ERROR = "quizbook/SEARCH_QUIZBOOK_LIST_ERROR" as const;
 
 export const getQuizBookListAsync = createAsyncAction(
   GET_QUIZBOOK_LIST,
@@ -23,3 +26,9 @@ export const postQuizBookLikstAsync = createAsyncAction(
   POST_QUIZBOOK_LIKE_SUCCESS,
   POST_QUIZBOOK_LIKe_ERROR
 )<number, QuizBookModel, AxiosError>();
+
+export const searchQuizBookListAsync = createAsyncAction(
+  SEARCH_QUIZBOOK_LIST,
+  SEARCH_QUIZBOOK_LIST_SUCCESS,
+  SEARCH_QUIZBOOK_LIST_ERROR
+)<SearchAPIPayload, QuizBookModel[], AxiosError>();

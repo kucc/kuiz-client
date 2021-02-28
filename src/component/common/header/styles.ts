@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
-import { THEME_COLOR } from "@asset/constant";
 import { BREAKPOINT } from "@asset/constant";
 
 export const Header = styled.div`
@@ -62,4 +61,26 @@ export const DesktopProfileImg = styled.img`
 export const MobileProfileImg = styled.img`
   width: 2rem;
   height: 2rem;
+`;
+
+export const DesktopDivLink = styled.div`
+  text-decoration: none;
+  color: inherit;
+
+  display: none;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    display: block;
+  }
+`;
+
+export const MobileDivLink = styled.div`
+  text-decoration: none;
+  color: inherit;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    display: none;
+  }
 `;

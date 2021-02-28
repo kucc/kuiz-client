@@ -15,3 +15,8 @@ export type QuizBookAPIPayload = {
   categoryId: number;
   page: number;
 };
+
+export type SearchAPIPayload = {
+  categoryId: number;
+  keyword: string;
+};

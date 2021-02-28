@@ -13,6 +13,8 @@ import QuizBookListPage from "@view/quizbook-list";
 import QuizBookPage from "@view/quiz-book/index";
 import Auth from "@component/common/auth";
 import AddQuizPage from "@view/add-quiz/index";
+import UserQuizBookListPage from "./view/user-quizbook";
+import EditQuizPage from "./view/edit-quiz";
 
 const App = () => {
   return (
@@ -28,9 +30,11 @@ const App = () => {
           component={MakeQuizPage}
         />
         <Route path="/quiz-book/:quizbookId/quiz/" component={QuizPage} />
+        <Route exact path="/quiz-book" component={QuizBookPage} />
+        <Route path="/quiz-book/" component={Auth(UserQuizBookListPage)} />
+        <Route path="/quiz/:quizId" component={Auth(EditQuizPage)} />
         <Route path="/result" component={QuizResultPage} />
         <Route path="/rank" component={RankPage} />
-        <Route path="/quiz-book" component={QuizBookPage} />
         <Route path="/addquiz" component={AddQuizPage} />
         <Redirect from="*" to="/" />
       </Switch>

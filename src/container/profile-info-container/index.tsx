@@ -4,6 +4,7 @@ import { STATIC_URL } from "@/asset/constant";
 import { RootState } from "@/modules";
 import { getUserInfoAsync } from "@/modules/user";
 import { MAX_LEVEL_POINT } from "./constants";
+import getUserLevelIcon from "@common/lib/get-user-level-icon.ts";
 import * as S from "./styles";
 
 const ProfileInfoContainer = () => {
