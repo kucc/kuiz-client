@@ -6,6 +6,9 @@ import {
   POST_QUIZBOOK_LIKE,
   POST_QUIZBOOK_LIKe_ERROR,
   POST_QUIZBOOK_LIKE_SUCCESS,
+  SEARCH_QUIZBOOK_LIST,
+  SEARCH_QUIZBOOK_LIST_ERROR,
+  SEARCH_QUIZBOOK_LIST_SUCCESS,
 } from "./actions";
 import { QuizBookAction, QuizBookState } from "./types";
 
@@ -62,6 +65,23 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       ...state,
       loading: false,
       error: action.payload,
+    }),
+
+    [SEARCH_QUIZBOOK_LIST]: (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }),
+    [SEARCH_QUIZBOOK_LIST_SUCCESS]: (state, action) => ({
+      ...state,
+      loading: false,
+      data: action.payload,
+    }),
+    [SEARCH_QUIZBOOK_LIST_ERROR]: (state, action) => ({
+      ...state,
+      loading: true,
+      error: action.payload,
+      data: null,
     }),
   }
 );
