@@ -16,3 +16,8 @@ export type QuizBookAPIPayload = {
   page: number;
   isSortByDate: boolean;
 };
+
+export type SearchAPIPayload = {
+  categoryId: number;
+  keyword: string;
+};

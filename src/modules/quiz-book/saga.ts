@@ -6,6 +6,8 @@ import {
   GET_QUIZBOOK_LIST,
   postQuizBookLikstAsync,
   POST_QUIZBOOK_LIKE,
+  searchQuizBookListAsync,
+  SEARCH_QUIZBOOK_LIST,
 } from "./actions";
 
 function* getQuizBookListSaga(
@@ -40,7 +42,24 @@ function* postQuizBookLikeSaga(
   }
 }
 
+function* searchQuizBookListSaga(
+  action: ReturnType<typeof searchQuizBookListAsync.request>
+) {
+  try {
+    const { categoryId, keyword } = action.payload;
+    const quizbookList: QuizBookModel[] = yield call(
+      quizbookAPI.searchQuizBookList,
+      categoryId,
+      keyword
+    );
+    yield put(searchQuizBookListAsync.success(quizbookList));
+  } catch (e) {
+    yield put(searchQuizBookListAsync.failure(e));
+  }
+}
+
 export function* quizBookSaga() {
   yield takeEvery(GET_QUIZBOOK_LIST, getQuizBookListSaga);
   yield takeEvery(POST_QUIZBOOK_LIKE, postQuizBookLikeSaga);
+  yield takeEvery(SEARCH_QUIZBOOK_LIST, searchQuizBookListSaga);
 }

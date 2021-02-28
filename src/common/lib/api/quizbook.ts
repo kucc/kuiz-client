@@ -15,12 +15,24 @@ const quizbookAPI = {
     );
     return quizBookList;
   },
-
+  searchQuizBookList: async (categoryId: number, keyword: string) => {
+    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&keyword=${keyword}`
+    );
+    return quizBookList;
+  },
   getSolvingQuizBook: async (isDone) => {
     const { data: solveQuizBook } = await axios.get<QuizBookModel[]>(
       `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}`
     );
     return solveQuizBook;
+  },
+  getUserQuizBook: async (path: string, isDone: boolean) => {
+    const { data: userQuizBook } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
+    );
+
+    return userQuizBook;
   },
 
   postSolveQuizBook: async (quizbookId, quizId, isCorrect) => {

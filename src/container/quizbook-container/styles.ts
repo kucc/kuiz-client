@@ -63,3 +63,13 @@ export const FilterText = styled.option`
   text-align: center;
   font-size: 1.5rem;
 `;
+
+export const InputBox = styled.input`
+  width: 100%;
+  font-size: 1.4rem;
+  height: 4rem;
+  outline: none;
+  border: 1px solid ${THEME_COLOR.GRAYER};
+  border-radius: 0.7rem;
+  padding: 0.8rem 1rem;
+`;

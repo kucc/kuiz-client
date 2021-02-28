@@ -1,21 +1,21 @@
-import QuizBookModel from "@/common/model/quiz-book";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import CommonButton from "@/component/buttons/common-button";
-import InputBox from "@/component/input-box";
 import QuizBook from "@/component/quizbook";
 import DropDown from "@/component/drop-down";
-import DropDownProps from "@/component/drop-down/types";
 import { RootState } from "@/modules";
-import { getQuizBookListAsync } from "@/modules/quiz-book";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  getQuizBookListAsync,
+  searchQuizBookListAsync,
+} from "@/modules/quiz-book";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 
-const QuizBookContainer = (
-  { categoryId }: QuizBookContainerProps,
-  props: DropDownProps
-) => {
+
+const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
+  const [keyword, setKeyword] = useState("");
   const { data, loading, error } = useSelector(
     (state: RootState) => state.quizbook
   );
@@ -97,6 +97,10 @@ const QuizBookContainer = (
     setFilter(filter);
   };
 
+  const searchQuizBookList = (keyword: string) => {
+    dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
+  };
+
   useEffect(() => {
     getQuizBookList();
     getTotalQuizBookList();
@@ -110,17 +114,38 @@ const QuizBookContainer = (
     getUnsolvedQuizBookList();
   }, [finish]);
 
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      timer = setTimeout(() => {
+        func(args);
+      }, delay);
+    };
+  };
+
+  const delayedQueryCall = useRef(
+    debounce((keyword: string) => searchQuizBookList(keyword), 500)
+  ).current;
+
+  const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.currentTarget.value);
+    delayedQueryCall(e.currentTarget.value);
+  };
+
+  const onClickHandler = () => {
+    searchQuizBookList(keyword);
+  };
+
   return (
     <S.QuizBookContainer>
       <S.SearchColumn>
-        <InputBox placeholder={"문제집 검색"} />
+        <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
         <S.CommonButtonWrapper>
-          <CommonButton
-            onClick={() => {
-              console.log("실행");
-            }}
-            text={"검색"}
-          />
+          <CommonButton onClick={() => onClickHandler} text={"검색"} />
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
