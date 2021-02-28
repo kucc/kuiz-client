@@ -85,19 +85,6 @@ export const Option = styled.option`
   border: 1px solid ${THEME_COLOR.GRAYER};
 `;
 
-export const InputBox = styled.input`
-  width: 100%;
-  font-size: 1.4rem;
-  height: 4rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-
-  border-radius: 0.7rem;
-
-  padding: 0.8rem 1rem;
-`;
-
 export const ImageBox = styled.div`
   display: flex;
   align-items: center;
@@ -123,10 +110,12 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 0.5rem;
 `;
 
 export const InputWarning = styled.div`
   width: 100%;
+  height: 100%;
   font-size: 1.2rem;
   height: 3rem;
 
@@ -176,31 +165,6 @@ export const ImageWarning = styled.div`
   align-items: center;
 `;
 
-export const MultipleChoiceInputBox = styled.input`
-  width: 100%;
-  font-size: 1.4rem;
-  height: 4rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-
-  border-radius: 0.7rem;
-
-  padding: 0.8rem 1rem;
-  margin: 0.4rem;
-`;
-
-export const CheckBox = styled.input`
-  width: 2rem;
-  height: 2rem;
-
-  outline: none;
-  border: 1px solid ${THEME_COLOR.GRAYER};
-  border-radius: 1rem;
-  background-color: ${(props) =>
-    props.checked ? THEME_COLOR.PRIMARY : "white"};
-`;
-
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -227,4 +191,8 @@ export const SubmitButton = styled.button`
   color: white;
 
   font-size: 1.4rem;
+`;
+
+export const ImageInput = styled.input`
+  display: none;
 `;

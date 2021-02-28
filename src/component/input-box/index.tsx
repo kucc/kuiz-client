@@ -3,7 +3,21 @@ import InputProps from "./types";
 import * as S from "./styles";
 
 const InputBox = (props: InputProps) => {
-  return <S.InputBox placeholder={props.placeholder} />;
+
+  const {
+    placeholder,
+    setData
+  } = props;
+
+  return (
+    <S.InputBox
+      placeholder={placeholder}
+      onChange={(e) => {
+        setData(e.target.value);
+      }}
+    />
+  );
+
 };
 
 export default InputBox;
