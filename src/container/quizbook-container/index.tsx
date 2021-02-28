@@ -86,7 +86,6 @@ const QuizBookContainer = (
 
       if (found === undefined) {
         unsolvedQuizBookList.push(quizBook);
-        // setUnsolvedQuizBookList([...unsolvedQuizBookList, quizBook]);
       }
     });
   };
