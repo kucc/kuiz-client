@@ -56,13 +56,13 @@ export const UserPoint = styled.div`
   }
 `;
 
-export const UserLevelWrapper = styled.div`
+export const IconContainer = styled.div`
   margin-left: 1rem;
   padding: 1rem 2rem 1rem 0rem;
 `;
 
-export const LevelLogo = styled.img`
-  @media only screen and (min-width: ${BREAKPOINT}px) {
+export const LevelIcon = styled.img`
+  @media only screen {
     display: block;
     width: 10rem;
   }
