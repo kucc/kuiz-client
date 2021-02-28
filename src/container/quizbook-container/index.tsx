@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "lodash";
 
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
@@ -32,8 +31,21 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     getQuizBookList();
   }, [dispatch]);
 
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      timer = setTimeout(() => {
+        func(args);
+      }, delay);
+    };
+  };
+
   const delayedQueryCall = useRef(
-    _.debounce((q) => searchQuizBookList(q), 1000)
+    debounce((keyword: string) => searchQuizBookList(keyword), 500)
   ).current;
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
