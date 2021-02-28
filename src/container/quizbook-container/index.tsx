@@ -1,3 +1,6 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
 import { RootState } from "@/modules";
@@ -5,8 +8,6 @@ import {
   getQuizBookListAsync,
   searchQuizBookListAsync,
 } from "@/modules/quiz-book";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 
@@ -24,18 +25,14 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const searchQuizBookList = () => {
+    console.log(keyword);
     dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
   };
 
-  const mounted = useRef(false);
   useEffect(() => {
-    if (!mounted.current) {
-      getQuizBookList();
-      mounted.current = true;
-    } else {
-      searchQuizBookList();
-    }
+    getQuizBookList();
   }, [dispatch]);
+
   let time;
   const debounce = (func, delay) => {
     return () => {
@@ -44,17 +41,17 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     };
   };
 
-  const onChangeHandler = (e) => {
-    setKeyword(e.target.value);
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.currentTarget.value);
+    console.log(keyword);
     if (keyword == "") {
       getQuizBookList();
     } else {
-      debounce(searchQuizBookList(), 100000);
+      debounce(searchQuizBookList(), 500);
     }
   };
 
   const onClickHandler = () => {
-    setKeyword(keyword);
     searchQuizBookList();
   };
 
