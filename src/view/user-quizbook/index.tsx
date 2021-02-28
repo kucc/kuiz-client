@@ -8,19 +8,7 @@ import {
   USER_SOLVE_QUIZBOOK_PATH,
   USER_MAKE_QUIZBOOK_PATH,
 } from "@/asset/constant";
-
-const parseBool = (value: string | string[] | undefined) => {
-  switch (value) {
-    case "true":
-    case "1":
-      return true;
-    case "false":
-    case "0":
-      return false;
-    default:
-      throw new Error("잘못된 URL");
-  }
-};
+import parseBool from "@/common/lib/parse-bool";
 
 const UserQuizBookListPage = ({ location }: RouteComponentProps) => {
   const path = location.pathname.split("/")[PARSE_QUIZBOOK_PATH_INDEX];
