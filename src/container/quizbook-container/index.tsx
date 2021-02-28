@@ -62,7 +62,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       <S.SearchColumn>
         <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
         <S.CommonButtonWrapper>
-          <CommonButton onClick={() => onClickHandler} text={"검색"} />
+          <CommonButton onClick={() => onClickHandler()} text={"검색"} />
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"}>
