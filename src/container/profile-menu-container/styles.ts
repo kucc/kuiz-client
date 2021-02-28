@@ -14,3 +14,8 @@ export const ProfileBorder = styled.div`
   height: 0.05rem;
   background-color: #666666;
 `;
+
+export const ButtonWrapper = styled.div`
+  width: 10%;
+  margin-top: 3rem;
+`;
