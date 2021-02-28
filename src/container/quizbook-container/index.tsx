@@ -13,7 +13,6 @@ import { QuizBookContainerProps } from "./types";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
-
   const { data, loading, error } = useSelector(
     (state: RootState) => state.quizbook
   );
@@ -32,21 +31,22 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     getQuizBookList();
   }, [dispatch]);
 
-  let time;
+  useEffect(() => {
+    debounce(searchQuizBookList(), 500);
+  }, [keyword]);
+
+  let timer;
   const debounce = (func, delay) => {
     return () => {
-      if (time) clearTimeout(time);
-      time = setTimeout(() => func, delay);
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => func, delay);
     };
   };
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
-    if (keyword == "") {
-      getQuizBookList();
-    } else {
-      debounce(searchQuizBookList(), 500);
-    }
   };
 
   const onClickHandler = () => {
