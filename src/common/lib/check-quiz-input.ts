@@ -1,4 +1,5 @@
 import QuizRequestBody from "@/common/model/quiz-request-body";
+import { optionIndexArray, OPTION_PREFIX } from "./quiz-constants";
 
 const checkQuizInput = (body: QuizRequestBody) => {
   const { question, answer, description, isChoice } = body;
@@ -18,12 +19,12 @@ const checkQuizInput = (body: QuizRequestBody) => {
     throw new Error();
   }
 
-  if (isChoice && !["1", "2", "3", "4"].includes(answer)) {
+  if (isChoice && !optionIndexArray.includes(answer)) {
     alert("답을 입력해 주세요.");
     throw new Error();
   }
 
-  if (isChoice && !body["option" + answer]) {
+  if (isChoice && !body[OPTION_PREFIX + answer]) {
     alert("답을 바르게 입력해 주세요.");
     throw new Error();
   }

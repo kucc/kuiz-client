@@ -1,18 +1,22 @@
 import QuizModel from "@/common/model/quiz";
 import QuizRequestBody from "@/common/model/quiz-request-body";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef, useMemo } from "react";
+import { NULL_STRING, OPTION_PREFIX } from "../../common/lib/quiz-constants";
 
-const defaultQuizRequest = {
-  quizBookId: null,
-  question: "",
-  answer: "",
-  option1: "",
-  option2: "",
-  option3: "",
-  option4: "",
-  description: "",
-  imageURL: "",
+export const defaultQuizOption = {
+  option1: NULL_STRING,
+  option2: NULL_STRING,
+  option3: NULL_STRING,
+  option4: NULL_STRING,
+};
+
+export const defaultQuizRequest: QuizRequestBody = {
+  question: NULL_STRING,
+  answer: NULL_STRING,
+  description: NULL_STRING,
+  imageURL: NULL_STRING,
   isChoice: 1,
+  ...defaultQuizOption,
 };
 
 export const useFetchQuiz = (quizId: number | null) => {
@@ -37,6 +41,23 @@ export const useFetchQuiz = (quizId: number | null) => {
   return { data, body, setBody };
 };
 
+export const saveAnswer = (data: QuizModel | undefined) => {
+  const savedAnswer = {
+    shortAnswer: NULL_STRING,
+    choiceAnswer: NULL_STRING,
+  };
+
+  if (data && data.isChoice) {
+    const key = OPTION_PREFIX + data.answer;
+    savedAnswer.choiceAnswer = data[key];
+  }
+  if (data && !data.isChoice) {
+    savedAnswer.shortAnswer = data?.answer;
+  }
+
+  return savedAnswer;
+};
+
 export const useQuizTypeRef = (quiz: QuizModel | undefined) => {
   const isChoiceContainer = useRef<HTMLSelectElement>(null);
   const isTextContainer = useRef<HTMLSelectElement>(null);
@@ -56,7 +77,6 @@ export const useQuizTypeRef = (quiz: QuizModel | undefined) => {
 
 // 기존 makeQuiz custom hook
 export const useMakeQuiz = (quizBookId) => {
-  defaultQuizRequest.quizBookId = quizBookId;
   const [quiz, setQuiz] = useState<QuizRequestBody>(defaultQuizRequest);
   const [isText, setIsText] = useState(1);
 

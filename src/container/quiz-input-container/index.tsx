@@ -4,8 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { QuizInputContainerProps } from "./types";
 import { editQuizAsync, getQuizAsync, postQuizAsync } from "@/modules/quiz";
-import { useFetchQuiz, useMakeQuiz, useQuizTypeRef } from "./hooks";
+import {
+  defaultQuizOption,
+  defaultQuizRequest,
+  saveAnswer,
+  useFetchQuiz,
+  useQuizTypeRef,
+} from "./hooks";
 import QuizInputOption from "@/component/quiz-input/quiz-input-option";
+import {
+  IS_CHOICE_KEY,
+  NULL_STRING,
+  optionIndexArray,
+} from "../../common/lib/quiz-constants";
 
 const QuizInputContainer = ({
   quizBookId,
@@ -13,6 +24,7 @@ const QuizInputContainer = ({
 }: QuizInputContainerProps) => {
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
+  const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
 
   const dispatch = useDispatch();
   const handleSubmit = () => {
@@ -22,48 +34,37 @@ const QuizInputContainer = ({
 
   const handleQuizType = (event) => {
     const isText = parseInt(event.target.value);
-    let imageURL = "/";
-    if (data?.imageURL) {
-      imageURL = data.imageURL;
-    }
-
     if (isText) {
-      setBody({ ...body, imageURL: "" });
+      setBody({ ...body, imageURL: NULL_STRING });
       return;
     }
-    setBody({ ...body, imageURL });
+    setBody({ ...body, imageURL: data?.imageURL || "/" });
   };
 
   const handleIsChoice = (isChoice: number) => {
-    if (isChoice) {
-      //객관식
+    if (!data) {
+      setBody({ ...body, ...defaultQuizOption, isChoice, answer: NULL_STRING });
+      return;
+    }
+    if (data && isChoice) {
+      setBody({ ...data, isChoice });
+      return;
+    }
+    if (data && !isChoice) {
       setBody({
-        ...body,
-        isChoice: 1,
-        answer: (data && data.isChoice && data.answer) || "",
-        ["option" + data?.answer]: body?.answer,
+        ...data,
+        ...defaultQuizOption,
+        isChoice,
+        answer: shortAnswer || choiceAnswer || NULL_STRING,
       });
-    } else {
-      // 주관식
-      setBody({
-        ...body,
-        isChoice: 0,
-        answer:
-          (data && !data.isChoice && data.answer) ||
-          (data && data.isChoice && data["option" + data?.answer]) ||
-          "",
-        option1: "",
-        option2: "",
-        option3: "",
-        option4: "",
-      });
+      return;
     }
   };
 
   const handleInput = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    if (key === "isChoice") {
+    if (key === IS_CHOICE_KEY) {
       handleIsChoice(parseInt(value));
       return;
     }
@@ -135,7 +136,7 @@ const QuizInputContainer = ({
         </S.TitleContainer>
         {body?.isChoice ? (
           <S.AnswerContainer>
-            {["1", "2", "3", "4"].map((index) => {
+            {optionIndexArray.map((index) => {
               return (
                 <QuizInputOption
                   key={index}
@@ -155,9 +156,7 @@ const QuizInputContainer = ({
             placeholder="답을 입력해 주세요."
             name="answer"
             onChange={(e) => handleInput(e)}
-            defaultValue={
-              data?.isChoice ? data["option" + data?.answer] : data?.answer
-            }
+            defaultValue={data?.isChoice ? choiceAnswer : shortAnswer}
           />
         )}
       </S.Container>
