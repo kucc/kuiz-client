@@ -5,20 +5,28 @@ import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
 import axios from "../axios";
 
 const quizbookAPI = {
+  getQuizBookList: async (
+    categoryId: number,
+    page: number,
+    isSortByDate: boolean
+  ) => {
+    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
+    );
+    return quizBookList;
+  },
   searchQuizBookList: async (categoryId: number, keyword: string) => {
     const { data: quizBookList } = await axios.get<QuizBookModel[]>(
       `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&keyword=${keyword}`
     );
     return quizBookList;
   },
-
-  getQuizBookList: async (categoryId: number, page: number) => {
-    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}?categoryId=${categoryId}&page=${page}`
+  getSolvingQuizBook: async (isDone) => {
+    const { data: solveQuizBook } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}`
     );
-    return quizBookList;
+    return solveQuizBook;
   },
-
   getUserQuizBook: async (path: string, isDone: boolean) => {
     const { data: userQuizBook } = await axios.get<QuizBookModel[]>(
       `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
