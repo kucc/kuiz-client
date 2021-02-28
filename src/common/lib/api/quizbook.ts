@@ -5,6 +5,13 @@ import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
 import axios from "../axios";
 
 const quizbookAPI = {
+  searchQuizBookList: async (categoryId: number, keyword: string) => {
+    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&keyword=${keyword}`
+    );
+    return quizBookList;
+  },
+
   getQuizBookList: async (categoryId: number, page: number) => {
     const { data: quizBookList } = await axios.get<QuizBookModel[]>(
       `${endpoints.QUIZBOOK_API}?categoryId=${categoryId}&page=${page}`

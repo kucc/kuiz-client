@@ -33,9 +33,9 @@ const ProfileInfoContainer = () => {
           <S.UserName>{data.name}</S.UserName>
           <S.UserEmail>{data.email}</S.UserEmail>
         </S.UserBasicInfoWrapper>
-        <S.UserLevelWrapper>
-          <S.LevelLogo src={findLevelIcon(data.level)} alt="Icon"></S.LevelLogo>
-        </S.UserLevelWrapper>
+        <S.IconContainer>
+          <S.LevelIcon src={findLevelIcon(data.level)} alt="Icon"></S.LevelIcon>
+        </S.IconContainer>
       </S.UserInfoContainer>
       <S.ProfilePointBarContainer>
         <S.PointBarWrapper>
