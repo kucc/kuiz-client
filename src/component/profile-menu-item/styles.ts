@@ -29,9 +29,3 @@ export const ProfileMenuTitle = styled.div`
   font-size: 1.6rem;
   padding-left: 1rem;
 `;
-
-export const ProfileMenuCount = styled.div`
-  color: #000000;
-  font-size: 1.6rem;
-  padding-right: 1rem;
-`;

@@ -3,6 +3,7 @@ import InputProps from "./types";
 import * as S from "./styles";
 
 const InputBox = (props: InputProps) => {
+
   const {
     placeholder,
     setData
@@ -16,6 +17,7 @@ const InputBox = (props: InputProps) => {
       }}
     />
   );
+
 };
 
 export default InputBox;

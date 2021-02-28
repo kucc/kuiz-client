@@ -21,7 +21,7 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   const quizbookId = Number(match.params.quizbookId);
 
   const [loading, setLoading] = useState(true);
-  const [quizList, setQuizList] = useState({} as QuizModel);
+  const [quizList, setQuizList] = useState({} as QuizModel[]);
   const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [quizCount, setQuizCount] = useState(0);
@@ -34,7 +34,7 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   const [correctQuizCount, setCorrectQuizCount] = useState(0);
 
   const getQuizList = async () => {
-    const quizList = await quizAPI.getQuiz(quizbookId);
+    const quizList = await quizAPI.getAllQuiz(quizbookId);
     setQuizList(quizList);
     setTotalQuizCount(Object.keys(quizList).length);
     setCurrentQuiz(quizList[0]);

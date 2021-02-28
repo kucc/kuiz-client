@@ -32,16 +32,25 @@ export const FilterColumn = styled.div<FilterColumnProps>`
   }
 `;
 
-export const ButtonFilter = styled.div`
+interface QuizBookProps {
+  active?: boolean;
+}
+
+export const ButtonFilter = styled.div<QuizBookProps>`
   width: auto;
   padding: 0.5rem 1rem;
   height: 3rem;
-  background-color: #ffa18c;
+  background-color: ${(props) => (props.active ? "#d77e6a" : "#ffa18c")};
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   border: 1px solid ${THEME_COLOR.GRAY};
   cursor: pointer;
+`;
+
+export const DropDownFilterContainer = styled.div`
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 export const Filter = styled.div`
@@ -50,7 +59,17 @@ export const Filter = styled.div`
   cursor: pointer;
 `;
 
-export const FilterText = styled.div`
+export const FilterText = styled.option`
   text-align: center;
   font-size: 1.5rem;
+`;
+
+export const InputBox = styled.input`
+  width: 100%;
+  font-size: 1.4rem;
+  height: 4rem;
+  outline: none;
+  border: 1px solid ${THEME_COLOR.GRAYER};
+  border-radius: 0.7rem;
+  padding: 0.8rem 1rem;
 `;
