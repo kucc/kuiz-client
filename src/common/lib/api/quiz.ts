@@ -1,32 +1,61 @@
 import endpoints from "@/common/endpoints";
 import QuizModel from "@/common/model/quiz";
+import QuizRequestBody from "@/common/model/quiz-request-body";
 import axios from "../axios";
+import checkQuizInput from "../check-quiz-input";
 
 const quizAPI = {
-  getQuiz: async (quizbookId) => {
-    const { data: quiz } = await axios.get<QuizModel>(
+  getAllQuiz: async (quizbookId: number) => {
+    const { data: quizList } = await axios.get<QuizModel[]>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`
     );
+    return quizList;
+  },
+
+  postQuiz: async (quizbookId: number, body) => {
+    try {
+      checkQuizInput(body);
+      const newQuiz = await axios
+        .post<QuizRequestBody>(
+          `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`,
+          body
+        )
+        .catch((err) => {
+          alert("다시 시도해주세요.");
+        });
+      alert("문제 제출에 성공하였습니다.");
+
+      return newQuiz;
+    } catch {
+      return;
+    }
+  },
+
+  getQuiz: async (quizId: number) => {
+    const { data: quiz } = await axios.get<QuizModel>(
+      `${endpoints.QUIZ_API}/${quizId}`
+    );
+
     return quiz;
   },
 
-  postQuiz: async (quizbookId, question, answer, isChoice, option1, option2, option3, option4, imageURL, description) => {
-    const { data: quiz } = await axios.post<QuizModel>(
-      `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`,
-      {
-        question: question,
-        answer: answer,
-        isChoice: isChoice,
-        option1: option1,
-        option2: option2,
-        option3: option3,
-        option4: option4,
-        imageURL: imageURL,
-        description: description
-      }
-    );
-    return quiz;
-  }
+  editQuiz: async (quizId: number, body) => {
+    try {
+      checkQuizInput(body);
+
+      const quiz = await axios
+        .patch<QuizRequestBody>(`${endpoints.QUIZ_API}/${quizId}`, body)
+        .catch((err) => {
+          alert("다시 시도해주세요.");
+        });
+
+      alert("문제 수정에 성공하였습니다.");
+
+      return quiz;
+    } catch {
+      return;
+    }
+  },
 };
 
 export default quizAPI;
