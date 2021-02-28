@@ -25,7 +25,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const searchQuizBookList = () => {
-    console.log(keyword);
     dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
   };
 
@@ -43,7 +42,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
-    console.log(keyword);
     if (keyword == "") {
       getQuizBookList();
     } else {
