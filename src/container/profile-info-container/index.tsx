@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { STATIC_URL } from "../../asset/constant";
-import { RootState } from "../../modules";
-import { getUserInfoAsync } from "../../modules/user";
+import { STATIC_URL } from "@/asset/constant";
+import { RootState } from "@/modules";
+import { getUserInfoAsync } from "@/modules/user";
 import { MAX_LEVEL_POINT } from "./constants";
 import * as S from "./styles";
 
@@ -29,15 +29,17 @@ const ProfileInfoContainer = () => {
   return data ? (
     <S.ProfileInfoContainer>
       <S.UserInfoContainer>
-        <S.UserBasicInfoWrapper>
-          <S.UserName>{data.name}</S.UserName>
+        <S.UserInfoWrapper>
+          <S.UserNameContainer>
+            <S.UserName>{data.name}</S.UserName>
+          </S.UserNameContainer>
           <S.UserEmail>{data.email}</S.UserEmail>
-        </S.UserBasicInfoWrapper>
+        </S.UserInfoWrapper>
         <S.IconContainer>
           <S.LevelIcon src={findLevelIcon(data.level)} alt="Icon"></S.LevelIcon>
         </S.IconContainer>
       </S.UserInfoContainer>
-      <S.ProfilePointBarContainer>
+      <S.PointBarContainer>
         <S.PointBarWrapper>
           <S.UserPoint> {data.point} P</S.UserPoint>
           <S.BackgroundBar>
@@ -49,7 +51,7 @@ const ProfileInfoContainer = () => {
         <S.Point>
           ( {data.point} / {MAX_LEVEL_POINT[data.level]} )
         </S.Point>
-      </S.ProfilePointBarContainer>
+      </S.PointBarContainer>
     </S.ProfileInfoContainer>
   ) : (
     <></>

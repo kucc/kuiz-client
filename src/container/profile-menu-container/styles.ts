@@ -6,6 +6,8 @@ export const ProfileMenuContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
+  font-size: 1.4rem;
+  font-weight: bold;
 
   padding: 1rem 2rem 1rem 2rem;
 `;

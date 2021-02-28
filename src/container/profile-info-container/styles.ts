@@ -20,9 +20,13 @@ export const UserInfoContainer = styled.div`
   justify-content: space-between;
 
   margin-bottom: 1rem;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 50%;
+  }
 `;
 
-export const UserBasicInfoWrapper = styled.div`
+export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -31,27 +35,32 @@ export const UserBasicInfoWrapper = styled.div`
   padding: 1rem 2rem 0rem 0rem;
 `;
 
+export const UserNameContainer = styled.div``;
+
 export const UserName = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
+  @media only screen {
     font-size: 1.5rem;
   }
 `;
 
 export const UserEmail = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   margin-top: 0.5rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
+  @media only screen {
     font-size: 1.5rem;
   }
 `;
 
 export const UserPoint = styled.div`
-  font-size: 2.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   color: ${THEME_COLOR.PRIMARY};
   margin: 0.5rem 0rem 0.5rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
+  @media only screen {
     font-size: 2.4rem;
   }
 `;
@@ -68,13 +77,17 @@ export const LevelIcon = styled.img`
   }
 `;
 
-export const ProfilePointBarContainer = styled.div`
+export const PointBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 1rem;
   width: 50%;
   padding: 1rem 2rem 1rem 0rem;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 50%;
+  }
 `;
 export const PointBarWrapper = styled.div`
   width: 100%;
@@ -98,5 +111,6 @@ export const PointBar = styled.div<PointBarProps>`
 
 export const Point = styled.div`
   align-self: flex-end;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
 `;
