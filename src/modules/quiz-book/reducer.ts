@@ -71,7 +71,6 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       ...state,
       loading: true,
       error: null,
-      data: null,
     }),
     [SEARCH_QUIZBOOK_LIST_SUCCESS]: (state, action) => ({
       ...state,
