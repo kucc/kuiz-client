@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
@@ -23,7 +24,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     dispatch(getQuizBookListAsync.request({ categoryId, page: 1 }));
   };
 
-  const searchQuizBookList = () => {
+  const searchQuizBookList = (keyword: string) => {
     dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
   };
 
@@ -31,26 +32,17 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     getQuizBookList();
   }, [dispatch]);
 
-  useEffect(() => {
-    debounce(searchQuizBookList(), 500);
-  }, [keyword]);
-
-  let timer;
-  const debounce = (func, delay) => {
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-      timer = setTimeout(() => func, delay);
-    };
-  };
+  const delayedQueryCall = useRef(
+    _.debounce((q) => searchQuizBookList(q), 1000)
+  ).current;
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
+    delayedQueryCall(e.currentTarget.value);
   };
 
   const onClickHandler = () => {
-    searchQuizBookList();
+    searchQuizBookList(keyword);
   };
 
   return (
