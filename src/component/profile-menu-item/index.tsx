@@ -9,7 +9,6 @@ const ProfileMenuItem = (menu: ProfileMenuItemProps) => {
         to={`/quiz-book/${menu.relation}?isDone=${menu.bool}`}
       >
         <S.ProfileMenuTitle>{menu.title}</S.ProfileMenuTitle>
-        <S.ProfileMenuCount>{menu.count}</S.ProfileMenuCount>
       </S.ProfileMenuItemWrapper>
     </S.ProfileMenuItem>
   );
