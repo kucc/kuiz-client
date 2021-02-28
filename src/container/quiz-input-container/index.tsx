@@ -18,10 +18,17 @@ import {
   optionIndexArray,
 } from "../../common/lib/quiz-constants";
 
-const QuizInputContainer = ({
+import { History } from 'history';
+export interface QuizInputProps {
+  history: History;
+  quizBookId: number | null;
+  quizId: number | null;
+}
+
+const QuizInputContainer: React.FC<QuizInputProps> = ({history,
   quizBookId,
   quizId,
-}: QuizInputContainerProps) => {
+}) => {
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
@@ -30,6 +37,7 @@ const QuizInputContainer = ({
   const handleSubmit = () => {
     if (quizId) dispatch(editQuizAsync.request({ quizId, body }));
     if (quizBookId) dispatch(postQuizAsync.request({ quizBookId, body }));
+    history.push("/addquiz");
   };
 
   const handleQuizType = (event) => {
