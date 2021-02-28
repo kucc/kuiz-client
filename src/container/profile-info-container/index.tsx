@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import getUserLevelIcon from "../../common/lib/get-user-level-icon";
-import { RootState } from "../../modules";
-import { getUserInfoAsync } from "../../modules/user";
+import { STATIC_URL } from "@/asset/constant";
+import { RootState } from "@/modules";
+import { getUserInfoAsync } from "@/modules/user";
 import { MAX_LEVEL_POINT } from "./constants";
 import * as S from "./styles";
 
