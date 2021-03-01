@@ -1,6 +1,6 @@
 import UserSolveQuizBookContainer from "@/container/user-quizbook-container";
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from "querystring";
 import {
   PARSE_QUIZBOOK_PATH_INDEX,
@@ -10,7 +10,8 @@ import {
 } from "@/asset/constant";
 import parseBool from "@/common/lib/parse-bool";
 
-const UserQuizBookListPage = ({ location }: RouteComponentProps) => {
+const UserQuizBookListPage = () => {
+  const location = useLocation();
   const path = location.pathname.split("/")[PARSE_QUIZBOOK_PATH_INDEX];
 
   if (path !== USER_SOLVE_QUIZBOOK_PATH && path !== USER_MAKE_QUIZBOOK_PATH) {

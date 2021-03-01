@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React from "react";
 import QuizInputContainer from "@/container/quiz-input-container";
+import { useParams } from "react-router-dom";
 
-const EditQuizPage = ({ match }: RouteComponentProps) => {
-  const quizId = match.params["quizId"];
+interface QuizId {
+  quizId: string;
+}
+
+const EditQuizPage = () => {
+  const { quizId } = useParams<QuizId>();
   if (!parseInt(quizId)) throw new Error("잘못된 URL");
 
-  return <QuizInputContainer quizId={quizId} quizBookId={null} />;
+  return <QuizInputContainer quizId={parseInt(quizId)} quizBookId={null} />;
 };
 export default EditQuizPage;
