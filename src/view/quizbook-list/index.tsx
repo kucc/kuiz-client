@@ -1,15 +1,18 @@
 import QuizBookContainer from "@/container/quizbook-container/index";
 import React from "react";
-import { Link } from "react-router-dom";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const QuizBookListPage = ({ history, match }: RouteComponentProps) => {
-  const categoryId = match.params["categoryId"];
+interface CategoryId {
+  categoryId: string;
+}
+
+const QuizBookListPage = () => {
+  const { categoryId } = useParams<CategoryId>();
   if (!parseInt(categoryId)) throw new Error("잘못된 URL");
 
   return (
     <>
-      <QuizBookContainer categoryId={categoryId} />
+      <QuizBookContainer categoryId={parseInt(categoryId)} />
     </>
   );
 };

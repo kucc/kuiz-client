@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { RootState } from "@/modules";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import * as S from "./styles";
-import { QuizInputContainerProps } from "./types";
-import { editQuizAsync, getQuizAsync, postQuizAsync } from "@/modules/quiz";
+import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
 import {
   defaultQuizOption,
-  defaultQuizRequest,
   saveAnswer,
   useFetchQuiz,
   useQuizTypeRef,
@@ -16,19 +13,19 @@ import {
   IS_CHOICE_KEY,
   NULL_STRING,
   optionIndexArray,
-} from "../../common/lib/quiz-constants";
+} from "@/common/lib/quiz-constants";
 
-import { History } from 'history';
+import { useHistory } from "react-router-dom";
 export interface QuizInputProps {
-  history: History;
   quizBookId: number | null;
   quizId: number | null;
 }
 
-const QuizInputContainer: React.FC<QuizInputProps> = ({history,
+const QuizInputContainer: React.FC<QuizInputProps> = ({
   quizBookId,
   quizId,
 }) => {
+  const history = useHistory();
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
@@ -79,17 +76,14 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({history,
     setBody({ ...body, [key]: value });
   };
 
-  // console.log(body);
-
-
   let fileInput;
-  const [previewURL, setPreviewURL] = useState('');
+  const [previewURL, setPreviewURL] = useState("");
   const fileHandler = (e) => {
-      const file = e.target.files[0];
-      let preview = URL.createObjectURL(file);
-      setPreviewURL(preview);
+    const file = e.target.files[0];
+    let preview = URL.createObjectURL(file);
+    setPreviewURL(preview);
   };
-  
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -132,34 +126,45 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({history,
             onChange={(e) => handleInput(e)}
             defaultValue={data?.question}
           />
-          {body?.imageURL && (
-          !previewURL ? (
-            <S.ImageBox>
-              <label>
-                <S.ImageInput
-                  type="file"
-                  accept="image/jpeg, image/jpg"
-                  onChange={fileHandler}
-                  ref={(f) => {fileInput = f}}/>
-                <S.ImageButton onClick={() => fileInput.click()}>이미지 등록</S.ImageButton>
-              </label>
-              <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
-              <S.ImageWarning>권장사이즈: 가로 335px, 세로 188px</S.ImageWarning>
-            </S.ImageBox>                
-          ) : (
-            <S.ImageBox>
-              <S.PreviewImg src={previewURL} />
-              <label>
-                <S.ImageInput
-                  type="file"
-                  accept="image/jpeg, image/jpg"
-                  onChange={fileHandler}
-                  ref={(f) => {fileInput = f}}/>
-                <S.ImageButton onClick={() => fileInput.click()}>이미지 등록</S.ImageButton>
-              </label>
-            </S.ImageBox>    
-          )
-          )}
+          {body?.imageURL &&
+            (!previewURL ? (
+              <S.ImageBox>
+                <label>
+                  <S.ImageInput
+                    type="file"
+                    accept="image/jpeg, image/jpg"
+                    onChange={fileHandler}
+                    ref={(f) => {
+                      fileInput = f;
+                    }}
+                  />
+                  <S.ImageButton onClick={() => fileInput.click()}>
+                    이미지 등록
+                  </S.ImageButton>
+                </label>
+                <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
+                <S.ImageWarning>
+                  권장사이즈: 가로 335px, 세로 188px
+                </S.ImageWarning>
+              </S.ImageBox>
+            ) : (
+              <S.ImageBox>
+                <S.PreviewImg src={previewURL} />
+                <label>
+                  <S.ImageInput
+                    type="file"
+                    accept="image/jpeg, image/jpg"
+                    onChange={fileHandler}
+                    ref={(f) => {
+                      fileInput = f;
+                    }}
+                  />
+                  <S.ImageButton onClick={() => fileInput.click()}>
+                    이미지 등록
+                  </S.ImageButton>
+                </label>
+              </S.ImageBox>
+            ))}
           <S.InputWarning>
             문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
           </S.InputWarning>
