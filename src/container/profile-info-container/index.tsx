@@ -29,12 +29,12 @@ const ProfileInfoContainer = () => {
           <S.UserName>{data.name}</S.UserName>
           <S.UserEmail>{data.email}</S.UserEmail>
         </S.UserBasicInfoWrapper>
-        <S.UserLevelWrapper>
-          <S.LevelLogo
+        <S.IconContainer>
+          <S.LevelIcon
             src={getUserLevelIcon(data.level)}
             alt="Icon"
-          ></S.LevelLogo>
-        </S.UserLevelWrapper>
+          ></S.LevelIcon>
+        </S.IconContainer>
       </S.UserInfoContainer>
       <S.ProfilePointBarContainer>
         <S.PointBarWrapper>
