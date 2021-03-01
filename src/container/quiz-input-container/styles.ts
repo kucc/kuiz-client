@@ -150,8 +150,8 @@ export const ProblemContainer = styled.div`
 `;
 
 export const ImageButton = styled.button`
-  width: 10rem;
-  height: 4rem;
+  width: 8rem;
+  height: 3.5rem;
   margin: 0.3rem;
   display: flex;
   justify-content: center;
@@ -227,4 +227,14 @@ export const SubmitButton = styled.button`
   color: white;
 
   font-size: 1.4rem;
+`;
+
+export const ImageInput = styled.input`
+  display: none;
+`;
+
+export const PreviewImg = styled.img`
+  width: 25rem;
+  height: 20rem;
+  margin: 1rem;
 `;

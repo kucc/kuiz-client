@@ -26,27 +26,27 @@ const MakeQuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
     const [isChoice, setIsChoice] = useState(true);
     const [isText, setIsText] = useState(true);
 
+    const body = {
+      question: question,
+      answer: answer,
+      description: description,
+      imageURL: imageURL,
+      isChoice: isChoice,
+      option1: option1,
+      option2: option2,
+      option3: option3,
+      option4: option4,
+    }
+
     const postQuiz = async () => {
-        const quiz = await quizAPI.postQuiz(
-            quizbookId,
-            question,
-            answer,
-            isChoice,
-            option1,
-            option2,
-            option3,
-            option4,
-            imageURL,
-            description
-        );
-        history.push("/addquiz")
+        const quiz = await quizAPI.postQuiz(quizbookId, body);
+        history.push("/addquiz");
         return quiz;
     }
 
     let fileInput;
     const fileHandler = (e) => {
         const file = e.target.files[0];
-        console.log(file)
         setImageURL(file);
     };
 
