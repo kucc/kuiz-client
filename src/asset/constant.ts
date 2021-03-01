@@ -1,4 +1,5 @@
 export const BREAKPOINT = 640;
+export const MAX_BREAKPOINT = 950;
 
 export const STATIC_URL = {
   LOGO: `https://user-images.githubusercontent.com/41494099/86317182-c58a8900-bc69-11ea-9a6e-dfdb1e0141be.png`,
@@ -36,3 +37,13 @@ export const THEME_COLOR = {
 };
 
 export const RANK_LIST_COUNT = 15;
+
+export const PARSE_QUIZBOOK_PATH_INDEX = 2;
+export const PARSE_QUIZBOOK_QUERY_INDEX = 1;
+export const USER_SOLVE_QUIZBOOK_PATH = "solving";
+export const USER_MAKE_QUIZBOOK_PATH = "owner";
+
+export const USER_SOLVING_QUIZBOOK_MENU = "내가 풀고 있는 문제집";
+export const USER_SOLVED_QUIZBOOK_MENU = "내가 푼 문제집";
+export const USER_MAKING_QUIZBOOK_MENU = "내가 만들고 있는 문제집";
+export const USER_MADE_QUIZBOOK_MENU = "내가 만든 문제집";

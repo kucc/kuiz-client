@@ -4,6 +4,7 @@ import { STATIC_URL } from "@/asset/constant";
 import { RootState } from "@/modules";
 import { getUserInfoAsync } from "@/modules/user";
 import { MAX_LEVEL_POINT } from "./constants";
+import getUserLevelIcon from "@common/lib/get-user-level-icon.ts";
 import * as S from "./styles";
 
 const ProfileInfoContainer = () => {
@@ -21,11 +22,6 @@ const ProfileInfoContainer = () => {
     getUserINfo();
   }, [dispatch]);
 
-  const findLevelIcon = (level: number) => {
-    const queryIcon = "Level" + String(level) + "_Icon";
-    return STATIC_URL[queryIcon];
-  };
-
   return data ? (
     <S.ProfileInfoContainer>
       <S.UserInfoContainer>
@@ -36,7 +32,10 @@ const ProfileInfoContainer = () => {
           <S.UserEmail>{data.email}</S.UserEmail>
         </S.UserInfoWrapper>
         <S.IconContainer>
-          <S.LevelIcon src={findLevelIcon(data.level)} alt="Icon"></S.LevelIcon>
+          <S.LevelIcon
+            src={getUserLevelIcon(data.level)}
+            alt="Icon"
+          ></S.LevelIcon>
         </S.IconContainer>
       </S.UserInfoContainer>
       <S.PointBarContainer>

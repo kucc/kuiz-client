@@ -1,5 +1,11 @@
 import React from "react";
-import { Switch, Redirect, Route } from "react-router-dom";
+import { Switch, Redirect, Route, BrowserRouter } from "react-router-dom";
+import createSagaMiddleware from "redux-saga";
+import { applyMiddleware, createStore } from "redux";
+import rootReducer, { rootSaga } from "@modules/index";
+import { Provider } from "react-redux";
+import GlobalStyle from "@component/common/global-style/index";
+
 import CategoryPage from "@view/category/index";
 import LoginPage from "@view/login";
 import MainPage from "@view/main/index";
@@ -13,29 +19,49 @@ import QuizBookListPage from "@view/quizbook-list";
 import QuizBookPage from "@view/quiz-book/index";
 import Auth from "@component/common/auth";
 import AddQuizPage from "@view/add-quiz/index";
+import UserQuizBookListPage from "./view/user-quizbook";
+import EditQuizPage from "./view/edit-quiz";
 
-const App = () => {
-  return (
-    <Layout>
-      <Switch>
-        <Route path="/" exact component={MainPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/category/:categoryId" component={QuizBookListPage} />
-        <Route path="/category" exact component={CategoryPage} />
-        <Route path="/profile" component={Auth(ProfilePage)} />
-        <Route
-          path="/quiz-book/:quizbookId/makequiz"
-          component={MakeQuizPage}
-        />
-        <Route path="/quiz-book/:quizbookId/quiz/" component={QuizPage} />
-        <Route path="/result" component={QuizResultPage} />
-        <Route path="/rank" component={RankPage} />
-        <Route path="/quiz-book" component={QuizBookPage} />
-        <Route path="/addquiz" component={AddQuizPage} />
-        <Redirect from="*" to="/" />
-      </Switch>
-    </Layout>
-  );
-};
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(rootSaga);
+
+const App: React.FC = () => (
+  <Provider store={store}>
+    <GlobalStyle />
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route
+            path="/quiz-book/:quizBookId/quiz/"
+            component={Auth(QuizPage)}
+          />
+          <Route
+            path="/quiz-book/:quizBookId/makequiz"
+            component={Auth(MakeQuizPage)}
+          />
+          <Route path="/quiz/:quizId" component={Auth(EditQuizPage)} />
+          <Route path="/category/:categoryId" component={QuizBookListPage} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="/category" exact component={CategoryPage} />
+          <Route path="/profile" exact component={Auth(ProfilePage)} />
+          <Route path="/quiz-book" exact component={QuizBookPage} />
+          <Route
+            path="/quiz-book/"
+            exact
+            component={Auth(UserQuizBookListPage)}
+          />
+          <Route path="/result" exact component={QuizResultPage} />
+          <Route path="/rank" exact component={RankPage} />
+          <Route path="/addquiz" exact component={AddQuizPage} />
+          <Route path="/" exact component={MainPage} />
+          <Redirect from="*" to="/" />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
+  </Provider>
+);
 
 export default App;

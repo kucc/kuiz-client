@@ -26,7 +26,7 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
   }),
   [GET_USER_INFO_ERROR]: (state, action) => ({
     ...state,
-    loading: true,
+    loading: false,
     error: action.payload,
     data: null,
   }),

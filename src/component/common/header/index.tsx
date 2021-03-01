@@ -9,15 +9,18 @@ const Header = () => {
         <S.DesktopLogo src={STATIC_URL.LOGO} alt="logo"></S.DesktopLogo>
       </S.DesktopLink>
       <S.MobileLink to="/">
-        <S.MobileLogo src={STATIC_URL.LOGO_WITHOUT_TEXT} alt="logo"></S.MobileLogo>
+        <S.MobileLogo
+          src={STATIC_URL.LOGO_WITHOUT_TEXT}
+          alt="logo"
+        ></S.MobileLogo>
       </S.MobileLink>
 
       <S.DesktopLink to="/profile">
-        <S.DesktopProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile"/>
+        <S.DesktopProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile" />
       </S.DesktopLink>
 
       <S.MobileLink to="/profile">
-        <S.MobileProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile"/>
+        <S.MobileProfileImg src={STATIC_URL.MEMBER_ICON} alt="profile" />
       </S.MobileLink>
     </S.Header>
   );

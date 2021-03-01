@@ -7,21 +7,16 @@ import QuizQuestion from "@/component/quiz-question/index";
 import QuizOption from "@/component/quiz-option/index";
 import QuizProgressBar from "@/component/quiz-progress-bar/index";
 import * as S from "./styles";
-import { RouteComponentProps } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import LoadingSpinner from "@/component/common/loading-spinner";
 
 export interface QuizProps {
-  quizbookId: string;
+  quizBookId: number;
 }
 
-const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
-  match,
-  history,
-}) => {
-  const quizbookId = Number(match.params.quizbookId);
-
+const QuizContainer: React.FC<QuizProps> = ({ quizBookId }) => {
   const [loading, setLoading] = useState(true);
-  const [quizList, setQuizList] = useState({} as QuizModel);
+  const [quizList, setQuizList] = useState({} as QuizModel[]);
   const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [quizCount, setQuizCount] = useState(0);
@@ -32,9 +27,10 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
   const [solved, setSolved] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [correctQuizCount, setCorrectQuizCount] = useState(0);
+  const history = useHistory();
 
   const getQuizList = async () => {
-    const quizList = await quizAPI.getQuiz(quizbookId);
+    const quizList = await quizAPI.getAllQuiz(quizBookId);
     setQuizList(quizList);
     setTotalQuizCount(Object.keys(quizList).length);
     setCurrentQuiz(quizList[0]);
@@ -47,7 +43,7 @@ const QuizContainer: React.FC<RouteComponentProps<QuizProps>> = ({
 
   const postSolveQuizBook = async () => {
     const solveQuizBook = await quizbookAPI.postSolveQuizBook(
-      quizbookId,
+      quizBookId,
       currentQuiz.id,
       correct
     );

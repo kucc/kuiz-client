@@ -14,6 +14,7 @@ export type QuizBookState = {
 export type QuizBookAPIPayload = {
   categoryId: number;
   page: number;
+  isSortByDate: boolean;
 };
 
 export type SearchAPIPayload = {

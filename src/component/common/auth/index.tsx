@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import userAPI from "@/common/lib/api/user";
 import { insetUserInfo } from "@/modules/user";
 import { useCookies } from "react-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const Auth = (children: any) => {
+const Auth = (Component: FC): FC => () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [authCookie] = useCookies(["accessToken"]);
@@ -27,7 +27,7 @@ const Auth = (children: any) => {
     checkUserLogin();
   }, []);
 
-  return children;
+  return <Component />;
 };
 
 export default Auth;
