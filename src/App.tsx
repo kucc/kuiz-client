@@ -47,7 +47,7 @@ const App: React.FC = () => (
           <Route path="/login" exact component={LoginPage} />
           <Route path="/category" exact component={CategoryPage} />
           <Route path="/profile" exact component={Auth(ProfilePage)} />
-          <Route path="/quiz-book" exact component={QuizBookPage} />
+          <Route path="/quiz-book" exact component={Auth(QuizBookPage)} />
           <Route
             path="/quiz-book/"
             exact
