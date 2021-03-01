@@ -12,8 +12,7 @@ import {
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
-
-
+import QuizBookModel from "@common/model/quiz-book";
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
   const { data, loading, error } = useSelector(
