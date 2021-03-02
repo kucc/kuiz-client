@@ -6,18 +6,22 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const Auth = (Component: FC): FC => () => {
+const Auth = (Component: FC, isMember: boolean): FC => () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [authCookie] = useCookies(["accessToken"]);
 
-  const checkUserLogin = async () => {
+  const checkIsValidLogin = async () => {
     if (!authCookie) {
       history.push("/login");
     } else {
       try {
         const userInfo = await userAPI.getUserInfo();
         dispatch(insetUserInfo(userInfo));
+        if (isMember && !userInfo.isMember) {
+          alert("kucc 회원만 가능합니다");
+          history.push("/");
+        }
       } catch (e) {
         history.push("/login");
       }
@@ -25,7 +29,7 @@ const Auth = (Component: FC): FC => () => {
   };
 
   useEffect(() => {
-    checkUserLogin();
+    checkIsValidLogin();
   }, []);
 
   return <Component />;
