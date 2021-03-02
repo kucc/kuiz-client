@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run type-check && webpack --mode production",
     "start": "npx webpack serve --open --mode development",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "lint": "eslint '*/**/*.{js,ts,tsx}'"
   },
   "keywords": [],
   "author": "",
@@ -26,9 +27,13 @@
     "@types/redux": "^3.6.0",
     "@types/redux-saga": "^0.10.5",
     "@types/styled-components": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
+    "eslint": "^7.21.0",
+    "eslint-plugin-react": "^7.22.0",
     "html-webpack-plugin": "^4.5.1",
     "typescript": "^4.2.2",
     "webpack": "^5.19.0",

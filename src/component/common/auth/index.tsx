@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { FC, useEffect } from "react";
 import userAPI from "@/common/lib/api/user";
 import { insetUserInfo } from "@/modules/user";

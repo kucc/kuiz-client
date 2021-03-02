@@ -23,10 +23,7 @@ export interface QuizInputProps {
   quizId: number | null;
 }
 
-const QuizInputContainer: React.FC<QuizInputProps> = ({
-  quizBookId,
-  quizId,
-}) => {
+const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
   const history = useHistory();
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
@@ -87,7 +84,7 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({
   const [previewURL, setPreviewURL] = useState("");
   const fileHandler = (e) => {
     const file = e.target.files[0];
-    let preview = URL.createObjectURL(file);
+    const preview = URL.createObjectURL(file);
     setPreviewURL(preview);
   };
 
