@@ -147,45 +147,33 @@ const QuizInputContainer = ({
             onChange={(e) => handleInput(e)}
             defaultValue={data?.question}
           />
-          {body?.imageURL &&
-            (!file ? (
-              <S.ImageBox>
-                <label>
-                  <S.ImageInput
-                    type="file"
-                    accept="image/jpeg, image/jpg, image/png"
-                    onChange={fileHandler}
-                    ref={(f) => {
-                      fileInput = f;
-                    }}
-                  />
-                  <S.ImageButton onClick={() => fileInput.click()}>
-                    이미지 등록
-                  </S.ImageButton>
-                </label>
-                <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
-                <S.ImageWarning>
-                  권장사이즈: 가로 335px, 세로 188px
-                </S.ImageWarning>
-              </S.ImageBox>
-            ) : (
-              <S.ImageBox>
-                <S.PreviewImg src={URL.createObjectURL(file)} />
-                <label>
-                  <S.ImageInput
-                    type="file"
-                    accept="image/jpeg, image/jpg"
-                    onChange={fileHandler}
-                    ref={(f) => {
-                      fileInput = f;
-                    }}
-                  />
-                  <S.ImageButton onClick={() => fileInput.click()}>
-                    이미지 등록
-                  </S.ImageButton>
-                </label>
-              </S.ImageBox>
-            ))}
+          {body?.imageURL && (
+            <S.ImageBox>
+              {file && <S.PreviewImg src={URL.createObjectURL(file)} />}
+              <label>
+                <S.ImageInput
+                  type="file"
+                  accept="image/jpeg, image/jpg, image/png, image/gif"
+                  onChange={fileHandler}
+                  ref={(f) => {
+                    fileInput = f;
+                  }}
+                />
+                <S.ImageButton onClick={() => fileInput.click()}>
+                  이미지 등록
+                </S.ImageButton>
+              </label>
+              {!file && (
+                <>
+                  <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
+                  <S.ImageWarning>
+                    권장사이즈: 가로 335px, 세로 188px
+                  </S.ImageWarning>
+                </>
+              )}
+            </S.ImageBox>
+          )}
+
           <S.InputWarning>
             문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
           </S.InputWarning>
