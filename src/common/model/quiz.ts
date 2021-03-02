@@ -9,5 +9,5 @@ export default interface QuizModel {
   option4?: string;
   imageURL: string;
   description: string;
-  isChoice: number;
+  isChoice: boolean;
 }
