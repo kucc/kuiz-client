@@ -13,6 +13,7 @@ import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@common/model/quiz-book";
+
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
   const { data, loading, error } = useSelector(
@@ -57,7 +58,8 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const getTotalQuizBookList = async () => {
     let idx = 1;
-    while (1) {
+    const TRUE = true;
+    while (TRUE) {
       try {
         const quizBookList = await quizbookAPI.getQuizBookList(
           categoryId,

@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./styles";
-import { RouteComponentProps } from "react-router-dom";
-import { StaticContext } from "react-router";
+import { useLocation } from "react-router";
 import QuizScore from "@component/quiz-result-score";
 import QuizPoint from "@component/quiz-result-point";
-import { QuizScoreProps } from "@component/quiz-result-score/types";
 
 export type LocationState = {
   totalQuizCount: number;
   correctQuizCount: number;
 };
 
-const QuizResultContainer: React.FC<
-  RouteComponentProps<{}, StaticContext, LocationState>
-> = ({ location }, props: QuizScoreProps) => {
+const QuizResultContainer: React.FC = () => {
+  const location = useLocation<LocationState>();
   const { totalQuizCount, correctQuizCount } = location.state;
   const [percentage, setPercentage] = useState(0);
   const [progressBar, setProgressBar] = useState(0);
