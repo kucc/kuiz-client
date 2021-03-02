@@ -14,43 +14,68 @@ import {
   NULL_STRING,
   optionIndexArray,
 } from "@/common/lib/quiz-constants";
-
 import { useHistory } from "react-router-dom";
-import parseBool from "@/common/lib/parse-bool";
 import checkQuizInput from "@/common/lib/check-quiz-input";
-export interface QuizInputProps {
-  quizBookId: number | null;
-  quizId: number | null;
-}
+import { QuizInputContainerProps } from "./types";
 
-const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
+const QuizInputContainer = ({
+  quizBookId,
+  quizId,
+}: QuizInputContainerProps) => {
   const history = useHistory();
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
-
+  const [file, setFile] = useState("");
   const dispatch = useDispatch();
+
+  let fileInput;
+  const fileHandler = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleFormData = () => {
+    const formData = new FormData();
+    Object.keys(body).map((key) => formData.append(key, body[key]));
+    if (file) {
+      formData.append("image", file);
+    }
+
+    return formData;
+  };
+
   const handleSubmit = () => {
     try {
       checkQuizInput(body);
+      const formData = handleFormData();
+
+      if (quizId) {
+        dispatch(editQuizAsync.request({ quizId, body: formData }));
+        return;
+      }
+
+      if (quizBookId) {
+        dispatch(postQuizAsync.request({ quizBookId, body: formData }));
+        history.push("/addquiz");
+      }
     } catch {
       return;
     }
-    if (quizId) dispatch(editQuizAsync.request({ quizId, body }));
-    if (quizBookId) dispatch(postQuizAsync.request({ quizBookId, body }));
-    history.push("/addquiz");
   };
 
   const handleQuizType = (event) => {
     const isText = parseInt(event.target.value);
     if (isText) {
       setBody({ ...body, imageURL: NULL_STRING });
+      setFile("");
       return;
     }
+
     setBody({ ...body, imageURL: data?.imageURL || "/" });
   };
 
-  const handleIsChoice = (isChoice: boolean) => {
+  const handleIsChoice = (isChoice: number) => {
     if (!data) {
       setBody({ ...body, ...defaultQuizOption, isChoice, answer: NULL_STRING });
       return;
@@ -74,18 +99,10 @@ const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
     const key = event.target.name;
     const value = event.target.value;
     if (key === IS_CHOICE_KEY) {
-      handleIsChoice(parseBool(value));
+      handleIsChoice(parseInt(value));
       return;
     }
     setBody({ ...body, [key]: value });
-  };
-
-  let fileInput;
-  const [previewURL, setPreviewURL] = useState("");
-  const fileHandler = (e) => {
-    const file = e.target.files[0];
-    const preview = URL.createObjectURL(file);
-    setPreviewURL(preview);
   };
 
   return (
@@ -131,12 +148,12 @@ const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
             defaultValue={data?.question}
           />
           {body?.imageURL &&
-            (!previewURL ? (
+            (!file ? (
               <S.ImageBox>
                 <label>
                   <S.ImageInput
                     type="file"
-                    accept="image/jpeg, image/jpg"
+                    accept="image/jpeg, image/jpg, image/png"
                     onChange={fileHandler}
                     ref={(f) => {
                       fileInput = f;
@@ -153,7 +170,7 @@ const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
               </S.ImageBox>
             ) : (
               <S.ImageBox>
-                <S.PreviewImg src={previewURL} />
+                <S.PreviewImg src={URL.createObjectURL(file)} />
                 <label>
                   <S.ImageInput
                     type="file"
@@ -217,8 +234,11 @@ const QuizInputContainer = ({ quizBookId, quizId }: QuizInputProps) => {
           defaultValue={data?.description}
         />
       </S.Container>
+
       <S.ButtonContainer>
-        <S.SubmitButton onClick={handleSubmit}>퀴즈 만들기</S.SubmitButton>
+        <S.SubmitButton type="submit" onClick={handleSubmit}>
+          퀴즈 만들기
+        </S.SubmitButton>
       </S.ButtonContainer>
     </S.Wrapper>
   );
