@@ -16,6 +16,7 @@ import {
 } from "@/common/lib/quiz-constants";
 
 import { useHistory } from "react-router-dom";
+import parseBool from "@/common/lib/parse-bool";
 export interface QuizInputProps {
   quizBookId: number | null;
   quizId: number | null;
@@ -35,6 +36,7 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({
     if (quizId) dispatch(editQuizAsync.request({ quizId, body }));
     if (quizBookId) dispatch(postQuizAsync.request({ quizBookId, body }));
     history.push("/addquiz");
+    //성공해야 addquiz로 가야함.
   };
 
   const handleQuizType = (event) => {
@@ -46,7 +48,7 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({
     setBody({ ...body, imageURL: data?.imageURL || "/" });
   };
 
-  const handleIsChoice = (isChoice: number) => {
+  const handleIsChoice = (isChoice: boolean) => {
     if (!data) {
       setBody({ ...body, ...defaultQuizOption, isChoice, answer: NULL_STRING });
       return;
@@ -70,7 +72,7 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({
     const key = event.target.name;
     const value = event.target.value;
     if (key === IS_CHOICE_KEY) {
-      handleIsChoice(parseInt(value));
+      handleIsChoice(parseBool(value));
       return;
     }
     setBody({ ...body, [key]: value });
