@@ -17,6 +17,7 @@ import {
 
 import { useHistory } from "react-router-dom";
 import parseBool from "@/common/lib/parse-bool";
+import checkQuizInput from "@/common/lib/check-quiz-input";
 export interface QuizInputProps {
   quizBookId: number | null;
   quizId: number | null;
@@ -33,10 +34,14 @@ const QuizInputContainer: React.FC<QuizInputProps> = ({
 
   const dispatch = useDispatch();
   const handleSubmit = () => {
+    try {
+      checkQuizInput(body);
+    } catch {
+      return;
+    }
     if (quizId) dispatch(editQuizAsync.request({ quizId, body }));
     if (quizBookId) dispatch(postQuizAsync.request({ quizBookId, body }));
     history.push("/addquiz");
-    //성공해야 addquiz로 가야함.
   };
 
   const handleQuizType = (event) => {
