@@ -48,11 +48,7 @@ const App: React.FC = () => (
           <Route path="/category" exact component={CategoryPage} />
           <Route path="/profile" exact component={Auth(ProfilePage)} />
           <Route path="/quiz-book" exact component={Auth(QuizBookPage)} />
-          <Route
-            path="/quiz-book/"
-            exact
-            component={Auth(UserQuizBookListPage)}
-          />
+          <Route path="/quiz-book/" component={Auth(UserQuizBookListPage)} />
           <Route path="/result" exact component={QuizResultPage} />
           <Route path="/rank" exact component={RankPage} />
           <Route path="/addquiz" exact component={AddQuizPage} />
