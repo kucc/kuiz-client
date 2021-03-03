@@ -15,7 +15,7 @@ export const defaultQuizRequest: QuizRequestBody = {
   answer: NULL_STRING,
   description: NULL_STRING,
   imageURL: NULL_STRING,
-  isChoice: true,
+  isChoice: 1,
   ...defaultQuizOption,
 };
 
@@ -64,7 +64,7 @@ export const useQuizTypeRef = (quiz: QuizModel | undefined) => {
 
   useEffect(() => {
     if (isChoiceContainer.current && quiz && isTextContainer.current) {
-      isChoiceContainer.current.value = `${quiz.isChoice ? 1 : 0}`;
+      isChoiceContainer.current.value = `${quiz.isChoice}`;
       isTextContainer.current.value = `${quiz.imageURL ? 0 : 1}`;
     }
   }, [quiz]);

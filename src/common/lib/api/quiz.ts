@@ -20,9 +20,10 @@ const quizAPI = {
       )
       .catch((err) => {
         alert("다시 시도해주세요.");
+        throw new Error("잘못된 요청");
       });
-    alert("문제 제출에 성공하였습니다.");
 
+    alert("문제 제출에 성공하였습니다.");
     return newQuiz;
   },
 
@@ -39,6 +40,7 @@ const quizAPI = {
       .patch<QuizRequestBody>(`${endpoints.QUIZ_API}/${quizId}`, body)
       .catch((err) => {
         alert("다시 시도해주세요.");
+        throw new Error("잘못된 요청");
       });
 
     alert("문제 수정에 성공하였습니다.");

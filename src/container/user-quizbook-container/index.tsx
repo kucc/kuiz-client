@@ -1,6 +1,6 @@
 import QuizBook from "@/component/quizbook";
 import { RootState } from "@/modules";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { UserQuizBookContainerProps } from "./types";
@@ -41,11 +41,15 @@ const UserQuizBookContainer = ({
         {!isOwner && !isDone && USER_SOLVING_QUIZBOOK_MENU}
       </S.UserQuizBookTitle>
       <S.UserQuizBookContainer>
-        {data &&
+        {data?.length ? (
           data.map((entity) => {
-            return <QuizBook key={entity.id} quizBook={entity}></QuizBook>;
-          })}
-        {!data?.length && (
+            return (
+              <React.Fragment key={entity.id}>
+                <QuizBook quizBook={entity} isUserQuizBook={isOwner}></QuizBook>
+              </React.Fragment>
+            );
+          })
+        ) : (
           <S.NoUserQuizBook>문제집이 없습니다.</S.NoUserQuizBook>
         )}
       </S.UserQuizBookContainer>

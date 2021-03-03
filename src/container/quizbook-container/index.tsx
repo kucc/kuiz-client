@@ -171,9 +171,13 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.DropDownFilterContainer>
 
       {quizBookData ? (
-        quizBookData.map((quizBook) => {
+        (quizBookData as QuizBookModel[]).map((quizBook) => {
           return (
-            <QuizBook key={`quiz${quizBook.id}`} quizBook={quizBook}></QuizBook>
+            <QuizBook
+              key={`quiz${quizBook.id}`}
+              quizBook={quizBook}
+              isUserQuizBook={false}
+            ></QuizBook>
           );
         })
       ) : (

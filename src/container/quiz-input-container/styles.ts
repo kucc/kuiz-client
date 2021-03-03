@@ -166,6 +166,7 @@ export const ImageButton = styled.button`
   box-shadow: 3px 3px 3px 3px ${THEME_COLOR.GRAYER};
 
   font-size: 1.4rem;
+  cursor: pointer;
 `;
 
 export const ImageWarning = styled.div`

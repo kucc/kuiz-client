@@ -21,7 +21,7 @@ export const mokData: QuizModel[] = [
     imageURL:
       "https://user-images.githubusercontent.com/46309902/107244451-5f70aa80-6a71-11eb-8dfc-d3eb17b8749c.jpg",
     description: "현채의 별명은 초코송이이다.",
-    isChoice: true,
+    isChoice: 1,
   },
 
   {
@@ -37,7 +37,7 @@ export const mokData: QuizModel[] = [
       "https://user-images.githubusercontent.com/46309902/107600044-e4241a00-6c65-11eb-8bc2-4e0d7ba59230.jpg",
     description:
       "연구에 따르면 강아지가 포도를 먹을 경우 신장의 기능 저하를 일으키며, 경우에 따라서는 급성 신부전증으로 인해 사망에 이를 수 있다고 한다.",
-    isChoice: true,
+    isChoice: 1,
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ export const mokData: QuizModel[] = [
     imageURL:
       "https://user-images.githubusercontent.com/46309902/107244451-5f70aa80-6a71-11eb-8dfc-d3eb17b8749c.jpg",
     description: "현채의 별명은 초코송이이다.",
-    isChoice: true,
+    isChoice: 1,
   },
   {
     id: 4,
@@ -65,7 +65,7 @@ export const mokData: QuizModel[] = [
     imageURL:
       "https://user-images.githubusercontent.com/46309902/107599693-b1c5ed00-6c64-11eb-8b01-e45e377dc98c.jpg",
     description: "확인된 것만 약 1만 8천 개의 섬이 존재한다고 한다.",
-    isChoice: true,
+    isChoice: 1,
   },
   {
     id: 5,
@@ -75,6 +75,6 @@ export const mokData: QuizModel[] = [
     imageURL:
       "https://user-images.githubusercontent.com/46309902/107244451-5f70aa80-6a71-11eb-8dfc-d3eb17b8749c.jpg",
     description: "현채의 별명은 초코송이이다.",
-    isChoice: false,
+    isChoice: 0,
   },
 ];
