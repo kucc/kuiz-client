@@ -1,7 +1,7 @@
 export interface ModalProps {
   children?: React.ReactNode;
   show?: boolean;
-  onToggle?: any;
+  onToggle?: () => void;
 }
 
 export interface ModalDivProps {
