@@ -53,54 +53,53 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
       "삭제 후 다시 복구할 수 없습니다. 정말 삭제하시겠어요?"
     );
     if (!isDelete) return;
+
     dispatch(deleteQuizBookAsync.request({ quizBookId: quizBook.id }));
     window.location.reload();
   };
 
   return (
-    <>
-      <S.QuizBookWrapper onClick={onClick}>
-        <S.QuizBookRow height={4}>
-          <S.QuizBookName>
-            <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
-          </S.QuizBookName>
-          <S.QuizBookLike>
-            <S.QuizText bold ref={likeButton}>
-              👍 {quizBook.likedCount}
-            </S.QuizText>
-          </S.QuizBookLike>
-        </S.QuizBookRow>
-        <S.QuizBookRow height={3}>
-          <S.QuizCount>
-            <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
-          </S.QuizCount>
-          <S.SolvedCount>
-            <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
-          </S.SolvedCount>
+    <S.QuizBookWrapper onClick={onClick}>
+      <S.QuizBookRow height={4}>
+        <S.QuizBookName>
+          <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
+        </S.QuizBookName>
+        <S.QuizBookLike>
+          <S.QuizText bold ref={likeButton}>
+            👍 {quizBook.likedCount}
+          </S.QuizText>
+        </S.QuizBookLike>
+      </S.QuizBookRow>
+      <S.QuizBookRow height={3}>
+        <S.QuizCount>
+          <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
+        </S.QuizCount>
+        <S.SolvedCount>
+          <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
+        </S.SolvedCount>
 
-          <S.QuizBookOwner>
-            {!isUserQuizBook ? (
-              <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
-            ) : (
-              <>
-                <S.QuizBookSetButton
-                  src={"/src/asset/setting.png"}
-                  ref={settingButton}
-                />
-                <DropDown
-                  ref={dropDownContainer}
-                  show={dropDown}
-                  text1={"수정하기"}
-                  text2={"삭제하기"}
-                  clickEvent1={editQuizBook}
-                  clickEvent2={deleteQuizBook}
-                />
-              </>
-            )}
-          </S.QuizBookOwner>
-        </S.QuizBookRow>
-      </S.QuizBookWrapper>
-    </>
+        <S.QuizBookOwner>
+          {!isUserQuizBook ? (
+            <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
+          ) : (
+            <>
+              <S.QuizBookSetButton
+                src={"/src/asset/setting.png"}
+                ref={settingButton}
+              />
+              <DropDown
+                ref={dropDownContainer}
+                show={dropDown}
+                text1={"수정하기"}
+                text2={"삭제하기"}
+                clickEvent1={editQuizBook}
+                clickEvent2={deleteQuizBook}
+              />
+            </>
+          )}
+        </S.QuizBookOwner>
+      </S.QuizBookRow>
+    </S.QuizBookWrapper>
   );
 };
 
