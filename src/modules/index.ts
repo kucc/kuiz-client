@@ -6,6 +6,7 @@ import quizbook from "./quiz-book/reducer";
 import category from "./category/reducer";
 import quiz from "./quiz/reducer";
 import userQuizBook from "./user-quizbook/reducer";
+import modal from "./modal/reducer";
 import { quizBookSaga } from "./quiz-book";
 import { categorySaga } from "./category";
 import { userQuizBookSaga } from "./user-quizbook";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   quizbook,
   category,
   userQuizBook,
+  modal,
 });
 
 export default rootReducer;

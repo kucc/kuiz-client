@@ -36,19 +36,23 @@ const App: React.FC = () => (
         <Switch>
           <Route
             path="/quiz-book/:quizBookId/quiz/"
-            component={Auth(QuizPage)}
+            component={Auth(QuizPage, false)}
           />
           <Route
             path="/quiz-book/:quizBookId/makequiz"
-            component={Auth(MakeQuizPage)}
+            component={Auth(MakeQuizPage, true)}
           />
-          <Route path="/quiz/:quizId" component={Auth(EditQuizPage)} />
+          <Route path="/quiz/:quizId" component={Auth(EditQuizPage, true)} />
           <Route path="/category/:categoryId" component={QuizBookListPage} />
           <Route path="/login" exact component={LoginPage} />
           <Route path="/category" exact component={CategoryPage} />
-          <Route path="/profile" exact component={Auth(ProfilePage)} />
-          <Route path="/quiz-book" exact component={Auth(QuizBookPage)} />
-          <Route path="/quiz-book/" component={Auth(UserQuizBookListPage)} />
+          <Route path="/profile" exact component={Auth(ProfilePage, false)} />
+          <Route path="/quiz-book" exact component={Auth(QuizBookPage, true)} />
+          <Route
+            path="/quiz-book/"
+            exact
+            component={Auth(UserQuizBookListPage, false)}
+          />
           <Route path="/result" exact component={QuizResultPage} />
           <Route path="/rank" exact component={RankPage} />
           <Route path="/addquiz" exact component={AddQuizPage} />
