@@ -1,4 +1,3 @@
-import { useHistory } from "react-router-dom";
 import { createReducer } from "typesafe-actions";
 import {
   EDIT_QUIZ,
