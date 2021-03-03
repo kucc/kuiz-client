@@ -1,25 +1,27 @@
 import React from "react";
 import Modal from "@component/common/modal";
 import * as S from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { hideAlertModal } from "@/modules/modal";
+import { RootState } from "@/modules";
+import { useHistory } from "react-router-dom";
 
-interface CustomAlertProps {
-  text: string;
-  show: boolean;
-  toggleModal: any;
-}
+const CustomAlert = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { show, message } = useSelector((state: RootState) => state.modal);
+  const hideModal = () => {
+    dispatch(hideAlertModal());
+    history.push("/");
+  };
 
-const CustomAlert = ({ text, show, toggleModal }: CustomAlertProps) => {
   return (
-    <Modal show={show} toggleModal={toggleModal}>
+    <Modal show={show} onToggle={hideModal}>
       <S.ModalHeader />
-      <S.ModalText>{text}</S.ModalText>
-      <S.ModalConfirmButton
-        onClick={() => {
-          toggleModal(!show);
-        }}
-      >
-        확인
-      </S.ModalConfirmButton>
+      <S.ModalBody>
+        <S.ModalText>{message}</S.ModalText>
+      </S.ModalBody>
+      <S.ModalConfirmButton onClick={hideModal}>확인</S.ModalConfirmButton>
     </Modal>
   );
 };
