@@ -15,7 +15,7 @@ const QuizOption = (props: QuizOptionProps) => {
     goToNextQuiz,
   } = props;
 
-  useEffect(() => {}), [solved, selectedOption];
+  //useEffect(() => {}), [solved, selectedOption];
 
   const optionArray = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
   const isChoice = quiz.isChoice;

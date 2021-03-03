@@ -14,7 +14,7 @@ export interface QuizProps {
   quizBookId: number;
 }
 
-const QuizContainer: React.FC<QuizProps> = ({ quizBookId }) => {
+const QuizContainer = ({ quizBookId }: QuizProps) => {
   const [loading, setLoading] = useState(true);
   const [quizList, setQuizList] = useState({} as QuizModel[]);
   const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);

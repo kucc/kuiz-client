@@ -3,5 +3,5 @@ export default interface UserModel {
   email: string;
   point: number;
   level: number;
-  isMember: Boolean;
+  isMember: boolean;
 }

@@ -4,5 +4,5 @@ export default interface UserWithRankModel {
   point: number;
   level: number;
   rank: number;
-  isMember: Boolean;
+  isMember: boolean;
 }
