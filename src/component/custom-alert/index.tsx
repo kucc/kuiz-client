@@ -5,14 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideAlertModal } from "@/modules/modal";
 import { RootState } from "@/modules";
 import { useHistory } from "react-router-dom";
+import { CustomAlertProps } from "./types";
 
-const CustomAlert = () => {
+const CustomAlert = ({ redirect }: CustomAlertProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { show, message } = useSelector((state: RootState) => state.modal);
   const hideModal = () => {
     dispatch(hideAlertModal());
-    history.push("/");
+    if (redirect) {
+      history.push(redirect);
+    }
   };
 
   return (
