@@ -38,9 +38,7 @@ const QuizInputContainer = ({
   const handleFormData = () => {
     const formData = new FormData();
     Object.keys(body).map((key) => formData.append(key, body[key]));
-    if (file) {
-      formData.append("image", file);
-    }
+    formData.append("image", file);
 
     return formData;
   };
@@ -149,6 +147,7 @@ const QuizInputContainer = ({
           />
           {body?.imageURL && (
             <S.ImageBox>
+              {!file && <S.PreviewImg src={data?.imageURL} />}
               {file && <S.PreviewImg src={URL.createObjectURL(file)} />}
               <label>
                 <S.ImageInput
@@ -163,7 +162,7 @@ const QuizInputContainer = ({
                   이미지 등록
                 </S.ImageButton>
               </label>
-              {!file && (
+              {!file && !data?.imageURL && (
                 <>
                   <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
                   <S.ImageWarning>
