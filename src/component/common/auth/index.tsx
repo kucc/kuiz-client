@@ -5,6 +5,8 @@ import { insetUserInfo } from "@/modules/user";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import CustomAlert from "@component/custom-alert";
+import { showAlertModal } from "@/modules/modal";
 
 const Auth = (Component: FC, isMember: boolean): FC => () => {
   const dispatch = useDispatch();
@@ -19,8 +21,7 @@ const Auth = (Component: FC, isMember: boolean): FC => () => {
         const userInfo = await userAPI.getUserInfo();
         dispatch(insetUserInfo(userInfo));
         if (isMember && !userInfo.isMember) {
-          alert("kucc 회원만 가능합니다");
-          history.push("/");
+          dispatch(showAlertModal("kucc 회원에게만 허용된 페이지 입니다"));
         }
       } catch (e) {
         history.push("/login");
@@ -32,7 +33,11 @@ const Auth = (Component: FC, isMember: boolean): FC => () => {
     checkIsValidLogin();
   }, []);
 
-  return <Component />;
+  return (
+    <>
+      <Component /> <CustomAlert />
+    </>
+  );
 };
 
 export default Auth;
