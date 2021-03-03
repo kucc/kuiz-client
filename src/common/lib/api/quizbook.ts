@@ -2,6 +2,7 @@ import endpoints from "@/common/endpoints";
 import QuizBookModel from "@/common/model/quiz-book";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
 import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
+import QuizBookwithLikedModel from "../../model/quiz-book-with-liked";
 import axios from "../axios";
 
 const quizbookAPI = {
@@ -10,13 +11,13 @@ const quizbookAPI = {
     page: number,
     isSortByDate: boolean
   ) => {
-    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
+    const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
       `${endpoints.QUIZBOOK_API}?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
     return quizBookList;
   },
   searchQuizBookList: async (categoryId: number, keyword: string) => {
-    const { data: quizBookList } = await axios.get<QuizBookModel[]>(
+    const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
       `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&keyword=${keyword}`
     );
     return quizBookList;
