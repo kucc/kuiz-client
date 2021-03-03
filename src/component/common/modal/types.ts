@@ -1,7 +1,7 @@
 export interface ModalProps {
   children?: React.ReactNode;
   show?: boolean;
-  toggleModal?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onToggle?: any;
 }
 
 export interface ModalDivProps {

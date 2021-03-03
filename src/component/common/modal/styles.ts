@@ -19,12 +19,13 @@ export const Container = styled.div`
   width: 100%;
   max-width: 40rem;
   margin: 0rem 2rem;
-
   z-index: 1100;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
   border: none;
   border-radius: 0.5rem;
+  overflow: hidden;
 `;

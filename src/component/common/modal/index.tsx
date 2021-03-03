@@ -5,9 +5,9 @@ import * as S from "./styles";
 const Modal: React.FunctionComponent<ModalProps> = ({
   children,
   show,
-  toggleModal,
+  onToggle,
 }) => (
-  <S.Modal show={show} onClick={toggleModal}>
+  <S.Modal show={show} onClick={onToggle}>
     <S.Container onClick={(e) => e.stopPropagation()}>{children}</S.Container>
   </S.Modal>
 );
