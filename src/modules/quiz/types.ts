@@ -18,10 +18,10 @@ export type GetQuizAPIPayload = {
 
 export type PostQuizAPIPayload = {
   quizBookId: number;
-  body: QuizRequestBody;
+  body: QuizRequestBody | FormData;
 };
 
 export type PatchQuizAPIPayload = {
   quizId: number;
-  body: QuizRequestBody | undefined;
+  body: QuizRequestBody | FormData | undefined;
 };

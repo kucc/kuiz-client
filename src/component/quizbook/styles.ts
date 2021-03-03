@@ -76,3 +76,11 @@ export const QuizBoldText = styled.div`
   font-weight: bold;
   font-size: 1.6rem;
 `;
+
+export const QuizBookSetButton = styled.img`
+  z-index: 1;
+  margin: 20px 0 25px 0;
+  padding: 10% 2% 10% 10%;
+  width: 25%;
+  /* border: 1px solid black; */
+`;

@@ -50,6 +50,14 @@ const quizbookAPI = {
 
     return updatedQuizBook;
   },
+
+  deleteQuizBook: async (quizbookId: number) => {
+    const { data: result } = await axios.delete<QuizBookModel>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}`
+    );
+
+    return result;
+  },
 };
 
 export default quizbookAPI;

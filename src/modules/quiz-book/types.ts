@@ -5,10 +5,14 @@ import * as actions from "./actions";
 
 export type QuizBookAction = ActionType<typeof actions>;
 
+export type DeleteResult = {
+  result: boolean;
+};
+
 export type QuizBookState = {
   loading: boolean;
   error: Error | null;
-  data: QuizBookModel[] | null;
+  data: QuizBookModel[] | DeleteResult | null;
 };
 
 export type QuizBookAPIPayload = {
@@ -20,4 +24,8 @@ export type QuizBookAPIPayload = {
 export type SearchAPIPayload = {
   categoryId: number;
   keyword: string;
+};
+
+export type DeleteQuizBookAPIPayload = {
+  quizBookId: number;
 };
