@@ -10,12 +10,11 @@ import { showAlertModal } from "@/modules/modal";
 const Auth = (Component: FC, isMember: boolean): FC => () => {
   const dispatch = useDispatch();
   const [authCookie] = useCookies(["accessToken"]);
-  const [redirectURL, setRedirectURL] = useState<string>("");
+  const [redirectURL, setRedirectURL] = useState<string>("/login");
   const [isValidLogin, setIsValidLogin] = useState<boolean>(false);
 
   const checkIsValidLogin = async () => {
     if (!authCookie) {
-      setRedirectURL("/login");
       dispatch(showAlertModal("로그인이 필요한 서비스입니다"));
     } else {
       try {
@@ -28,7 +27,6 @@ const Auth = (Component: FC, isMember: boolean): FC => () => {
         }
         setIsValidLogin(true);
       } catch (e) {
-        setRedirectURL("/login");
         dispatch(showAlertModal("로그인이 필요한 서비스 입니다"));
       }
     }
