@@ -1,11 +1,23 @@
 import styled from "styled-components";
+import { BREAKPOINT } from "@asset/constant";
 
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 100%;
+  width: 70%;
   height: 100%;
 
-  padding: 3rem 2rem 0rem 2rem;
+  margin-top: 2rem;
+  padding: 3rem 0rem;
+  background-color: white;
+  border-radius: 0.5rem;
+
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 50%;
+    padding: 0rem 5rem;
+  }
 `;
