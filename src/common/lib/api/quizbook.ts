@@ -35,6 +35,14 @@ const quizbookAPI = {
     return userQuizBook;
   },
 
+  getUnsolvedQuizBookList: async () => {
+    const { data: unsolvedQuizBookList } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/unsolved`
+    );
+
+    return unsolvedQuizBookList;
+  },
+
   postSolveQuizBook: async (quizbookId, quizId, isCorrect) => {
     const { data: solveQuizBook } = await axios.post<SolveQuizBookModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/solve`,
