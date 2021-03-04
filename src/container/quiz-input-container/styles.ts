@@ -5,13 +5,17 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 100%;
+  width: 70%;
   height: 100%;
 
-  padding: 0rem 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+
+  margin: 2rem 0rem;
+  padding: 2rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 50%;
-    padding: 0rem 5rem;
+    margin: 2rem 0rem;
   }
 `;
 

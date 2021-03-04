@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileMenuItem from "@/component/profile-menu-item";
-import CommonButton from "@/component/buttons/common-button";
 import endpoints from "@/common/endpoints";
 import {
   USER_MADE_QUIZBOOK_MENU,
@@ -42,7 +41,7 @@ const ProfileMenuContainer = () => {
       />
       <S.ProfileBorder />
       <S.ButtonWrapper>
-        <CommonButton onClick={clickHandler} text="로그아웃" />
+        <S.LogoutButton onClick={clickHandler}>로그아웃</S.LogoutButton>
       </S.ButtonWrapper>
     </S.ProfileMenuContainer>
   );
