@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { THEME_COLOR } from "@asset/constant";
 
 export const ProfileBorder = styled.div`
   width: 100%;
@@ -27,5 +28,7 @@ export const ProfileMenuItemWrapper = styled(Link)`
 export const ProfileMenuTitle = styled.div`
   color: #000000;
   font-size: 1.6rem;
-  /* padding-left: 1rem; */
+  &:hover {
+    color: ${THEME_COLOR.PRIMARY};
+  }
 `;
