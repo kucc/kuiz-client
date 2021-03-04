@@ -8,13 +8,13 @@ export const ProfileInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin: 2rem;
 `;
 
 export const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 30rem;
   align-items: center;
   justify-content: space-between;
 
@@ -73,7 +73,7 @@ export const ProfilePointBarContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 1rem;
-  width: 50%;
+  width: 30rem;
 `;
 export const PointBarWrapper = styled.div`
   width: 100%;
@@ -98,4 +98,11 @@ export const PointBar = styled.div<PointBarProps>`
 export const Point = styled.div`
   align-self: flex-end;
   font-size: 1.6rem;
+`;
+
+export const UserInfoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 `;

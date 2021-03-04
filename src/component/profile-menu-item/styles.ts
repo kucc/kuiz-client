@@ -8,11 +8,11 @@ export const ProfileBorder = styled.div`
 `;
 
 export const ProfileMenuItem = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 `;
 
 export const ProfileMenuItemWrapper = styled(Link)`
@@ -27,5 +27,5 @@ export const ProfileMenuItemWrapper = styled(Link)`
 export const ProfileMenuTitle = styled.div`
   color: #000000;
   font-size: 1.6rem;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
 `;

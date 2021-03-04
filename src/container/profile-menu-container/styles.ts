@@ -4,19 +4,24 @@ import { THEME_COLOR } from "@asset/constant";
 export const ProfileMenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 30rem;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
 `;
 export const ProfileBorder = styled.div`
-  width: 50%;
+  width: 100%;
   height: 0.05rem;
   background-color: #666666;
 `;
 
 export const ButtonWrapper = styled.div`
-  width: 10%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin-top: 3rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const LogoutButton = styled.button`
