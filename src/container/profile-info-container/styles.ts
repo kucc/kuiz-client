@@ -8,7 +8,7 @@ export const ProfileInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  margin: 2rem;
+  margin: 2rem 2rem 4rem 2rem;
 `;
 
 export const UserInfoContainer = styled.div`

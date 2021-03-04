@@ -7,7 +7,7 @@ export const ProfileMenuContainer = styled.div`
   width: 30rem;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
+  margin-bottom: 3rem;
 `;
 export const ProfileBorder = styled.div`
   width: 100%;
@@ -19,7 +19,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 3rem;
+  margin-top: 4rem;
   align-items: center;
   justify-content: center;
 `;
