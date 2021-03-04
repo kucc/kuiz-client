@@ -8,8 +8,7 @@ export const ProfileInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-
-  padding: 1rem 2rem 1rem 2rem;
+  margin-bottom: 3rem;
 `;
 
 export const UserInfoContainer = styled.div`
@@ -28,7 +27,6 @@ export const UserBasicInfoWrapper = styled.div`
   align-items: flex-start;
   justify-content: space-around;
   margin-right: 1rem;
-  padding: 1rem 2rem 0rem 0rem;
 `;
 
 export const UserName = styled.div`
@@ -58,13 +56,15 @@ export const UserPoint = styled.div`
 
 export const IconContainer = styled.div`
   margin-left: 1rem;
-  padding: 1rem 2rem 1rem 0rem;
 `;
 
 export const LevelIcon = styled.img`
-  @media only screen {
-    display: block;
-    width: 10rem;
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem;
+  @media only screen and (min-width: ${BREAKPOINT}px){
+    width: 7rem;
+    height: 7rem;
   }
 `;
 
@@ -74,11 +74,10 @@ export const ProfilePointBarContainer = styled.div`
   align-items: flex-start;
   margin-bottom: 1rem;
   width: 50%;
-  padding: 1rem 2rem 1rem 0rem;
 `;
 export const PointBarWrapper = styled.div`
   width: 100%;
-  padding: 1rem 2rem 1rem 0rem;
+  margin-bottom: 1rem;
 `;
 export const BackgroundBar = styled.div`
   width: 100%;

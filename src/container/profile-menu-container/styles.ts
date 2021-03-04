@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { THEME_COLOR } from "@asset/constant";
 
 export const ProfileMenuContainer = styled.div`
   display: flex;
@@ -6,8 +7,6 @@ export const ProfileMenuContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-
-  padding: 1rem 2rem 1rem 2rem;
 `;
 export const ProfileBorder = styled.div`
   width: 50%;
@@ -18,4 +17,15 @@ export const ProfileBorder = styled.div`
 export const ButtonWrapper = styled.div`
   width: 10%;
   margin-top: 3rem;
+`;
+
+export const LogoutButton = styled.button`
+  width: 10rem;
+  height: 3rem;
+  background-color: ${THEME_COLOR.PRIMARY};
+  border-radius: 10px;
+  color: #fbfffb;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
 `;
