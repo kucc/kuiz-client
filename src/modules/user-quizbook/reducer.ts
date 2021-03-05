@@ -43,20 +43,26 @@ const userQuizBookReducer = createReducer<
     error: null,
   }),
 
-  [DELETE_QUIZBOOK_SUCCESS]: (state, action) => ({
-    ...state,
-    loading: false,
-    data: state.data?.filter((quizBook) => {
-      const deletedQuizBookId = action.payload;
-      return quizBook.id !== deletedQuizBookId;
-    }),
-  }),
+  [DELETE_QUIZBOOK_SUCCESS]: (state, action) => {
+    if (!state.data) {
+      return { ...state };
+    }
+
+    const quizBookList = state.data.filter((quizBook) => {
+      return quizBook.id !== action.payload;
+    });
+
+    return {
+      ...state,
+      loading: false,
+      data: quizBookList,
+    };
+  },
 
   [DELETE_QUIZBOOK_ERROR]: (state, action) => ({
     ...state,
     loading: true,
     error: action.payload,
-    data: null,
   }),
 });
 

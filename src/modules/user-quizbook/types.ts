@@ -8,7 +8,7 @@ export type UserQuizBookAction = ActionType<typeof actions>;
 export type UserQuizBookState = {
   loading: boolean;
   error: Error | null;
-  data: QuizBookModel[] | null | undefined;
+  data: QuizBookModel[] | null;
 };
 
 export type UserQuizBookAPIPayload = {
