@@ -48,15 +48,13 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       if (!state.data) {
         return { ...state };
       }
-      const updatedQuizBookList = (state.data as QuizBookModel[]).map(
-        (quizBook) => {
-          if (quizBook.id === action.payload.id) {
-            return action.payload;
-          } else {
-            return quizBook;
-          }
+      const updatedQuizBookList = state.data.map((quizBook) => {
+        if (quizBook.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return quizBook;
         }
-      );
+      });
       return {
         ...state,
         loading: false,
