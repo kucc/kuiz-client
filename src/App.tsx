@@ -50,7 +50,6 @@ const App: React.FC = () => (
           <Route path="/quiz-book" exact component={Auth(QuizBookPage, true)} />
           <Route
             path="/quiz-book/"
-            exact
             component={Auth(UserQuizBookListPage, false)}
           />
           <Route path="/result" exact component={QuizResultPage} />
