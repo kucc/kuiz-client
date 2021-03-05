@@ -33,7 +33,7 @@ export const useFetchQuiz = (quizId: number | null) => {
       });
       const quiz = await response.json();
       setData(quiz);
-      setBody({ ...quiz, imageURL: quiz.imageURL, isChoice: quiz.isChoice });
+      setBody({ ...body, ...quiz });
     };
     getQuiz();
   }, []);
