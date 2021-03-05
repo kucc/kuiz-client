@@ -24,12 +24,12 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
 
   const [quizBookData, setQuizBookData] = useState(data);
-  const [totalQuizBookList, setTotalQuizBookList] = useState(
-    [] as QuizBookModel[]
+  const [totalQuizBookList, setTotalQuizBookList] = useState<QuizBookModel[]>(
+    []
   );
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookModel[]
-  );
+  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
+    QuizBookModel[]
+  >([]);
 
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
@@ -159,7 +159,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.DropDownFilterContainer>
 
       {quizBookData ? (
-        (quizBookData as QuizBookModel[]).map((quizBook) => {
+        quizBookData.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}

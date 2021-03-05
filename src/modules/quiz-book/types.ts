@@ -12,7 +12,7 @@ export type DeleteResult = {
 export type QuizBookState = {
   loading: boolean;
   error: Error | null;
-  data: QuizBookModel[] | DeleteResult | null;
+  data: QuizBookModel[] | null;
 };
 
 export type QuizBookAPIPayload = {
@@ -24,8 +24,4 @@ export type QuizBookAPIPayload = {
 export type SearchAPIPayload = {
   categoryId: number;
   keyword: string;
-};
-
-export type DeleteQuizBookAPIPayload = {
-  quizBookId: number;
 };
