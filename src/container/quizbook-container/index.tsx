@@ -13,6 +13,7 @@ import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@common/model/quiz-book";
+import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
@@ -114,19 +115,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   useEffect(() => {
     getUnsolvedQuizBookList();
   }, [finish]);
-
-  const debounce = (func, delay) => {
-    let timer;
-    return (...args) => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-      timer = setTimeout(() => {
-        func(args);
-      }, delay);
-    };
-  };
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
