@@ -3,11 +3,9 @@ import { QuizBookProps } from "./types";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  deleteQuizBookAsync,
-  postQuizBookLikstAsync,
-} from "@/modules/quiz-book";
 import DropDown from "../drop-down";
+import { deleteQuizBookAsync } from "@/modules/user-quizbook";
+import { postQuizBookLikstAsync } from "@/modules/quiz-book";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const likeButton = useRef<HTMLDivElement>(null);
@@ -55,7 +53,6 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
     if (!isDelete) return;
 
     dispatch(deleteQuizBookAsync.request({ quizBookId: quizBook.id }));
-    window.location.reload();
   };
 
   return (

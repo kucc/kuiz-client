@@ -52,11 +52,16 @@ const quizbookAPI = {
   },
 
   deleteQuizBook: async (quizbookId: number) => {
-    const { data: result } = await axios.delete<QuizBookModel>(
+    const { data } = await axios.delete<{ result: boolean }>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}`
     );
 
-    return result;
+    if (!data.result) {
+      alert("내부 오류입니다. 잠시 후 다시시도해주세요.");
+      return;
+    }
+
+    return quizbookId;
   },
 };
 
