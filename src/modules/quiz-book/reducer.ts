@@ -14,8 +14,6 @@ import {
   DELETE_QUIZBOOK_ERROR,
 } from "./actions";
 import { QuizBookAction, QuizBookState } from "./types";
-import QuizBookModel from "@/common/model/quiz-book";
-import QuizBookwithLikedModel from "../../common/model/quiz-book-with-liked";
 
 const initialState: QuizBookState = {
   loading: false,

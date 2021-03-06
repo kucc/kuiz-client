@@ -7,7 +7,7 @@ import {
   DELETE_QUIZBOOK,
   getQuizBookListAsync,
   GET_QUIZBOOK_LIST,
-  postQuizBookLikstAsync,
+  postQuizBookLikeAsync,
   POST_QUIZBOOK_LIKE,
   searchQuizBookListAsync,
   SEARCH_QUIZBOOK_LIST,
@@ -32,7 +32,7 @@ function* getQuizBookListSaga(
 }
 
 function* postQuizBookLikeSaga(
-  action: ReturnType<typeof postQuizBookLikstAsync.request>
+  action: ReturnType<typeof postQuizBookLikeAsync.request>
 ) {
   try {
     const quizBookId = action.payload;

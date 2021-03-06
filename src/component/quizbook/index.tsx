@@ -12,14 +12,14 @@ import { STATIC_URL } from "@/asset/constant";
 import quizbookAPI from "@common/lib/api/quizbook";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
-  const likeButton = useRef<HTMLDivElement>(null);
+  const { data, loading, error } = useSelector(
   const likeButton = useRef<HTMLImageElement>(null);
   const settingButton = useRef<HTMLImageElement>(null);
   const dropDownContainer = useRef<HTMLDivElement>(null);
 
-  const [dropDown, setDropDown] = useState(false);
-  const [likedCount, setLikedCount] = useState(quizBook.likedCount);
-  const [liked, setLiked] = useState(quizBook.liked);
+  const [dropDown, setDropDown] = useState<boolean>(false);
+  const [likedCount, setLikedCount] = useState<number>(quizBook.likedCount);
+  const [liked, setLiked] = useState<boolean>(quizBook.liked);
 
   const history = useHistory();
   const dispatch = useDispatch();
