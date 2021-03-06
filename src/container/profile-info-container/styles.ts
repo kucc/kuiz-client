@@ -21,6 +21,17 @@ export const UserInfoContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 22rem;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    font-size: 1.5rem;
+  }
+`;
+
 export const UserBasicInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,10 +42,7 @@ export const UserBasicInfoWrapper = styled.div`
 
 export const UserName = styled.div`
   font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    font-size: 1.5rem;
-  }
+  margin-right: 1.2rem;
 `;
 
 export const UserEmail = styled.div`
@@ -62,7 +70,7 @@ export const LevelIcon = styled.img`
   width: 5rem;
   height: 5rem;
   margin: 1rem;
-  @media only screen and (min-width: ${BREAKPOINT}px){
+  @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 7rem;
     height: 7rem;
   }
@@ -105,4 +113,16 @@ export const UserInfoWrapper = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
+`;
+
+export const UpdateButtonContainer = styled.div`
+  display: flex;
+  height: 1.2rem;
+  width: 13%;
+  align-items: center;
+  justify-content: flex-end;
+  img {
+    height: 100%;
+  }
+  cursor: pointer;
 `;
