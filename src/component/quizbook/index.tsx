@@ -2,17 +2,23 @@ import React, { useRef, useState } from "react";
 import { QuizBookProps } from "./types";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteQuizBookAsync,
   postQuizBookLikeAsync,
 } from "@/modules/quiz-book";
 import DropDown from "../drop-down";
 import { STATIC_URL } from "@/asset/constant";
+import { RootState } from "@/modules";
 import quizbookAPI from "@common/lib/api/quizbook";
+import { showAlertModal } from "../../modules/modal";
+import CustomAlert from "../custom-alert";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const { data, loading, error } = useSelector(
+    (state: RootState) => state.quizbook
+  );
+
   const likeButton = useRef<HTMLImageElement>(null);
   const settingButton = useRef<HTMLImageElement>(null);
   const dropDownContainer = useRef<HTMLDivElement>(null);
@@ -20,6 +26,7 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [likedCount, setLikedCount] = useState<number>(quizBook.likedCount);
   const [liked, setLiked] = useState<boolean>(quizBook.liked);
+  const [isAllowed, setIsAllowed] = useState<boolean>(true);
 
   const history = useHistory();
   const dispatch = useDispatch();
