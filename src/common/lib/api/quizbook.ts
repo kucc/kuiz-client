@@ -1,7 +1,6 @@
 import endpoints from "@/common/endpoints";
 import QuizBookModel from "@/common/model/quiz-book";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
-import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
 import axios from "../axios";
 
 const quizbookAPI = {
@@ -33,6 +32,14 @@ const quizbookAPI = {
     );
 
     return userQuizBook;
+  },
+
+  getUnsolvedQuizBookList: async () => {
+    const { data: unsolvedQuizBookList } = await axios.get<QuizBookModel[]>(
+      `${endpoints.QUIZBOOK_API}/unsolved`
+    );
+
+    return unsolvedQuizBookList;
   },
 
   postSolveQuizBook: async (quizbookId, quizId, isCorrect) => {
