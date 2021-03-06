@@ -13,6 +13,7 @@ import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@common/model/quiz-book";
+import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
@@ -23,9 +24,12 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
 
   const [quizBookData, setQuizBookData] = useState(data);
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookModel[]
+  const [totalQuizBookList, setTotalQuizBookList] = useState<QuizBookModel[]>(
+    []
   );
+  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
+    QuizBookModel[]
+  >([]);
 
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
@@ -77,18 +81,9 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     setQuizBookData(data);
   }, [data]);
 
-  const debounce = (func, delay) => {
-    let timer;
-    return (...args) => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-      timer = setTimeout(() => {
-        func(args);
-      }, delay);
-    };
-  };
+  useEffect(() => {
+    getUnsolvedQuizBookList();
+  }, [finish]);
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
@@ -133,7 +128,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.DropDownFilterContainer>
 
       {quizBookData ? (
-        (quizBookData as QuizBookModel[]).map((quizBook) => {
+        quizBookData.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}

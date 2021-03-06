@@ -24,18 +24,20 @@ const ProfileInfoContainer = () => {
 
   return data ? (
     <S.ProfileInfoContainer>
-      <S.UserInfoContainer>
-        <S.UserBasicInfoWrapper>
-          <S.UserName>{data.name}</S.UserName>
-          <S.UserEmail>{data.email}</S.UserEmail>
-        </S.UserBasicInfoWrapper>
-        <S.IconContainer>
-          <S.LevelIcon
-            src={getUserLevelIcon(data.level)}
-            alt="Icon"
-          ></S.LevelIcon>
-        </S.IconContainer>
-      </S.UserInfoContainer>
+      <S.UserInfoWrapper>
+        <S.UserInfoContainer>
+          <S.UserBasicInfoWrapper>
+            <S.UserName>{data.name}</S.UserName>
+            <S.UserEmail>{data.email}</S.UserEmail>
+          </S.UserBasicInfoWrapper>
+          <S.IconContainer>
+            <S.LevelIcon
+              src={getUserLevelIcon(data.level)}
+              alt="Icon"
+            ></S.LevelIcon>
+          </S.IconContainer>
+        </S.UserInfoContainer>
+      </S.UserInfoWrapper>
       <S.ProfilePointBarContainer>
         <S.PointBarWrapper>
           <S.UserPoint> {data.point} P</S.UserPoint>
