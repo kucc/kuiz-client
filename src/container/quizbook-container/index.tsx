@@ -99,7 +99,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const searchQuizBookList = (keyword: string) => {
-    dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
+    dispatch(searchQuizBookListAsync.request({ categoryId, page: 1, keyword }));
   };
 
   useEffect(() => {

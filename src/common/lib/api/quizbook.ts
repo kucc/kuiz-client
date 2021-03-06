@@ -1,8 +1,8 @@
 import endpoints from "@/common/endpoints";
 import QuizBookModel from "@/common/model/quiz-book";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
-import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
-import QuizBookwithLikedModel from "../../model/quiz-book-with-liked";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
+import LikeResultModel from "@/common/model/like-result";
 import axios from "../axios";
 
 const quizbookAPI = {

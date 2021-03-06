@@ -1,5 +1,6 @@
 import QuizBookModel from "@/common/model/quiz-book";
 import { ActionType } from "typesafe-actions";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 import * as actions from "./actions";
 
@@ -12,7 +13,7 @@ export type DeleteResult = {
 export type QuizBookState = {
   loading: boolean;
   error: Error | null;
-  data: QuizBookModel[] | DeleteResult | null;
+  data: QuizBookwithLikedModel[] | DeleteResult | LikeResultModel | null;
 };
 
 export type QuizBookAPIPayload = {
@@ -23,6 +24,7 @@ export type QuizBookAPIPayload = {
 
 export type SearchAPIPayload = {
   categoryId: number;
+  page: number;
   keyword: string;
 };
 

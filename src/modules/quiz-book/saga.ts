@@ -1,6 +1,7 @@
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@/common/model/quiz-book";
 import { call, put, takeEvery } from "redux-saga/effects";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import {
   deleteQuizBookAsync,
   DELETE_QUIZBOOK,
@@ -18,7 +19,7 @@ function* getQuizBookListSaga(
 ) {
   try {
     const { categoryId, page, isSortByDate } = action.payload;
-    const quizBookList: QuizBookModel[] = yield call(
+    const quizBookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.getQuizBookList,
       categoryId,
       page,
@@ -49,10 +50,11 @@ function* searchQuizBookListSaga(
   action: ReturnType<typeof searchQuizBookListAsync.request>
 ) {
   try {
-    const { categoryId, keyword } = action.payload;
-    const quizbookList: QuizBookModel[] = yield call(
+    const { categoryId, page, keyword } = action.payload;
+    const quizbookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.searchQuizBookList,
       categoryId,
+      page,
       keyword
     );
     yield put(searchQuizBookListAsync.success(quizbookList));

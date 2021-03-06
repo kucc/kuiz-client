@@ -6,6 +6,8 @@ import {
   SearchAPIPayload,
   DeleteQuizBookAPIPayload,
 } from "./types";
+import QuizBookwithLikedModel from "@common/model/quiz-book-with-liked";
+import LikeResultModel from "@common/model/like-result";
 
 export const GET_QUIZBOOK_LIST = "quizbook/GET_QUIZBOOK_LIST" as const;
 export const GET_QUIZBOOK_LIST_SUCCESS = "quizbook/GET_QUIZBOOK_LIST_SUCCESS" as const;
@@ -27,19 +29,19 @@ export const getQuizBookListAsync = createAsyncAction(
   GET_QUIZBOOK_LIST,
   GET_QUIZBOOK_LIST_SUCCESS,
   GET_QUIZBOOK_LIST_ERROR
-)<QuizBookAPIPayload, QuizBookModel[], AxiosError>();
+)<QuizBookAPIPayload, QuizBookwithLikedModel[], AxiosError>();
 
-export const postQuizBookLikstAsync = createAsyncAction(
+export const postQuizBookLikeAsync = createAsyncAction(
   POST_QUIZBOOK_LIKE,
   POST_QUIZBOOK_LIKE_SUCCESS,
   POST_QUIZBOOK_LIKe_ERROR
-)<number, QuizBookModel, AxiosError>();
+)<number, LikeResultModel, AxiosError>();
 
 export const searchQuizBookListAsync = createAsyncAction(
   SEARCH_QUIZBOOK_LIST,
   SEARCH_QUIZBOOK_LIST_SUCCESS,
   SEARCH_QUIZBOOK_LIST_ERROR
-)<SearchAPIPayload, QuizBookModel[], AxiosError>();
+)<SearchAPIPayload, QuizBookwithLikedModel[], AxiosError>();
 
 export const deleteQuizBookAsync = createAsyncAction(
   DELETE_QUIZBOOK,
