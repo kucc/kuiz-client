@@ -16,38 +16,30 @@ import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.quizbook
-  );
-
+  const { data } = useSelector((state: RootState) => state.quizbook);
   const dispatch = useDispatch();
-
   const [quizBookData, setQuizBookData] = useState(data);
-  const [totalQuizBookList, setTotalQuizBookList] = useState<QuizBookModel[]>(
-    []
-  );
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
     QuizBookModel[]
   >([]);
 
+  const [isSortByDate, setIsSortByDate] = useState(true);
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
-  const [text, setText] = useState("최신순");
 
   const getQuizBookList = () => {
+    setIsSortByDate(true);
     dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: true })
+      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
     );
-    setText("최신순");
     setShow(false);
   };
 
   const getQuizBookListByLikes = () => {
+    setIsSortByDate(false);
     dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: false })
+      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
     );
-
-    setText("인기순");
     setShow(false);
   };
 
@@ -111,7 +103,9 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.FilterColumn>
       <S.DropDownFilterContainer>
         <S.FilterColumn align={"flex-end"}>
-          <S.Filter onClick={toggleDropDown}>{text} ▽</S.Filter>
+          <S.Filter onClick={toggleDropDown}>
+            {isSortByDate ? "최신순" : "인기순"} ▽
+          </S.Filter>
         </S.FilterColumn>
         <DropDown
           show={show}
