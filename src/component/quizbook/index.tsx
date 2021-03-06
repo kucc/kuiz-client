@@ -25,20 +25,21 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const dispatch = useDispatch();
 
   const postQuizBookLike = async () => {
-    const { likedCount, liked } = await quizbookAPI.postQuizBookLike(
-      quizBook.id
-    );
-    setLikedCount(likedCount);
-    setLiked(liked);
+    try {
+      const { likedCount, liked } = await quizbookAPI.postQuizBookLike(
+        quizBook.id
+      );
+      setLikedCount(likedCount);
+      setLiked(liked);
+    } catch (err) {
+      setIsAllowed(false);
+      dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
+    }
   };
 
   const onClick = async (e) => {
     if (e.target === likeButton.current) {
-      try {
-        postQuizBookLike();
-      } catch (err) {
-        console.error(err);
-      }
+      postQuizBookLike();
       return;
     }
 
@@ -76,62 +77,65 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   };
 
   return (
-    <S.QuizBookWrapper onClick={onClick}>
-      <S.QuizBookRow height={4}>
-        <S.QuizBookName>
-          <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
-        </S.QuizBookName>
-        <S.QuizBookLike>
-          <S.LikeIconWrapper>
-            {liked == true ? (
-              <S.LikeIcon
-                liked={quizBook.liked}
-                src={STATIC_URL.LIKE_ICON}
-                alt="LikeIcon"
-                ref={likeButton}
-              />
-            ) : (
-              <S.LikeIcon
-                liked={quizBook.liked}
-                src={STATIC_URL.UNLIKE_ICON}
-                alt="UnlikeIcon"
-                ref={likeButton}
-              />
-            )}
-          </S.LikeIconWrapper>
-          <S.QuizText bold>{likedCount}</S.QuizText>
-        </S.QuizBookLike>
-      </S.QuizBookRow>
-      <S.QuizBookRow height={3}>
-        <S.QuizCount>
-          <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
-        </S.QuizCount>
-        <S.SolvedCount>
-          <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
-        </S.SolvedCount>
+    <>
+      {isAllowed ? null : <CustomAlert />}
+      <S.QuizBookWrapper onClick={onClick}>
+        <S.QuizBookRow height={4}>
+          <S.QuizBookName>
+            <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
+          </S.QuizBookName>
+          <S.QuizBookLike>
+            <S.LikeIconWrapper>
+              {liked == true ? (
+                <S.LikeIcon
+                  liked={quizBook.liked}
+                  src={STATIC_URL.LIKE_ICON}
+                  alt="LikeIcon"
+                  ref={likeButton}
+                />
+              ) : (
+                <S.LikeIcon
+                  liked={quizBook.liked}
+                  src={STATIC_URL.UNLIKE_ICON}
+                  alt="UnlikeIcon"
+                  ref={likeButton}
+                />
+              )}
+            </S.LikeIconWrapper>
+            <S.QuizText bold>{likedCount}</S.QuizText>
+          </S.QuizBookLike>
+        </S.QuizBookRow>
+        <S.QuizBookRow height={3}>
+          <S.QuizCount>
+            <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
+          </S.QuizCount>
+          <S.SolvedCount>
+            <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
+          </S.SolvedCount>
 
-        <S.QuizBookOwner>
-          {!isUserQuizBook ? (
-            <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
-          ) : (
-            <>
-              <S.QuizBookSetButton
-                src={"/src/asset/setting.png"}
-                ref={settingButton}
-              />
-              <DropDown
-                ref={dropDownContainer}
-                show={dropDown}
-                text1={"수정하기"}
-                text2={"삭제하기"}
-                clickEvent1={editQuizBook}
-                clickEvent2={deleteQuizBook}
-              />
-            </>
-          )}
-        </S.QuizBookOwner>
-      </S.QuizBookRow>
-    </S.QuizBookWrapper>
+          <S.QuizBookOwner>
+            {!isUserQuizBook ? (
+              <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
+            ) : (
+              <>
+                <S.QuizBookSetButton
+                  src={"/src/asset/setting.png"}
+                  ref={settingButton}
+                />
+                <DropDown
+                  ref={dropDownContainer}
+                  show={dropDown}
+                  text1={"수정하기"}
+                  text2={"삭제하기"}
+                  clickEvent1={editQuizBook}
+                  clickEvent2={deleteQuizBook}
+                />
+              </>
+            )}
+          </S.QuizBookOwner>
+        </S.QuizBookRow>
+      </S.QuizBookWrapper>
+    </>
   );
 };
 
