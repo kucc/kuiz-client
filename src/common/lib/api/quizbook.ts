@@ -16,21 +16,25 @@ const quizbookAPI = {
     );
     return quizBookList;
   },
-  searchQuizBookList: async (categoryId: number, keyword: string) => {
+  searchQuizBookList: async (
+    categoryId: number,
+    page: number,
+    keyword: string
+  ) => {
     const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&keyword=${keyword}`
+      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&page=${page}&keyword=${keyword}`
     );
     return quizBookList;
   },
-  getSolvingQuizBook: async (isDone) => {
-    const { data: solveQuizBook } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}`
+  getSolvingQuizBook: async (isDone: boolean, page: number) => {
+    const { data: solveQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
+      `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}&page=${page}`
     );
     return solveQuizBook;
   },
-  getUserQuizBook: async (path: string, isDone: boolean) => {
-    const { data: userQuizBook } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
+  getUserQuizBook: async (path: string, isDone: boolean, page: number) => {
+    const { data: userQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
+      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}&page=${page}`
     );
 
     return userQuizBook;

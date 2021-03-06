@@ -13,21 +13,21 @@ import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@common/model/quiz-book";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
   const { data, loading, error } = useSelector(
     (state: RootState) => state.quizbook
   );
-
   const dispatch = useDispatch();
 
   const [quizBookData, setQuizBookData] = useState(data);
   const [totalQuizBookList, setTotalQuizBookList] = useState(
-    [] as QuizBookModel[]
+    [] as QuizBookwithLikedModel[]
   );
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookModel[]
+    [] as QuizBookwithLikedModel[]
   );
 
   const [filter, setFilter] = useState("");
@@ -76,7 +76,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const getUnsolvedQuizBookList = async () => {
-    const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true);
+    const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true, 1);
 
     totalQuizBookList.map((quizBook) => {
       const found = solvedQuizBookList.find((solvedQuizBook) => {
@@ -171,7 +171,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.DropDownFilterContainer>
 
       {quizBookData ? (
-        (quizBookData as QuizBookModel[]).map((quizBook) => {
+        (quizBookData as QuizBookwithLikedModel[]).map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}
