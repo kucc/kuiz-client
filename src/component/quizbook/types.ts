@@ -12,3 +12,7 @@ export interface QuizBookRowProps {
 export interface QuizTextProps {
   bold: boolean;
 }
+
+export interface LikedProps {
+  liked: boolean;
+}

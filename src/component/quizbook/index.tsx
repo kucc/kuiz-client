@@ -8,10 +8,12 @@ import {
   postQuizBookLikeAsync,
 } from "@/modules/quiz-book";
 import DropDown from "../drop-down";
+import { STATIC_URL } from "@/asset/constant";
 import quizbookAPI from "@common/lib/api/quizbook";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const likeButton = useRef<HTMLDivElement>(null);
+  const likeButton = useRef<HTMLImageElement>(null);
   const settingButton = useRef<HTMLImageElement>(null);
   const dropDownContainer = useRef<HTMLDivElement>(null);
 
@@ -80,9 +82,24 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
           <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
         </S.QuizBookName>
         <S.QuizBookLike>
-          <S.QuizText bold ref={likeButton}>
-            👍 {quizBook.likedCount}
-          </S.QuizText>
+          <S.LikeIconWrapper>
+            {liked == true ? (
+              <S.LikeIcon
+                liked={quizBook.liked}
+                src={STATIC_URL.LIKE_ICON}
+                alt="LikeIcon"
+                ref={likeButton}
+              />
+            ) : (
+              <S.LikeIcon
+                liked={quizBook.liked}
+                src={STATIC_URL.UNLIKE_ICON}
+                alt="UnlikeIcon"
+                ref={likeButton}
+              />
+            )}
+          </S.LikeIconWrapper>
+          <S.QuizText bold>{likedCount}</S.QuizText>
         </S.QuizBookLike>
       </S.QuizBookRow>
       <S.QuizBookRow height={3}>
