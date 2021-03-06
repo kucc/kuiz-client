@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
 import DropDown from "@/component/drop-down";
@@ -80,10 +79,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   useEffect(() => {
     setQuizBookData(data);
   }, [data]);
-
-  useEffect(() => {
-    getUnsolvedQuizBookList();
-  }, [finish]);
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
