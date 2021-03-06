@@ -8,14 +8,13 @@ export const ProfileInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-
-  padding: 1rem 2rem 1rem 2rem;
+  margin: 2rem 2rem 4rem 2rem;
 `;
 
 export const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 30rem;
   align-items: center;
   justify-content: space-between;
 
@@ -26,24 +25,31 @@ export const UserInfoContainer = styled.div`
   }
 `;
 
-export const UserInfoWrapper = styled.div`
+
+export const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 22rem;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    font-size: 1.5rem;
+  }
+`;
+
+export const UserBasicInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
   margin-right: 1rem;
-  padding: 1rem 2rem 0rem 0rem;
 `;
 
 export const UserNameContainer = styled.div``;
 
 export const UserName = styled.div`
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  @media only screen {
-    font-size: 1.5rem;
-  }
+  font-size: 1.6rem;
+  margin-right: 1.2rem;
 `;
 
 export const UserEmail = styled.div`
@@ -67,13 +73,15 @@ export const UserPoint = styled.div`
 
 export const IconContainer = styled.div`
   margin-left: 1rem;
-  padding: 1rem 2rem 1rem 0rem;
 `;
 
 export const LevelIcon = styled.img`
-  @media only screen {
-    display: block;
-    width: 10rem;
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 7rem;
+    height: 7rem;
   }
 `;
 
@@ -82,16 +90,11 @@ export const PointBarContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 1rem;
-  width: 50%;
-  padding: 1rem 2rem 1rem 0rem;
-
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 50%;
-  }
+  width: 30rem;
 `;
 export const PointBarWrapper = styled.div`
   width: 100%;
-  padding: 1rem 2rem 1rem 0rem;
+  margin-bottom: 1rem;
 `;
 export const BackgroundBar = styled.div`
   width: 100%;
@@ -113,4 +116,23 @@ export const Point = styled.div`
   align-self: flex-end;
   font-size: 1.4rem;
   font-weight: bold;
+`;
+
+export const UserInfoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const UpdateButtonContainer = styled.div`
+  display: flex;
+  height: 1.2rem;
+  width: 13%;
+  align-items: center;
+  justify-content: flex-end;
+  img {
+    height: 100%;
+  }
+  cursor: pointer;
 `;

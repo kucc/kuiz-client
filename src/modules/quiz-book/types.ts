@@ -27,7 +27,3 @@ export type SearchAPIPayload = {
   page: number;
   keyword: string;
 };
-
-export type DeleteQuizBookAPIPayload = {
-  quizBookId: number;
-};

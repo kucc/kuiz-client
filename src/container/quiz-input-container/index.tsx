@@ -38,7 +38,7 @@ const QuizInputContainer = ({
   const handleFormData = () => {
     const formData = new FormData();
     Object.keys(body).map((key) => formData.append(key, body[key]));
-    formData.append("image", file);
+    if (file) formData.append("image", file);
 
     return formData;
   };
@@ -147,8 +147,12 @@ const QuizInputContainer = ({
           />
           {body?.imageURL && (
             <S.ImageBox>
-              {!file && <S.PreviewImg src={data?.imageURL} />}
-              {file && <S.PreviewImg src={URL.createObjectURL(file)} />}
+              {file ? (
+                <S.PreviewImg src={URL.createObjectURL(file)} />
+              ) : (
+                data?.imageURL && <S.PreviewImg src={data?.imageURL} />
+              )}
+
               <label>
                 <S.ImageInput
                   type="file"

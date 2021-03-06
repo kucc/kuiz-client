@@ -3,8 +3,6 @@ import QuizBookModel from "@/common/model/quiz-book";
 import { call, put, takeEvery } from "redux-saga/effects";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import {
-  deleteQuizBookAsync,
-  DELETE_QUIZBOOK,
   getQuizBookListAsync,
   GET_QUIZBOOK_LIST,
   postQuizBookLikeAsync,
@@ -12,7 +10,6 @@ import {
   searchQuizBookListAsync,
   SEARCH_QUIZBOOK_LIST,
 } from "./actions";
-import { DeleteResult } from "./types";
 
 function* getQuizBookListSaga(
   action: ReturnType<typeof getQuizBookListAsync.request>
@@ -63,24 +60,8 @@ function* searchQuizBookListSaga(
   }
 }
 
-function* deleteQuizBookSaga(
-  action: ReturnType<typeof deleteQuizBookAsync.request>
-) {
-  try {
-    const { quizBookId } = action.payload;
-    const deleteResult: DeleteResult = yield call(
-      quizbookAPI.deleteQuizBook,
-      quizBookId
-    );
-    yield put(deleteQuizBookAsync.success(deleteResult));
-  } catch (e) {
-    yield put(deleteQuizBookAsync.failure(e));
-  }
-}
-
 export function* quizBookSaga() {
   yield takeEvery(GET_QUIZBOOK_LIST, getQuizBookListSaga);
   yield takeEvery(POST_QUIZBOOK_LIKE, postQuizBookLikeSaga);
   yield takeEvery(SEARCH_QUIZBOOK_LIST, searchQuizBookListSaga);
-  yield takeEvery(DELETE_QUIZBOOK, deleteQuizBookSaga);
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
 import DropDown from "@/component/drop-down";
@@ -14,6 +13,7 @@ import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@common/model/quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
+import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [keyword, setKeyword] = useState("");
@@ -29,11 +29,13 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
     [] as QuizBookwithLikedModel[]
   );
+  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
+    QuizBookModel[]
+  >([]);
 
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
   const [text, setText] = useState("최신순");
-  const [finish, setFinish] = useState(false);
 
   const getQuizBookList = () => {
     dispatch(
@@ -56,39 +58,9 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     setShow(!show);
   };
 
-  const getTotalQuizBookList = async () => {
-    let idx = 1;
-    const TRUE = true;
-    while (TRUE) {
-      try {
-        const quizBookList = await quizbookAPI.getQuizBookList(
-          categoryId,
-          idx,
-          true
-        );
-        idx += 1;
-        setTotalQuizBookList([...totalQuizBookList, ...quizBookList]);
-      } catch {
-        break;
-      }
-    }
-    setFinish(true);
-  };
-
   const getUnsolvedQuizBookList = async () => {
-    const solvedQuizBookList = await quizbookAPI.getSolvingQuizBook(true, 1);
-
-    totalQuizBookList.map((quizBook) => {
-      const found = solvedQuizBookList.find((solvedQuizBook) => {
-        if (quizBook.id === solvedQuizBook.id) {
-          return solvedQuizBook;
-        }
-      });
-
-      if (found === undefined) {
-        unsolvedQuizBookList.push(quizBook);
-      }
-    });
+    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList();
+    setUnsolvedQuizBookList(unsolvedQuizBookList);
   };
 
   const changeFilter = (e) => {
@@ -104,29 +76,12 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   useEffect(() => {
     getQuizBookList();
-    getTotalQuizBookList();
+    getUnsolvedQuizBookList();
   }, [dispatch]);
 
   useEffect(() => {
     setQuizBookData(data);
   }, [data]);
-
-  useEffect(() => {
-    getUnsolvedQuizBookList();
-  }, [finish]);
-
-  const debounce = (func, delay) => {
-    let timer;
-    return (...args) => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-      timer = setTimeout(() => {
-        func(args);
-      }, delay);
-    };
-  };
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
@@ -171,7 +126,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.DropDownFilterContainer>
 
       {quizBookData ? (
-        (quizBookData as QuizBookwithLikedModel[]).map((quizBook) => {
+        quizBookData.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}

@@ -9,8 +9,12 @@ export const StyledCommonButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid black;
+  border: none;
   cursor: pointer;
+
+  & + & {
+    margin-left: 1rem;
+  }
 `;
 
 export const ButtonText = styled.div`

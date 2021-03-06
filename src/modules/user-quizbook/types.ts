@@ -15,3 +15,7 @@ export type UserQuizBookAPIPayload = {
   isDone: boolean;
   path: string;
 };
+
+export type DeleteQuizBookAPIPayload = {
+  quizBookId: number;
+};

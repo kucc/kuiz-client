@@ -8,7 +8,7 @@ export const Header = styled.div`
   align-items: center;
 
   height: 6rem;
-
+  background-color: white;
   padding: 0rem 2rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
     height: 10rem;

@@ -3,16 +3,15 @@ import { QuizBookProps } from "./types";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteQuizBookAsync,
-  postQuizBookLikeAsync,
-} from "@/modules/quiz-book";
+import { postQuizBookLikeAsync } from "@/modules/quiz-book";
+import { deleteQuizBookAsync } from "@/modules/user-quizbook";
 import DropDown from "../drop-down";
 import { STATIC_URL } from "@/asset/constant";
 import { RootState } from "@/modules";
 import quizbookAPI from "@common/lib/api/quizbook";
 import { showAlertModal } from "../../modules/modal";
 import CustomAlert from "../custom-alert";
+
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const { data, loading, error } = useSelector(
@@ -80,7 +79,6 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
     if (!isDelete) return;
 
     dispatch(deleteQuizBookAsync.request({ quizBookId: quizBook.id }));
-    window.location.reload();
   };
 
   return (
