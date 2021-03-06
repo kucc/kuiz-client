@@ -45,11 +45,11 @@ const quizbookAPI = {
   },
 
   postQuizBookLike: async (quizbookId: number) => {
-    const { data: updatedQuizBook } = await axios.patch<QuizBookModel>(
+    const { data: likeResult } = await axios.patch<LikeResultModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/like`
     );
 
-    return updatedQuizBook;
+    return likeResult;
   },
 
   deleteQuizBook: async (quizbookId: number) => {
