@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   deleteQuizBookAsync,
-  postQuizBookLikstAsync,
+  postQuizBookLikeAsync,
 } from "@/modules/quiz-book";
 import DropDown from "../drop-down";
+import quizbookAPI from "@common/lib/api/quizbook";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const likeButton = useRef<HTMLDivElement>(null);
@@ -15,13 +16,27 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const dropDownContainer = useRef<HTMLDivElement>(null);
 
   const [dropDown, setDropDown] = useState(false);
+  const [likedCount, setLikedCount] = useState(quizBook.likedCount);
+  const [liked, setLiked] = useState(quizBook.liked);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const onClick = (e) => {
+  const postQuizBookLike = async () => {
+    const { likedCount, liked } = await quizbookAPI.postQuizBookLike(
+      quizBook.id
+    );
+    setLikedCount(likedCount);
+    setLiked(liked);
+  };
+
+  const onClick = async (e) => {
     if (e.target === likeButton.current) {
-      dispatch(postQuizBookLikstAsync.request(quizBook.id));
+      try {
+        postQuizBookLike();
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 
