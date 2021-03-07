@@ -69,11 +69,6 @@ export const IconContainer = styled.div`
 export const LevelIcon = styled.img`
   width: 5rem;
   height: 5rem;
-  margin: 1rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 7rem;
-    height: 7rem;
-  }
 `;
 
 export const ProfilePointBarContainer = styled.div`
