@@ -23,16 +23,9 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
 
   const [quizBookData, setQuizBookData] = useState(data);
-  const [totalQuizBookList, setTotalQuizBookList] = useState(
-    [] as QuizBookwithLikedModel[]
-  );
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookwithLikedModel[]
+    [] as QuizBookModel[]
   );
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
-    QuizBookModel[]
-  >([]);
-
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
   const [text, setText] = useState("최신순");

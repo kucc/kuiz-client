@@ -79,7 +79,7 @@ const ProfileInfoContainer = () => {
           </S.IconContainer>
         </S.UserInfoContainer>
       </S.UserInfoWrapper>
-      <S.ProfilePointBarContainer>
+      <S.PointBarContainer>
         <S.PointBarWrapper>
           <S.UserPoint> {data.point} P</S.UserPoint>
           <S.BackgroundBar>
