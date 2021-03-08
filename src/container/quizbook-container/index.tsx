@@ -48,7 +48,11 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const getUnsolvedQuizBookList = async () => {
-    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList();
+    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList(
+      categoryId,
+      1,
+      isSortByDate
+    );
     setUnsolvedQuizBookList(unsolvedQuizBookList);
   };
 

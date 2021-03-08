@@ -34,9 +34,13 @@ const quizbookAPI = {
     return userQuizBook;
   },
 
-  getUnsolvedQuizBookList: async () => {
+  getUnsolvedQuizBookList: async (
+    categoryId: number,
+    page: number,
+    isSortByDate: boolean
+  ) => {
     const { data: unsolvedQuizBookList } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}/unsolved`
+      `${endpoints.QUIZBOOK_API}/unsolved?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
 
     return unsolvedQuizBookList;
