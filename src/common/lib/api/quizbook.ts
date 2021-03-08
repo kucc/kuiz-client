@@ -74,6 +74,19 @@ const quizbookAPI = {
 
     return quizbookId;
   },
+  postNewQuizBook: async (title: string, categoryId: number) => {
+    const { data: newQuizBook } = await axios.post<QuizBookModel>(
+      endpoints.QUIZBOOK_API,
+      { title, categoryId }
+    );
+
+    if (!newQuizBook.id) {
+      alert("문제집 생성 실패");
+      return;
+    }
+
+    return newQuizBook;
+  },
 };
 
 export default quizbookAPI;
