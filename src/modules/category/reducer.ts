@@ -1,5 +1,9 @@
 import { createReducer } from "typesafe-actions";
-import { GET_CATEGORY_ERROR, GET_CATEGORY_SUCCESS } from "./actions";
+import {
+  GET_CATEGORY,
+  GET_CATEGORY_ERROR,
+  GET_CATEGORY_SUCCESS,
+} from "./actions";
 import { CategoryAction, CategoryState } from "./types";
 
 const initialState: CategoryState = {
@@ -11,7 +15,7 @@ const initialState: CategoryState = {
 const categoryReducer = createReducer<CategoryState, CategoryAction>(
   initialState,
   {
-    [GET_CATEGORY_SUCCESS]: (state) => ({
+    [GET_CATEGORY]: (state) => ({
       ...state,
       loading: true,
       error: null,
