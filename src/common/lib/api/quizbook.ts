@@ -41,9 +41,9 @@ const quizbookAPI = {
   },
 
   getUnsolvedQuizBookList: async () => {
-    const { data: unsolvedQuizBookList } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}/unsolved`
-    );
+    const { data: unsolvedQuizBookList } = await axios.get<
+      QuizBookwithLikedModel[]
+    >(`${endpoints.QUIZBOOK_API}/unsolved`);
 
     return unsolvedQuizBookList;
   },
@@ -56,11 +56,17 @@ const quizbookAPI = {
     return solveQuizBook;
   },
 
+  getQuizBookLike: async (quizBookId: number) => {
+    const { data: likeResult } = await axios.get<LikeResultModel>(
+      `${endpoints.QUIZBOOK_API}/${quizBookId}/like`
+    );
+    return likeResult;
+  },
+
   postQuizBookLike: async (quizbookId: number) => {
-    const { data: likeResult } = await axios.patch<LikeResultModel>(
+    const { data: likeResult } = await axios.patch<QuizBookwithLikedModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/like`
     );
-
     return likeResult;
   },
 

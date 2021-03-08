@@ -1,5 +1,4 @@
 import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookModel from "@/common/model/quiz-book";
 import { call, put, takeEvery } from "redux-saga/effects";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import {
@@ -33,13 +32,13 @@ function* postQuizBookLikeSaga(
 ) {
   try {
     const quizBookId = action.payload;
-    const updatedQuizBook = yield call(
+    const updatedQuizBookLike: QuizBookwithLikedModel = yield call(
       quizbookAPI.postQuizBookLike,
       quizBookId
     );
-    yield put(postQuizBookLikstAsync.success(updatedQuizBook));
+    yield put(postQuizBookLikeAsync.success(updatedQuizBookLike));
   } catch (e) {
-    yield put(postQuizBookLikstAsync.failure(e));
+    yield put(postQuizBookLikeAsync.failure(e));
   }
 }
 

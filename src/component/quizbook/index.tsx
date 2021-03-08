@@ -1,17 +1,18 @@
-import React, { useRef, useState } from "react";
-import { QuizBookProps } from "./types";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postQuizBookLikeAsync } from "@/modules/quiz-book";
-import { deleteQuizBookAsync } from "@/modules/user-quizbook";
-import DropDown from "../drop-down";
-import { STATIC_URL } from "@/asset/constant";
-import { RootState } from "@/modules";
-import quizbookAPI from "@common/lib/api/quizbook";
-import { showAlertModal } from "../../modules/modal";
-import CustomAlert from "../custom-alert";
 
+import DropDown from "@/component/drop-down";
+import { RootState } from "@/modules";
+import { QuizBookProps } from "./types";
+import CustomAlert from "@/component/custom-alert";
+import { STATIC_URL } from "@/asset/constant";
+import { showAlertModal } from "@/modules/modal";
+import { deleteQuizBookAsync } from "@/modules/user-quizbook";
+import { getQuizBookLikeAsync } from "@/modules/quiz-book-like";
+import quizbookAPI from "@common/lib/api/quizbook";
+import { postQuizBookLikeAsync } from "@/modules/quiz-book";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const { data, loading, error } = useSelector(
@@ -23,25 +24,46 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
   const dropDownContainer = useRef<HTMLDivElement>(null);
 
   const [dropDown, setDropDown] = useState<boolean>(false);
-  const [likedCount, setLikedCount] = useState<number>(quizBook.likedCount);
-  const [liked, setLiked] = useState<boolean>(quizBook.liked);
+
+  // const [likedCount, setLikedCount] = useState<number>(quizBook.likedCount);
+  // const [liked, setLiked] = useState<boolean>(quizBook.liked);
   const [isAllowed, setIsAllowed] = useState<boolean>(true);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // const getQuizBookLike = () => {
+  //   dispatch(getQuizBookLikeAsync.request(quizBook.id));
+  // };
+
   const postQuizBookLike = async () => {
-    try {
-      const { likedCount, liked } = await quizbookAPI.postQuizBookLike(
-        quizBook.id
-      );
-      setLikedCount(likedCount);
-      setLiked(liked);
-    } catch (err) {
+    // try {
+    //   const data = await quizbookAPI.postQuizBookLike(quizBook.id);
+    //   dispatch(postQuizBookLikeAsync.request(quizBook.id));
+    //   if (data?.likedCount !== undefined) {
+    //      setLikedCount(data?.likedCount);
+    //    }
+
+    //   if (data?.liked !== undefined) {
+    //      setLiked(data?.liked);
+    //   }
+    // } catch (err) {
+    //   setIsAllowed(false);
+    //   dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
+    // }
+
+    dispatch(postQuizBookLikeAsync.request(quizBook.id));
+
+    if (error) {
+      // 여기서 에러 캐치 못함
       setIsAllowed(false);
       dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
     }
   };
+
+  // useEffect(() => {
+  //   getQuizBookLike();
+  // }, [dispatch]);
 
   const onClick = async (e) => {
     if (e.target === likeButton.current) {
@@ -91,7 +113,7 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
           </S.QuizBookName>
           <S.QuizBookLike>
             <S.LikeIconWrapper>
-              {liked == true ? (
+              {quizBook.liked == true ? (
                 <S.LikeIcon
                   liked={quizBook.liked}
                   src={STATIC_URL.LIKE_ICON}
@@ -107,7 +129,7 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
                 />
               )}
             </S.LikeIconWrapper>
-            <S.QuizText bold>{likedCount}</S.QuizText>
+            <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
           </S.QuizBookLike>
         </S.QuizBookRow>
         <S.QuizBookRow height={3}>
