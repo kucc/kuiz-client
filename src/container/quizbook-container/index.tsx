@@ -23,7 +23,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const [quizBookData, setQuizBookData] = useState(data);
   const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookModel[]
+    [] as QuizBookwithLikedModel[]
   );
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
@@ -51,7 +51,11 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   const getUnsolvedQuizBookList = async () => {
-    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList();
+    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList(
+      categoryId,
+      1,
+      true
+    );
     setUnsolvedQuizBookList(unsolvedQuizBookList);
   };
 
