@@ -8,7 +8,7 @@ export const NextButton = styled.div`
   height: 100%;
 `;
 
-export const NextButtonContainer = styled(Link)`
+export const NextButtonContainer = styled.button`
   display: flex;
   width: 10rem;
   height: 4rem;

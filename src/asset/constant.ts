@@ -38,7 +38,7 @@ export const THEME_COLOR = {
 
 export const RANK_LIST_COUNT = 15;
 
-export const PARSE_QUIZBOOK_PATH_INDEX = 2;
+export const PARSE_QUIZBOOK_PATH_INDEX = 3;
 export const PARSE_QUIZBOOK_QUERY_INDEX = 1;
 export const USER_SOLVE_QUIZBOOK_PATH = "solving";
 export const USER_MAKE_QUIZBOOK_PATH = "owner";
