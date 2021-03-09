@@ -26,6 +26,8 @@ export const STATIC_URL = {
   FLAG: `https://user-images.githubusercontent.com/46309902/107686315-69501300-6ce8-11eb-8ce0-f34fd36c3248.jpg`,
   RUNNING_MAN: `https://user-images.githubusercontent.com/46309902/107687612-0bbcc600-6cea-11eb-898e-23b080570143.png`,
   FALL_DOWN_MAN: `https://user-images.githubusercontent.com/46309902/107687739-373fb080-6cea-11eb-8421-c9432c32ac1b.png`,
+  QUESTION_MARK: `https://user-images.githubusercontent.com/50616334/110240036-4df5c200-7f8d-11eb-8bd3-89db54d78543.png`,
+  CANCEL_ICON: `https://user-images.githubusercontent.com/50616334/110313835-5cee7a00-804a-11eb-91e8-6a404506e374.png`,
 };
 
 export const THEME_COLOR = {
@@ -47,3 +49,11 @@ export const USER_SOLVING_QUIZBOOK_MENU = "내가 풀고 있는 문제집";
 export const USER_SOLVED_QUIZBOOK_MENU = "내가 푼 문제집";
 export const USER_MAKING_QUIZBOOK_MENU = "내가 만들고 있는 문제집";
 export const USER_MADE_QUIZBOOK_MENU = "내가 만든 문제집";
+
+export const MAX_LEVEL_POINT = {
+  1: 150,
+  2: 600,
+  3: 1500,
+  4: 3000,
+  5: 100000,
+};
