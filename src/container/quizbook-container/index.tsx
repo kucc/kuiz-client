@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
@@ -6,60 +6,50 @@ import DropDown from "@/component/drop-down";
 import { RootState } from "@/modules";
 import {
   getQuizBookListAsync,
+  getUnsolvedQuizBookListAsync,
   searchQuizBookListAsync,
 } from "@/modules/quiz-book";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
-import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookModel from "@common/model/quiz-book";
 import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
-  const [keyword, setKeyword] = useState("");
-  const { data } = useSelector((state: RootState) => state.quizbook);
   const dispatch = useDispatch();
-  const [quizBookData, setQuizBookData] = useState(data);
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState<
-    QuizBookModel[]
-  >([]);
-
+  const { data } = useSelector((state: RootState) => state.quizbook);
+  const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
   const [isSortByDate, setIsSortByDate] = useState(true);
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
-  const getQuizBookList = () => {
-    setIsSortByDate(true);
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
-    );
-    setShow(false);
-  };
+  const getQuizBookList = useCallback(
+    (page) => {
+      if (unSolvedQuizBook) {
+        dispatch(
+          getUnsolvedQuizBookListAsync.request({
+            categoryId,
+            page,
+            isSortByDate,
+          })
+        );
+      } else {
+        dispatch(
+          getQuizBookListAsync.request({ categoryId, page, isSortByDate })
+        );
+      }
+      setShow(false);
+    },
+    [unSolvedQuizBook, isSortByDate]
+  );
 
-  const getQuizBookListByLikes = () => {
-    setIsSortByDate(false);
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
-    );
-    setShow(false);
-  };
-
-  const toggleDropDown = () => {
+  const toggleDropDown = useCallback(() => {
     setShow(!show);
-  };
-
-  const getUnsolvedQuizBookList = async () => {
-    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList(
-      categoryId,
-      1,
-      isSortByDate
-    );
-    setUnsolvedQuizBookList(unsolvedQuizBookList);
-  };
+  }, [show]);
 
   const changeFilter = (e) => {
     const filter = e.target.value;
-    if (filter === "all") setQuizBookData(data);
-    if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
+    if (filter === "all") setUnSolvedQuizBook(false);
+    if (filter === "unsolved") setUnSolvedQuizBook(true);
     setFilter(filter);
   };
 
@@ -68,13 +58,8 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   useEffect(() => {
-    getQuizBookList();
-    getUnsolvedQuizBookList();
-  }, [dispatch]);
-
-  useEffect(() => {
-    setQuizBookData(data);
-  }, [data]);
+    getQuizBookList(1);
+  }, [dispatch, unSolvedQuizBook, isSortByDate]);
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
@@ -115,13 +100,19 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
           show={show}
           text1={"최신순"}
           text2={"인기순"}
-          clickEvent1={getQuizBookList}
-          clickEvent2={getQuizBookListByLikes}
+          clickEvent1={() => {
+            setIsSortByDate(true);
+            setShow(false);
+          }}
+          clickEvent2={() => {
+            setIsSortByDate(false);
+            setShow(false);
+          }}
         />
       </S.DropDownFilterContainer>
 
-      {quizBookData ? (
-        quizBookData.map((quizBook) => {
+      {data &&
+        data.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}
@@ -129,10 +120,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
               isUserQuizBook={false}
             ></QuizBook>
           );
-        })
-      ) : (
-        <></>
-      )}
+        })}
     </S.QuizBookContainer>
   );
 };
