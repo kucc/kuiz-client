@@ -5,7 +5,7 @@ import * as S from "./styles";
 const NextButton = (props: NextButtonProps) => {
   return (
     <S.NextButton>
-      <S.NextButtonContainer to={props.link}>
+      <S.NextButtonContainer onClick={props.onClickHandler}>
         <S.ButtonText>{props.text}</S.ButtonText>
       </S.NextButtonContainer>
     </S.NextButton>

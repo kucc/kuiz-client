@@ -34,9 +34,13 @@ const quizbookAPI = {
     return userQuizBook;
   },
 
-  getUnsolvedQuizBookList: async () => {
+  getUnsolvedQuizBookList: async (
+    categoryId: number,
+    page: number,
+    isSortByDate: boolean
+  ) => {
     const { data: unsolvedQuizBookList } = await axios.get<QuizBookModel[]>(
-      `${endpoints.QUIZBOOK_API}/unsolved`
+      `${endpoints.QUIZBOOK_API}/unsolved?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
 
     return unsolvedQuizBookList;
@@ -69,6 +73,19 @@ const quizbookAPI = {
     }
 
     return quizbookId;
+  },
+  postNewQuizBook: async (title: string, categoryId: number) => {
+    const { data: newQuizBook } = await axios.post<QuizBookModel>(
+      endpoints.QUIZBOOK_API,
+      { title, categoryId }
+    );
+
+    if (!newQuizBook.id) {
+      alert("문제집 생성 실패");
+      return;
+    }
+
+    return newQuizBook;
   },
 };
 

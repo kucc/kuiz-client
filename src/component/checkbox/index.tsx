@@ -1,14 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import * as S from "./styles";
+import { CheckboxProps } from "./types";
 
-const CheckBox = () => {
-  const [checked, setChecked] = useState(true);
+const CheckBox = ({ onChange }: CheckboxProps) => {
   return (
-    <S.CheckBox
-      type="checkbox"
-      defaultChecked={false}
-      onChange={() => setChecked(!checked)}
-    />
+    <S.CheckBox type="checkbox" defaultChecked={false} onChange={onChange} />
   );
 };
 
