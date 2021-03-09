@@ -24,6 +24,14 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
+
+  textarea {
+    padding: 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid ${THEME_COLOR.GRAYER};
+    outline: none;
+  }
 `;
 
 export const TitleContainer = styled.div`
