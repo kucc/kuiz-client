@@ -43,9 +43,11 @@ const quizbookAPI = {
     page: number,
     isSortByDate: boolean
   ) => {
+
     const { data: unsolvedQuizBookList } = await axios.get<
       QuizBookwithLikedModel[]
     >(
+
       `${endpoints.QUIZBOOK_API}/unsolved?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
 
@@ -78,6 +80,19 @@ const quizbookAPI = {
     }
 
     return quizbookId;
+  },
+  postNewQuizBook: async (title: string, categoryId: number) => {
+    const { data: newQuizBook } = await axios.post<QuizBookModel>(
+      endpoints.QUIZBOOK_API,
+      { title, categoryId }
+    );
+
+    if (!newQuizBook.id) {
+      alert("문제집 생성 실패");
+      return;
+    }
+
+    return newQuizBook;
   },
 };
 

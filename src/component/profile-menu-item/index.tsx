@@ -6,7 +6,7 @@ const ProfileMenuItem = (menu: ProfileMenuItemProps) => {
   return (
     <S.ProfileMenuItem>
       <S.ProfileMenuItemWrapper
-        to={`/quiz-book/${menu.relation}?isDone=${menu.bool}`}
+        to={`/quiz-book/user/${menu.relation}?isDone=${menu.bool}`}
       >
         <S.ProfileMenuTitle>{menu.title}</S.ProfileMenuTitle>
       </S.ProfileMenuItemWrapper>

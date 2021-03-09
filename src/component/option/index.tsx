@@ -1,12 +1,15 @@
 import React from "react";
 import * as S from "./styles";
+import { QuizCategorySelectProps } from "./types";
 
-const QuizCategorySelect = () => {
+const QuizCategorySelect = ({ options, onChange }: QuizCategorySelectProps) => {
   return (
-    <S.TypeOptions>
-      <S.Option>Computer Science</S.Option>
-      <S.Option>잡동사니</S.Option>
-      <S.Option>기타</S.Option>
+    <S.TypeOptions onChange={onChange}>
+      {options.map((option) => (
+        <S.Option key={`option${option.id}`} value={option.id}>
+          {option.name}
+        </S.Option>
+      ))}
     </S.TypeOptions>
   );
 };
