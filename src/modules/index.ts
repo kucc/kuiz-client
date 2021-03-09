@@ -6,13 +6,11 @@ import quizbook from "./quiz-book/reducer";
 import category from "./category/reducer";
 import quiz from "./quiz/reducer";
 import userQuizBook from "./user-quizbook/reducer";
-import quizbookLike from "./quiz-book-like/reducer";
 import modal from "./modal/reducer";
 import { quizBookSaga } from "./quiz-book";
 import { categorySaga } from "./category";
 import { userQuizBookSaga } from "./user-quizbook";
 import { quizSaga } from "./quiz";
-import { quizBookLikeSaga } from "./quiz-book-like";
 
 const rootReducer = combineReducers({
   user,
@@ -21,7 +19,6 @@ const rootReducer = combineReducers({
   category,
   userQuizBook,
   modal,
-  quizbookLike,
 });
 
 export default rootReducer;
@@ -35,6 +32,5 @@ export function* rootSaga() {
     categorySaga(),
     userQuizBookSaga(),
     quizSaga(),
-    quizBookLikeSaga(),
   ]);
 }

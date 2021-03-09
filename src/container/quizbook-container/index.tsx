@@ -11,7 +11,6 @@ import {
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookModel from "@common/model/quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import debounce from "@common/lib/debounce";
 

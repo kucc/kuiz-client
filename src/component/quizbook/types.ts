@@ -1,4 +1,3 @@
-import QuizBookModel from "@/common/model/quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 export interface QuizBookProps {

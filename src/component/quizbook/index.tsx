@@ -10,8 +10,6 @@ import CustomAlert from "@/component/custom-alert";
 import { STATIC_URL } from "@/asset/constant";
 import { showAlertModal } from "@/modules/modal";
 import { deleteQuizBookAsync } from "@/modules/user-quizbook";
-import { getQuizBookLikeAsync } from "@/modules/quiz-book-like";
-import quizbookAPI from "@common/lib/api/quizbook";
 import { postQuizBookLikeAsync } from "@/modules/quiz-book";
 
 const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
@@ -25,40 +23,12 @@ const QuizBook = ({ quizBook, isUserQuizBook }: QuizBookProps) => {
 
   const [dropDown, setDropDown] = useState<boolean>(false);
 
-  // const [likedCount, setLikedCount] = useState<number>(quizBook.likedCount);
-  // const [liked, setLiked] = useState<boolean>(quizBook.liked);
-  const [isAllowed, setIsAllowed] = useState<boolean>(true);
-
   const history = useHistory();
   const dispatch = useDispatch();
 
   // const getQuizBookLike = () => {
-  //   dispatch(getQuizBookLikeAsync.request(quizBook.id));
-  // };
-
-  const postQuizBookLike = async () => {
-    // try {
-    //   const data = await quizbookAPI.postQuizBookLike(quizBook.id);
-    //   dispatch(postQuizBookLikeAsync.request(quizBook.id));
-    //   if (data?.likedCount !== undefined) {
-    //      setLikedCount(data?.likedCount);
-    //    }
-
-    //   if (data?.liked !== undefined) {
-    //      setLiked(data?.liked);
-    //   }
-    // } catch (err) {
-    //   setIsAllowed(false);
-    //   dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
-    // }
-
     dispatch(postQuizBookLikeAsync.request(quizBook.id));
 
-    if (error) {
-      // 여기서 에러 캐치 못함
-      setIsAllowed(false);
-      dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
-    }
   };
 
   // useEffect(() => {
