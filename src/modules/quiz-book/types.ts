@@ -10,6 +10,7 @@ export type QuizBookState = {
   error: Error | null;
   data: QuizBookModel[] | null;
   isUnsolved: boolean;
+  isSameCondition: boolean;
 };
 
 export type QuizBookAPIPayload = {
