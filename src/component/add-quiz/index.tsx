@@ -7,7 +7,15 @@ import QuizCategorySelect from "../../component/option";
 import InputBox from "@component/input-box/index";
 import CheckBox from "@component/checkbox/index";
 import AddQuizList from "@component/add-quiz-list";
+import { RouteComponentProps, useParams } from "react-router-dom";
+
 const AddQuizPage = () => {
+  interface QuizBookId {
+    quizBookId: string;
+  }
+
+  const { quizBookId } = useParams<QuizBookId>();
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -15,7 +23,7 @@ const AddQuizPage = () => {
           <S.Title>문제</S.Title>
         </S.TitleContainer>
 
-        <AddQuizList />
+        <AddQuizList quizBookid={parseInt(quizBookId)} />
         <S.ButtonContainer>
           <S.SaveButton>임시저장</S.SaveButton>
           <S.SubmitButton>제출</S.SubmitButton>
