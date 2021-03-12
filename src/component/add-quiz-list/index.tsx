@@ -21,7 +21,6 @@ const AddQuizList = () => {
     <S.Wrapper>
       <S.Container>
         <AddButton link={`/quiz-book/${parseInt(quizBookId)}/makequiz`} />
-        <QuizContainer quizBookId={parseInt(quizBookId)} />
       </S.Container>
     </S.Wrapper>
   );
