@@ -1,66 +1,55 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
 import DropDown from "@/component/drop-down";
 import { RootState } from "@/modules";
 import {
   getQuizBookListAsync,
+  getUnsolvedQuizBookListAsync,
   searchQuizBookListAsync,
 } from "@/modules/quiz-book";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
-import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookModel from "@common/model/quiz-book";
+import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
-  const [keyword, setKeyword] = useState("");
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.quizbook
-  );
-
   const dispatch = useDispatch();
-
-  const [quizBookData, setQuizBookData] = useState(data);
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookModel[]
-  );
-
+  const { data } = useSelector((state: RootState) => state.quizbook);
+  const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
+  const [isSortByDate, setIsSortByDate] = useState(true);
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
-  const [text, setText] = useState("최신순");
+  const [keyword, setKeyword] = useState("");
 
-  const getQuizBookList = () => {
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: true })
-    );
-    setText("최신순");
-    setShow(false);
-  };
+  const getQuizBookList = useCallback(
+    (page) => {
+      if (unSolvedQuizBook) {
+        dispatch(
+          getUnsolvedQuizBookListAsync.request({
+            categoryId,
+            page,
+            isSortByDate,
+          })
+        );
+      } else {
+        dispatch(
+          getQuizBookListAsync.request({ categoryId, page, isSortByDate })
+        );
+      }
+      setShow(false);
+    },
+    [unSolvedQuizBook, isSortByDate]
+  );
 
-  const getQuizBookListByLikes = () => {
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate: false })
-    );
-
-    setText("인기순");
-    setShow(false);
-  };
-
-  const toggleDropDown = () => {
+  const toggleDropDown = useCallback(() => {
     setShow(!show);
-  };
-
-  const getUnsolvedQuizBookList = async () => {
-    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList();
-    setUnsolvedQuizBookList(unsolvedQuizBookList);
-  };
+  }, [show]);
 
   const changeFilter = (e) => {
     const filter = e.target.value;
-    if (filter === "all") setQuizBookData(data);
-    if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
+    if (filter === "all") setUnSolvedQuizBook(false);
+    if (filter === "unsolved") setUnSolvedQuizBook(true);
     setFilter(filter);
   };
 
@@ -69,26 +58,8 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   useEffect(() => {
-    getQuizBookList();
-    getUnsolvedQuizBookList();
-  }, [dispatch]);
-
-  useEffect(() => {
-    setQuizBookData(data);
-  }, [data]);
-
-  const debounce = (func, delay) => {
-    let timer;
-    return (...args) => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-      timer = setTimeout(() => {
-        func(args);
-      }, delay);
-    };
-  };
+    getQuizBookList(1);
+  }, [dispatch, unSolvedQuizBook, isSortByDate]);
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
@@ -121,19 +92,27 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       </S.FilterColumn>
       <S.DropDownFilterContainer>
         <S.FilterColumn align={"flex-end"}>
-          <S.Filter onClick={toggleDropDown}>{text} ▽</S.Filter>
+          <S.Filter onClick={toggleDropDown}>
+            {isSortByDate ? "최신순" : "인기순"} ▽
+          </S.Filter>
         </S.FilterColumn>
         <DropDown
           show={show}
           text1={"최신순"}
           text2={"인기순"}
-          clickEvent1={getQuizBookList}
-          clickEvent2={getQuizBookListByLikes}
+          clickEvent1={() => {
+            setIsSortByDate(true);
+            setShow(false);
+          }}
+          clickEvent2={() => {
+            setIsSortByDate(false);
+            setShow(false);
+          }}
         />
       </S.DropDownFilterContainer>
 
-      {quizBookData ? (
-        (quizBookData as QuizBookModel[]).map((quizBook) => {
+      {data &&
+        data.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}
@@ -141,10 +120,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
               isUserQuizBook={false}
             ></QuizBook>
           );
-        })
-      ) : (
-        <></>
-      )}
+        })}
     </S.QuizBookContainer>
   );
 };

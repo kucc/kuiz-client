@@ -3,6 +3,9 @@ import {
   GET_USER_INFO,
   GET_USER_INFO_ERROR,
   GET_USER_INFO_SUCCESS,
+  UPDATE_USER_INFO,
+  UPDATE_USER_INFO_ERROR,
+  UPDATE_USER_INFO_SUCCESS,
 } from "./actions";
 import { UserAction, UserState } from "./types";
 
@@ -29,6 +32,21 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     loading: false,
     error: action.payload,
     data: null,
+  }),
+  [UPDATE_USER_INFO]: (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  }),
+  [UPDATE_USER_INFO_SUCCESS]: (state, action) => ({
+    ...state,
+    loading: false,
+    data: action.payload,
+  }),
+  [UPDATE_USER_INFO_ERROR]: (state, action) => ({
+    ...state,
+    loading: false,
+    error: action.payload,
   }),
 });
 

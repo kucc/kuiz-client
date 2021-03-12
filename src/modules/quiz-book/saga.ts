@@ -2,16 +2,15 @@ import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizBookModel from "@/common/model/quiz-book";
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
-  deleteQuizBookAsync,
-  DELETE_QUIZBOOK,
   getQuizBookListAsync,
+  getUnsolvedQuizBookListAsync,
   GET_QUIZBOOK_LIST,
+  GET_UNSOLVED_QUIZBOOK_LIST,
   postQuizBookLikstAsync,
   POST_QUIZBOOK_LIKE,
   searchQuizBookListAsync,
   SEARCH_QUIZBOOK_LIST,
 } from "./actions";
-import { DeleteResult } from "./types";
 
 function* getQuizBookListSaga(
   action: ReturnType<typeof getQuizBookListAsync.request>
@@ -27,6 +26,23 @@ function* getQuizBookListSaga(
     yield put(getQuizBookListAsync.success(quizBookList));
   } catch (e) {
     yield put(getQuizBookListAsync.failure(e));
+  }
+}
+
+function* getUnSolvedQuizBookListSaga(
+  action: ReturnType<typeof getUnsolvedQuizBookListAsync.request>
+) {
+  try {
+    const { categoryId, page, isSortByDate } = action.payload;
+    const quizBookList: QuizBookModel[] = yield call(
+      quizbookAPI.getUnsolvedQuizBookList,
+      categoryId,
+      page,
+      isSortByDate
+    );
+    yield put(getUnsolvedQuizBookListAsync.success(quizBookList));
+  } catch (e) {
+    yield put(getUnsolvedQuizBookListAsync.failure(e));
   }
 }
 
@@ -61,24 +77,9 @@ function* searchQuizBookListSaga(
   }
 }
 
-function* deleteQuizBookSaga(
-  action: ReturnType<typeof deleteQuizBookAsync.request>
-) {
-  try {
-    const { quizBookId } = action.payload;
-    const deleteResult: DeleteResult = yield call(
-      quizbookAPI.deleteQuizBook,
-      quizBookId
-    );
-    yield put(deleteQuizBookAsync.success(deleteResult));
-  } catch (e) {
-    yield put(deleteQuizBookAsync.failure(e));
-  }
-}
-
 export function* quizBookSaga() {
   yield takeEvery(GET_QUIZBOOK_LIST, getQuizBookListSaga);
+  yield takeEvery(GET_UNSOLVED_QUIZBOOK_LIST, getUnSolvedQuizBookListSaga);
   yield takeEvery(POST_QUIZBOOK_LIKE, postQuizBookLikeSaga);
   yield takeEvery(SEARCH_QUIZBOOK_LIST, searchQuizBookListSaga);
-  yield takeEvery(DELETE_QUIZBOOK, deleteQuizBookSaga);
 }

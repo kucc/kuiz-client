@@ -1,25 +1,26 @@
-import { createReducer } from "typesafe-actions";
+import { action, createReducer } from "typesafe-actions";
+import { SHOW_ALERT_MODAL } from "../modal";
 import {
   GET_QUIZBOOK_LIST,
   GET_QUIZBOOK_LIST_ERROR,
   GET_QUIZBOOK_LIST_SUCCESS,
+  GET_UNSOLVED_QUIZBOOK_LIST,
+  GET_UNSOLVED_QUIZBOOK_LIST_ERROR,
+  GET_UNSOLVED_QUIZBOOK_LIST_SUCCESS,
   POST_QUIZBOOK_LIKE,
   POST_QUIZBOOK_LIKe_ERROR,
   POST_QUIZBOOK_LIKE_SUCCESS,
   SEARCH_QUIZBOOK_LIST,
   SEARCH_QUIZBOOK_LIST_ERROR,
   SEARCH_QUIZBOOK_LIST_SUCCESS,
-  DELETE_QUIZBOOK,
-  DELETE_QUIZBOOK_SUCCESS,
-  DELETE_QUIZBOOK_ERROR,
 } from "./actions";
 import { QuizBookAction, QuizBookState } from "./types";
-import QuizBookModel from "@/common/model/quiz-book";
 
 const initialState: QuizBookState = {
   loading: false,
   error: null,
   data: null,
+  isUnsolved: false,
 };
 
 const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
@@ -29,7 +30,7 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       ...state,
       loading: true,
       error: null,
-      data: null,
+      isUnsolved: false,
     }),
     [GET_QUIZBOOK_LIST_SUCCESS]: (state, action) => ({
       ...state,
@@ -38,9 +39,24 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
     }),
     [GET_QUIZBOOK_LIST_ERROR]: (state, action) => ({
       ...state,
-      loading: true,
+      loading: false,
       error: action.payload,
-      data: null,
+    }),
+    [GET_UNSOLVED_QUIZBOOK_LIST]: (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+      isUnsolved: true,
+    }),
+    [GET_UNSOLVED_QUIZBOOK_LIST_SUCCESS]: (state, action) => ({
+      ...state,
+      loading: false,
+      data: action.payload,
+    }),
+    [GET_UNSOLVED_QUIZBOOK_LIST_ERROR]: (state, action) => ({
+      ...state,
+      loading: false,
+      error: action.payload,
     }),
     [POST_QUIZBOOK_LIKE]: (state) => ({
       ...state,
@@ -51,15 +67,13 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       if (!state.data) {
         return { ...state };
       }
-      const updatedQuizBookList = (state.data as QuizBookModel[]).map(
-        (quizBook) => {
-          if (quizBook.id === action.payload.id) {
-            return action.payload;
-          } else {
-            return quizBook;
-          }
+      const updatedQuizBookList = state.data.map((quizBook) => {
+        if (quizBook.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return quizBook;
         }
-      );
+      });
       return {
         ...state,
         loading: false,
@@ -84,23 +98,6 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       data: action.payload,
     }),
     [SEARCH_QUIZBOOK_LIST_ERROR]: (state, action) => ({
-      ...state,
-      loading: true,
-      error: action.payload,
-      data: null,
-    }),
-
-    [DELETE_QUIZBOOK]: (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    }),
-    [DELETE_QUIZBOOK_SUCCESS]: (state, action) => ({
-      ...state,
-      loading: false,
-      data: action.payload,
-    }),
-    [DELETE_QUIZBOOK_ERROR]: (state, action) => ({
       ...state,
       loading: true,
       error: action.payload,

@@ -14,6 +14,13 @@ const userAPI = {
     );
     return userInfoWithRank;
   },
+  updateUserNickname: async (nickname: string) => {
+    const { data: userInfo } = await axios.patch<UserModel>(
+      `${endpoints.USER_API}/nickname`,
+      { nickname }
+    );
+    return userInfo;
+  },
 };
 
 export default userAPI;
