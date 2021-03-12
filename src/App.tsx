@@ -49,7 +49,7 @@ const App: React.FC = () => (
           <Route path="/profile" exact component={Auth(ProfilePage, false)} />
           <Route path="/quiz-book" exact component={Auth(QuizBookPage, true)} />
           <Route
-            path="/quiz-book/:quizbookId"
+            path="/quiz-book/:quizBookId"
             component={Auth(AddQuizPage, true)}
           />
           <Route
