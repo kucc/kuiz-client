@@ -19,6 +19,8 @@ export const SEARCH_QUIZBOOK_LIST = "quizbook/SEARCH_QUIZBOOK_LIST" as const;
 export const SEARCH_QUIZBOOK_LIST_SUCCESS = "quizbook/SEARCH_QUIZBOOK_LIST_SUCCESS" as const;
 export const SEARCH_QUIZBOOK_LIST_ERROR = "quizbook/SEARCH_QUIZBOOK_LIST_ERROR" as const;
 
+export const INIT_QUIZBOOK_REDUCER = "quizbook/INIT_QUIZBOOK_REDUCER" as const;
+
 export const getQuizBookListAsync = createAsyncAction(
   GET_QUIZBOOK_LIST,
   GET_QUIZBOOK_LIST_SUCCESS,
@@ -42,3 +44,7 @@ export const searchQuizBookListAsync = createAsyncAction(
   SEARCH_QUIZBOOK_LIST_SUCCESS,
   SEARCH_QUIZBOOK_LIST_ERROR
 )<SearchAPIPayload, QuizBookModel[], AxiosError>();
+
+export const initQuizBookReducer = () => ({
+  type: INIT_QUIZBOOK_REDUCER,
+});
