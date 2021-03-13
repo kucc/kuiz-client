@@ -2,6 +2,7 @@ import endpoints from "@/common/endpoints";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import axios from "../axios";
+import QuizBookModel from "@/common/model/quiz-book";
 
 const quizbookAPI = {
   getQuizBookList: async (
@@ -43,11 +44,9 @@ const quizbookAPI = {
     page: number,
     isSortByDate: boolean
   ) => {
-
     const { data: unsolvedQuizBookList } = await axios.get<
       QuizBookwithLikedModel[]
     >(
-
       `${endpoints.QUIZBOOK_API}/unsolved?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
 
@@ -93,6 +92,14 @@ const quizbookAPI = {
     }
 
     return newQuizBook;
+  },
+
+  checkAuth: async (quizbookId: number): Promise<boolean> => {
+    const { data: isAuth } = await axios.get<boolean>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}/authorize`
+    );
+
+    return isAuth;
   },
 };
 
