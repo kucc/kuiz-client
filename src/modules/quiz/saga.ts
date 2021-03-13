@@ -5,9 +5,11 @@ import {
   getQuizAsync,
   editQuizAsync,
   postQuizAsync,
+  getQuizListAsync,
   EDIT_QUIZ,
   GET_QUIZ,
   POST_QUIZ,
+  GET_QUIZ_LIST,
 } from "./actions";
 
 function* getQuizSaga(action: ReturnType<typeof getQuizAsync.request>) {
@@ -40,8 +42,20 @@ function* postQuizSaga(action: ReturnType<typeof postQuizAsync.request>) {
   }
 }
 
+function* getQuizListSaga(action: ReturnType<typeof getQuizListAsync.request>) {
+  try {
+    const { quizBookId } = action.payload;
+    const quizList: QuizModel[] = yield call(quizAPI.getAllQuiz, quizBookId);
+    yield put(getQuizListAsync.success(quizList));
+  } catch (e) {
+    yield put(getQuizListAsync.failure(e));
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function* quizSaga() {
   yield takeEvery(GET_QUIZ, getQuizSaga);
   yield takeEvery(EDIT_QUIZ, editQuizSaga);
   yield takeEvery(POST_QUIZ, postQuizSaga);
+  yield takeEvery(GET_QUIZ_LIST, getQuizListSaga);
 }

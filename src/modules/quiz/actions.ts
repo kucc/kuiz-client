@@ -19,6 +19,10 @@ export const POST_QUIZ = "quiz/POST_QUIZ" as const;
 export const POST_QUIZ_SUCCESS = "quiz/POST_QUIZ_SUCCESS" as const;
 export const POST_QUIZ_ERROR = "quiz/POST_QUIZ_ERROR" as const;
 
+export const GET_QUIZ_LIST = "quiz/GET_QUIZ_LIST" as const;
+export const GET_QUIZ_LIST_SUCCESS = "quiz/GET_QUIZ_LIST_SUCCESS" as const;
+export const GET_QUIZ_LIST_ERROR = "quiz/GET_QUIZ_LIST_ERROR" as const;
+
 export const getQuizAsync = createAsyncAction(
   GET_QUIZ,
   GET_QUIZ_SUCCESS,
@@ -36,3 +40,9 @@ export const postQuizAsync = createAsyncAction(
   POST_QUIZ_SUCCESS,
   POST_QUIZ_ERROR
 )<PostQuizAPIPayload, QuizModel, AxiosError>();
+
+export const getQuizListAsync = createAsyncAction(
+  GET_QUIZ_LIST,
+  GET_QUIZ_LIST_SUCCESS,
+  GET_QUIZ_LIST_ERROR
+)<{ quizBookId: number }, QuizModel[], AxiosError>();
