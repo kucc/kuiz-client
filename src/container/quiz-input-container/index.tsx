@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import * as S from "./styles";
 import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
-import { RouteComponentProps, useParams } from "react-router-dom";
 import {
   defaultQuizOption,
   saveAnswer,
@@ -18,12 +17,12 @@ import {
 import { useHistory } from "react-router-dom";
 import checkQuizInput from "@/common/lib/check-quiz-input";
 import { QuizInputContainerProps } from "./types";
-import TextareaAutosize from 'react-textarea-autosize';
+import TextareaAutosize from "react-textarea-autosize";
 
 const QuizInputContainer = ({
   quizBookId,
   quizId,
-}: QuizInputContainerProps) => {
+}: QuizInputContainerProps): ReactElement => {
   const history = useHistory();
   const { data, body, setBody } = useFetchQuiz(quizId);
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
@@ -51,13 +50,16 @@ const QuizInputContainer = ({
       const formData = handleFormData();
 
       if (quizId) {
-        dispatch(editQuizAsync.request({ quizId, body: formData }));
+        dispatch(editQuizAsync.request({ quizId, body: formData, history }));
+        alert("문제 수정에 성공하였습니다.");
         return;
       }
 
       if (quizBookId) {
-        dispatch(postQuizAsync.request({ quizBookId, body: formData }));
-        history.push(`/quiz-book/${quizBookId}`);
+        dispatch(
+          postQuizAsync.request({ quizBookId, body: formData, history })
+        );
+        alert("문제 제출에 성공하였습니다.");
       }
     } catch {
       return;
@@ -141,7 +143,7 @@ const QuizInputContainer = ({
           <S.SubTitle>문제</S.SubTitle>
         </S.TitleContainer>
         <S.ProblemContainer>
-          <TextareaAutosize 
+          <TextareaAutosize
             className="textarea"
             name="question"
             placeholder="문제를 입력해 주세요."
@@ -221,13 +223,13 @@ const QuizInputContainer = ({
         <S.TitleContainer>
           <S.SubTitle>설명</S.SubTitle>
         </S.TitleContainer>
-        <TextareaAutosize 
-            className="textarea"
-            name="description"
-            placeholder="퀴즈에 대한 설명을 입력해 주세요."
-            onChange={(e) => handleInput(e)}
-            defaultValue={data?.description}
-          />
+        <TextareaAutosize
+          className="textarea"
+          name="description"
+          placeholder="퀴즈에 대한 설명을 입력해 주세요."
+          onChange={(e) => handleInput(e)}
+          defaultValue={data?.description}
+        />
       </S.Container>
 
       <S.ButtonContainer>
