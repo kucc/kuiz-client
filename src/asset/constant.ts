@@ -23,6 +23,10 @@ export const STATIC_URL = {
   FLAG: `https://user-images.githubusercontent.com/46309902/107686315-69501300-6ce8-11eb-8ce0-f34fd36c3248.jpg`,
   RUNNING_MAN: `https://user-images.githubusercontent.com/46309902/107687612-0bbcc600-6cea-11eb-898e-23b080570143.png`,
   FALL_DOWN_MAN: `https://user-images.githubusercontent.com/46309902/107687739-373fb080-6cea-11eb-8421-c9432c32ac1b.png`,
+  LIKE_ICON:
+    "https://user-images.githubusercontent.com/44545922/109840770-c4dc4380-7c8b-11eb-98bf-eeaf88ad2d63.png",
+  UNLIKE_ICON:
+    "https://user-images.githubusercontent.com/44545922/109837628-b6d8f380-7c88-11eb-9ba5-9d4250e0579f.png",
   QUESTION_MARK: `https://user-images.githubusercontent.com/50616334/110240036-4df5c200-7f8d-11eb-8bd3-89db54d78543.png`,
   CANCEL_ICON: `https://user-images.githubusercontent.com/50616334/110313835-5cee7a00-804a-11eb-91e8-6a404506e374.png`,
   GOLD_MEDAL: `https://user-images.githubusercontent.com/50616334/98394677-754f8780-209e-11eb-8df9-9249fcd76e5d.png`,

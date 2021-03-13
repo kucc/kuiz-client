@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
-import { QuizBookProps } from "./types";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import DropDown from "../drop-down";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DropDown from "@/component/drop-down";
+import { RootState } from "@/modules";
+import { QuizBookProps } from "./types";
+import { STATIC_URL } from "@/asset/constant";
+import { showAlertModal } from "@/modules/modal";
 import { deleteQuizBookAsync } from "@/modules/user-quizbook";
-import { postQuizBookLikstAsync } from "@/modules/quiz-book";
+import { postQuizBookLikeAsync } from "@/modules/quiz-book";
 
 // eslint-disable-next-line react/display-name
 const QuizBook = React.forwardRef(
@@ -13,30 +16,32 @@ const QuizBook = React.forwardRef(
     { quizBook, isUserQuizBook }: QuizBookProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
-    const likeButton = useRef<HTMLDivElement>(null);
-    const settingButton = useRef<HTMLImageElement>(null);
-    const dropDownContainer = useRef<HTMLDivElement>(null);
-
-    const [dropDown, setDropDown] = useState(false);
-
     const history = useHistory();
     const dispatch = useDispatch();
+    const { error } = useSelector((state: RootState) => state.quizbook);
+    const likeButton = useRef<HTMLImageElement>(null);
+    const settingButton = useRef<HTMLImageElement>(null);
+    const dropDownContainer = useRef<HTMLDivElement>(null);
+    const [dropDown, setDropDown] = useState(false);
 
-    const onClick = (e) => {
+    useEffect(() => {
+      if (!error) return;
+      dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
+    }, [error]);
+
+    const onClick = async (e) => {
       if (e.target === likeButton.current) {
-        dispatch(postQuizBookLikstAsync.request(quizBook.id));
+        dispatch(postQuizBookLikeAsync.request(quizBook.id));
+
         return;
       }
-
       if (e.target === settingButton.current) {
         setDropDown(!dropDown);
         return;
       }
-
       if (e.target.parentNode === dropDownContainer.current) {
         return;
       }
-
       if (dropDown) {
         setDropDown(!dropDown);
         return;
@@ -59,49 +64,66 @@ const QuizBook = React.forwardRef(
 
       dispatch(deleteQuizBookAsync.request({ quizBookId: quizBook.id }));
     };
-
     return (
-      <S.QuizBookWrapper onClick={onClick} ref={ref}>
-        <S.QuizBookRow height={4}>
-          <S.QuizBookName>
-            <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
-          </S.QuizBookName>
-          <S.QuizBookLike>
-            <S.QuizText bold ref={likeButton}>
-              👍 {quizBook.likedCount}
-            </S.QuizText>
-          </S.QuizBookLike>
-        </S.QuizBookRow>
-        <S.QuizBookRow height={3}>
-          <S.QuizCount>
-            <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
-          </S.QuizCount>
-          <S.SolvedCount>
-            <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
-          </S.SolvedCount>
+      <>
+        (
+        <S.QuizBookWrapper onClick={onClick} ref={ref}>
+          <S.QuizBookRow height={4}>
+            <S.QuizBookName>
+              <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
+            </S.QuizBookName>
+            <S.QuizBookLike>
+              <S.LikeIconWrapper>
+                {quizBook.liked == true ? (
+                  <S.LikeIcon
+                    liked={quizBook.liked}
+                    src={STATIC_URL.LIKE_ICON}
+                    alt="LikeIcon"
+                    ref={likeButton}
+                  />
+                ) : (
+                  <S.LikeIcon
+                    liked={quizBook.liked}
+                    src={STATIC_URL.UNLIKE_ICON}
+                    alt="UnlikeIcon"
+                    ref={likeButton}
+                  />
+                )}
+              </S.LikeIconWrapper>
+              <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
+            </S.QuizBookLike>
+          </S.QuizBookRow>
+          <S.QuizBookRow height={3}>
+            <S.QuizCount>
+              <S.QuizText bold>Q {quizBook.quizCount}</S.QuizText>
+            </S.QuizCount>
+            <S.SolvedCount>
+              <S.QuizText bold={false}>{quizBook.solvedCount} solve</S.QuizText>
+            </S.SolvedCount>
 
-          <S.QuizBookOwner>
-            {!isUserQuizBook ? (
-              <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
-            ) : (
-              <>
-                <S.QuizBookSetButton
-                  src={"/src/asset/setting.png"}
-                  ref={settingButton}
-                />
-                <DropDown
-                  ref={dropDownContainer}
-                  show={dropDown}
-                  text1={"수정하기"}
-                  text2={"삭제하기"}
-                  clickEvent1={editQuizBook}
-                  clickEvent2={deleteQuizBook}
-                />
-              </>
-            )}
-          </S.QuizBookOwner>
-        </S.QuizBookRow>
-      </S.QuizBookWrapper>
+            <S.QuizBookOwner>
+              {!isUserQuizBook ? (
+                <S.QuizText bold={false}>{quizBook.ownerName}</S.QuizText>
+              ) : (
+                <>
+                  <S.QuizBookSetButton
+                    src={"/src/asset/setting.png"}
+                    ref={settingButton}
+                  />
+                  <DropDown
+                    ref={dropDownContainer}
+                    show={dropDown}
+                    text1={"수정하기"}
+                    text2={"삭제하기"}
+                    clickEvent1={editQuizBook}
+                    clickEvent2={deleteQuizBook}
+                  />
+                </>
+              )}
+            </S.QuizBookOwner>
+          </S.QuizBookRow>
+        </S.QuizBookWrapper>
+      </>
     );
   }
 );

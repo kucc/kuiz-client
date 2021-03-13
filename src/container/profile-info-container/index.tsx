@@ -100,7 +100,7 @@ const ProfileInfoContainer = () => {
               </S.IconContainer>
             </S.UserInfoContainer>
           </S.UserInfoWrapper>
-          <S.ProfilePointBarContainer>
+          <S.PointBarContainer>
             <S.PointBarWrapper>
               <S.PointInfoWrapper>
                 <S.UserPoint> {data.point} P</S.UserPoint>
@@ -119,11 +119,11 @@ const ProfileInfoContainer = () => {
             <S.Point>
               ( {data.point} / {MAX_LEVEL_POINT[data.level]} )
             </S.Point>
-          </S.ProfilePointBarContainer>
           <ProfileModal 
             showModal={showModal}
             setShowModal={setShowModal}
           />
+          </S.PointBarContainer>
         </S.ProfileInfoContainer>
         <CustomAlert />
     </>
