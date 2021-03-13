@@ -2,11 +2,9 @@ import * as S from "./styles";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import DropDown from "@/component/drop-down";
 import { RootState } from "@/modules";
 import { QuizBookProps } from "./types";
-import CustomAlert from "@/component/custom-alert";
 import { STATIC_URL } from "@/asset/constant";
 import { showAlertModal } from "@/modules/modal";
 import { deleteQuizBookAsync } from "@/modules/user-quizbook";
