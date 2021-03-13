@@ -1,15 +1,15 @@
 import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookModel from "@/common/model/quiz-book";
 import { call, put, takeEvery } from "redux-saga/effects";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import {
   getQuizBookListAsync,
-  getUnsolvedQuizBookListAsync,
   GET_QUIZBOOK_LIST,
+  postQuizBookLikeAsync,
   GET_UNSOLVED_QUIZBOOK_LIST,
-  postQuizBookLikstAsync,
   POST_QUIZBOOK_LIKE,
   searchQuizBookListAsync,
   SEARCH_QUIZBOOK_LIST,
+  getUnsolvedQuizBookListAsync,
 } from "./actions";
 
 function* getQuizBookListSaga(
@@ -17,7 +17,7 @@ function* getQuizBookListSaga(
 ) {
   try {
     const { categoryId, page, isSortByDate } = action.payload;
-    const quizBookList: QuizBookModel[] = yield call(
+    const quizBookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.getQuizBookList,
       categoryId,
       page,
@@ -34,7 +34,7 @@ function* getUnSolvedQuizBookListSaga(
 ) {
   try {
     const { categoryId, page, isSortByDate } = action.payload;
-    const quizBookList: QuizBookModel[] = yield call(
+    const quizBookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.getUnsolvedQuizBookList,
       categoryId,
       page,
@@ -47,17 +47,17 @@ function* getUnSolvedQuizBookListSaga(
 }
 
 function* postQuizBookLikeSaga(
-  action: ReturnType<typeof postQuizBookLikstAsync.request>
+  action: ReturnType<typeof postQuizBookLikeAsync.request>
 ) {
   try {
     const quizBookId = action.payload;
-    const updatedQuizBook = yield call(
+    const updatedQuizBookLike: QuizBookwithLikedModel = yield call(
       quizbookAPI.postQuizBookLike,
       quizBookId
     );
-    yield put(postQuizBookLikstAsync.success(updatedQuizBook));
+    yield put(postQuizBookLikeAsync.success(updatedQuizBookLike));
   } catch (e) {
-    yield put(postQuizBookLikstAsync.failure(e));
+    yield put(postQuizBookLikeAsync.failure(e));
   }
 }
 
@@ -65,10 +65,11 @@ function* searchQuizBookListSaga(
   action: ReturnType<typeof searchQuizBookListAsync.request>
 ) {
   try {
-    const { categoryId, keyword } = action.payload;
-    const quizbookList: QuizBookModel[] = yield call(
+    const { categoryId, page, keyword } = action.payload;
+    const quizbookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.searchQuizBookList,
       categoryId,
+      page,
       keyword
     );
     yield put(searchQuizBookListAsync.success(quizbookList));
