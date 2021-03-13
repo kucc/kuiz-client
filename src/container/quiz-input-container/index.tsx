@@ -18,6 +18,7 @@ import {
 import { useHistory } from "react-router-dom";
 import checkQuizInput from "@/common/lib/check-quiz-input";
 import { QuizInputContainerProps } from "./types";
+import TextareaAutosize from 'react-textarea-autosize';
 
 const QuizInputContainer = ({
   quizBookId,
@@ -140,7 +141,8 @@ const QuizInputContainer = ({
           <S.SubTitle>문제</S.SubTitle>
         </S.TitleContainer>
         <S.ProblemContainer>
-          <S.InputBox
+          <TextareaAutosize 
+            className="textarea"
             name="question"
             placeholder="문제를 입력해 주세요."
             onChange={(e) => handleInput(e)}
@@ -219,12 +221,13 @@ const QuizInputContainer = ({
         <S.TitleContainer>
           <S.SubTitle>설명</S.SubTitle>
         </S.TitleContainer>
-        <S.InputBox
-          placeholder="퀴즈에 대한 설명을 입력해 주세요."
-          name="description"
-          onChange={(e) => handleInput(e)}
-          defaultValue={data?.description}
-        />
+        <TextareaAutosize 
+            className="textarea"
+            name="description"
+            placeholder="퀴즈에 대한 설명을 입력해 주세요."
+            onChange={(e) => handleInput(e)}
+            defaultValue={data?.description}
+          />
       </S.Container>
 
       <S.ButtonContainer>
