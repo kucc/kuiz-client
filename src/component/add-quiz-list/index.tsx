@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import * as S from "./styles";
 import AddButton from "@component/buttons/add-button/index";
 import QuizModel from "@common/model/quiz";
-import QuizQuestion from "../quiz-question";
+import QuizBox from "../quiz-box";
 
 export interface QuizProps {
   quizBookId: number;
@@ -15,15 +15,11 @@ const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
       <S.Container>
         <AddButton link={`/quiz-book/${quizBookId}/makequiz`} />
       </S.Container>
+
       <S.Container>
         {quizList &&
           quizList.map((quiz) => {
-            return (
-              <S.QuizQuestionContainer key={quiz.id}>
-                <S.Title>문제</S.Title>
-                <QuizQuestion question={quiz.question} />
-              </S.QuizQuestionContainer>
-            );
+            return <QuizBox key={quiz.id} quiz={quiz} />;
           })}
       </S.Container>
     </S.Wrapper>
