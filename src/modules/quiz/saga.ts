@@ -1,28 +1,17 @@
 import quizAPI from "@/common/lib/api/quiz";
+import quizbookAPI from "@/common/lib/api/quizbook";
 import QuizModel from "@/common/model/quiz";
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
-  getQuizAsync,
   editQuizAsync,
   postQuizAsync,
   getQuizListAsync,
   deleteQuizAsync,
   EDIT_QUIZ,
-  GET_QUIZ,
   POST_QUIZ,
   GET_QUIZ_LIST,
   DELETE_QUIZ,
 } from "./actions";
-
-function* getQuizSaga(action: ReturnType<typeof getQuizAsync.request>) {
-  try {
-    const { quizId } = action.payload;
-    const quiz: QuizModel = yield call(quizAPI.getQuiz, quizId);
-    yield put(getQuizAsync.success(quiz));
-  } catch (e) {
-    yield put(getQuizAsync.failure(e));
-  }
-}
 
 function* editQuizSaga(action: ReturnType<typeof editQuizAsync.request>) {
   try {
@@ -48,7 +37,8 @@ function* postQuizSaga(action: ReturnType<typeof postQuizAsync.request>) {
 
 function* getQuizListSaga(action: ReturnType<typeof getQuizListAsync.request>) {
   try {
-    const { quizBookId } = action.payload;
+    const { quizBookId, checkAuth } = action.payload;
+    if (checkAuth) yield call(quizbookAPI.checkAuth, quizBookId);
     const quizList: QuizModel[] = yield call(quizAPI.getAllQuiz, quizBookId);
     yield put(getQuizListAsync.success(quizList));
   } catch (e) {
@@ -68,7 +58,6 @@ function* deleteQuizSaga(action: ReturnType<typeof deleteQuizAsync.request>) {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function* quizSaga() {
-  yield takeEvery(GET_QUIZ, getQuizSaga);
   yield takeEvery(EDIT_QUIZ, editQuizSaga);
   yield takeEvery(POST_QUIZ, postQuizSaga);
   yield takeEvery(GET_QUIZ_LIST, getQuizListSaga);

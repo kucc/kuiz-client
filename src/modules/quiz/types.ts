@@ -12,8 +12,9 @@ export type QuizState = {
   data: QuizModel[] | null;
 };
 
-export type GetQuizAPIPayload = {
-  quizId: number;
+export type GetQuizListAPIPayload = {
+  quizBookId: number;
+  checkAuth: boolean;
 };
 
 export type PostQuizAPIPayload = {
