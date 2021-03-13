@@ -1,14 +1,13 @@
-import QuizBookModel from "@/common/model/quiz-book";
-import UserSolveQuizBookModel from "@/common/model/user-solve-quiz-book";
 import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 export type UserQuizBookAction = ActionType<typeof actions>;
 
 export type UserQuizBookState = {
   loading: boolean;
   error: Error | null;
-  data: QuizBookModel[] | null;
+  data: QuizBookwithLikedModel[] | null;
 };
 
 export type UserQuizBookAPIPayload = {

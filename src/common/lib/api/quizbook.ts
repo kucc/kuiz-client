@@ -25,22 +25,13 @@ const quizbookAPI = {
     );
     return quizBookList;
   },
-  getSolvingQuizBook: async (
-    isDone: boolean,
-    page: number
-  ): Promise<QuizBookwithLikedModel[]> => {
-    const { data: solveQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}&page=${page}`
-    );
-    return solveQuizBook;
-  },
+
   getUserQuizBook: async (
     path: string,
-    isDone: boolean,
-    page: number
+    isDone: boolean
   ): Promise<QuizBookwithLikedModel[]> => {
     const { data: userQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}&page=${page}`
+      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
     );
 
     return userQuizBook;
