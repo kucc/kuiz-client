@@ -38,7 +38,6 @@ interface QuizBookProps {
 
 export const ButtonFilter = styled.div<QuizBookProps>`
   width: auto;
-  padding: 0.5rem 1rem;
   height: 3rem;
   background-color: ${(props) => (props.active ? "#d77e6a" : "#ffa18c")};
   align-items: center;
@@ -60,6 +59,8 @@ export const Filter = styled.div`
 `;
 
 export const FilterText = styled.option`
+  padding: 0.5rem 1rem;
+
   text-align: center;
   font-size: 1.5rem;
 `;
