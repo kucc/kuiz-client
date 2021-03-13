@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonButton from "@/component/buttons/common-button";
 import QuizBook from "@/component/quizbook";
@@ -6,79 +6,95 @@ import DropDown from "@/component/drop-down";
 import { RootState } from "@/modules";
 import {
   getQuizBookListAsync,
+  getUnsolvedQuizBookListAsync,
+  initQuizBookReducer,
   searchQuizBookListAsync,
 } from "@/modules/quiz-book";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
-import quizbookAPI from "@/common/lib/api/quizbook";
-import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import debounce from "@common/lib/debounce";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
-  const [keyword, setKeyword] = useState("");
-
-  const { data } = useSelector((state: RootState) => state.quizbook);
-
   const dispatch = useDispatch();
-  const [quizBookData, setQuizBookData] = useState(data);
-
-  const [unsolvedQuizBookList, setUnsolvedQuizBookList] = useState(
-    [] as QuizBookwithLikedModel[]
-  );
+  const { data } = useSelector((state: RootState) => state.quizbook);
+  const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
   const [isSortByDate, setIsSortByDate] = useState(true);
-
-  const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const target = useRef<HTMLDivElement>(null);
 
-  const getQuizBookList = () => {
-    setIsSortByDate(true);
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
-    );
-    setShow(false);
-  };
+  const getQuizBookList = useCallback(
+    (page) => {
+      if (unSolvedQuizBook) {
+        dispatch(
+          getUnsolvedQuizBookListAsync.request({
+            categoryId,
+            page,
+            isSortByDate,
+          })
+        );
+      } else {
+        dispatch(
+          getQuizBookListAsync.request({ categoryId, page, isSortByDate })
+        );
+      }
+      setShow(false);
+    },
+    [unSolvedQuizBook, isSortByDate]
+  );
 
-  const getQuizBookListByLikes = () => {
-    setIsSortByDate(false);
-    dispatch(
-      getQuizBookListAsync.request({ categoryId, page: 1, isSortByDate })
-    );
-    setShow(false);
-  };
-
-  const toggleDropDown = () => {
+  const toggleDropDown = useCallback(() => {
     setShow(!show);
-  };
-
-  const getUnsolvedQuizBookList = async () => {
-    const unsolvedQuizBookList = await quizbookAPI.getUnsolvedQuizBookList(
-      categoryId,
-      1,
-      isSortByDate
-
-    );
-    setUnsolvedQuizBookList(unsolvedQuizBookList);
-  };
+  }, [show]);
 
   const changeFilter = (e) => {
-    const filter = e.target.value;
-    if (filter === "all") setQuizBookData(data);
-    if (filter === "unsolved") setQuizBookData(unsolvedQuizBookList);
-    setFilter(filter);
+    const newFilter = Boolean(e.target.value);
+    if (unSolvedQuizBook !== newFilter) {
+      dispatch(initQuizBookReducer());
+      setPage(1);
+      newFilter === false
+        ? setUnSolvedQuizBook(false)
+        : setUnSolvedQuizBook(true);
+      setUnSolvedQuizBook(newFilter);
+    }
   };
 
-  const searchQuizBookList = (keyword: string) => {
-    dispatch(searchQuizBookListAsync.request({ categoryId, page: 1, keyword }));
-  };
+  const searchQuizBookList = useCallback(
+    (keyword: string) => {
+      dispatch(searchQuizBookListAsync.request({ categoryId, page, keyword }));
+    },
+    [keyword]
+  );
 
   useEffect(() => {
-    getQuizBookList();
-    getUnsolvedQuizBookList();
-  }, [dispatch]);
-
-  useEffect(() => {
-    setQuizBookData(data);
+    let observer: IntersectionObserver;
+    if (target.current) {
+      observer = new IntersectionObserver(
+        (entries: IntersectionObserverEntry[]) => {
+          if (entries[0].intersectionRatio <= 0) return;
+          setPage(page + 1);
+        },
+        {
+          root: null,
+          rootMargin: "0px 0px 0px 10px",
+          threshold: 0.3,
+        }
+      );
+      observer.observe(target.current as Element);
+    }
+    return () => observer && observer.disconnect();
   }, [data]);
+
+  useEffect(() => {
+    getQuizBookList(page);
+  }, [dispatch, unSolvedQuizBook, isSortByDate, page]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(initQuizBookReducer());
+    };
+  }, []);
 
   const delayedQueryCall = useRef(
     debounce((keyword: string) => searchQuizBookList(keyword), 500)
@@ -102,11 +118,11 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
-        <S.ButtonFilter active={filter === "all"}>
-          <S.FilterText value="all">전체 문제집</S.FilterText>
+        <S.ButtonFilter active={unSolvedQuizBook === false}>
+          <S.FilterText value={""}>전체 문제집</S.FilterText>
         </S.ButtonFilter>
-        <S.ButtonFilter active={filter === "unsolved"}>
-          <S.FilterText value="unsolved">안 푼 문제집</S.FilterText>
+        <S.ButtonFilter active={unSolvedQuizBook === true}>
+          <S.FilterText value={1}>안 푼 문제집</S.FilterText>
         </S.ButtonFilter>
       </S.FilterColumn>
       <S.DropDownFilterContainer>
@@ -119,24 +135,42 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
           show={show}
           text1={"최신순"}
           text2={"인기순"}
-          clickEvent1={getQuizBookList}
-          clickEvent2={getQuizBookListByLikes}
+          clickEvent1={
+            isSortByDate
+              ? () => {
+                  setShow(false);
+                }
+              : () => {
+                  setPage(1);
+                  setIsSortByDate(true);
+                  dispatch(initQuizBookReducer());
+                }
+          }
+          clickEvent2={
+            isSortByDate
+              ? () => {
+                  setPage(1);
+                  setIsSortByDate(false);
+                  dispatch(initQuizBookReducer());
+                }
+              : () => {
+                  setShow(false);
+                }
+          }
         />
       </S.DropDownFilterContainer>
 
-      {quizBookData ? (
-        quizBookData.map((quizBook) => {
+      {data &&
+        data.map((quizBook) => {
           return (
             <QuizBook
               key={`quiz${quizBook.id}`}
               quizBook={quizBook}
               isUserQuizBook={false}
+              ref={target}
             ></QuizBook>
           );
-        })
-      ) : (
-        <></>
-      )}
+        })}
     </S.QuizBookContainer>
   );
 };
