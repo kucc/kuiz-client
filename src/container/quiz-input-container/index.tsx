@@ -1,11 +1,11 @@
-import React, { useState, useMemo, ReactElement } from "react";
+import React, { useState, useMemo, ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as S from "./styles";
 import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
 import {
   defaultQuizOption,
   saveAnswer,
-  useFetchQuiz,
+  defaultQuizRequest,
   useQuizTypeRef,
 } from "./hooks";
 import QuizInputOption from "@/component/quiz-input/quiz-input-option";
@@ -18,17 +18,23 @@ import { useHistory } from "react-router-dom";
 import checkQuizInput from "@/common/lib/check-quiz-input";
 import { QuizInputContainerProps } from "./types";
 import TextareaAutosize from "react-textarea-autosize";
+import QuizRequestBody from "@/common/model/quiz-request-body";
 
 const QuizInputContainer = ({
   quizBookId,
   quizId,
+  data,
 }: QuizInputContainerProps): ReactElement => {
   const history = useHistory();
-  const { data, body, setBody } = useFetchQuiz(quizId);
+  const dispatch = useDispatch();
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
   const [file, setFile] = useState("");
-  const dispatch = useDispatch();
+  const [body, setBody] = useState<QuizRequestBody>(defaultQuizRequest);
+
+  useEffect(() => {
+    setBody({ ...body, ...data });
+  }, [data]);
 
   let fileInput;
   const fileHandler = (event) => {

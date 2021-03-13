@@ -1,15 +1,30 @@
-import React from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import QuizInputContainer from "@/container/quiz-input-container";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import QuizModel from "@/common/model/quiz";
+import quizAPI from "@/common/lib/api/quiz";
 
 interface QuizId {
   quizId: string;
 }
 
-const EditQuizPage = () => {
+const EditQuizPage = (): ReactElement => {
+  const history = useHistory();
   const { quizId } = useParams<QuizId>();
-  if (!parseInt(quizId)) throw new Error("잘못된 URL");
+  const [data, setData] = useState<QuizModel>();
 
-  return <QuizInputContainer quizId={parseInt(quizId)} quizBookId={null} />;
+  useEffect(() => {
+    if (!parseInt(quizId)) history.push("/");
+
+    const getQuiz = async () => {
+      const quiz = await quizAPI.getQuiz(parseInt(quizId));
+      setData(quiz);
+    };
+    getQuiz();
+  }, []);
+
+  return (
+    <QuizInputContainer data={data as QuizModel} quizId={parseInt(quizId)} />
+  );
 };
 export default EditQuizPage;
