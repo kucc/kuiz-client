@@ -19,7 +19,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const { data } = useSelector((state: RootState) => state.quizbook);
   const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
   const [isSortByDate, setIsSortByDate] = useState(true);
-  const [filter, setFilter] = useState<"all" | "unSolved">("all");
   const [show, setShow] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
@@ -50,14 +49,14 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, [show]);
 
   const changeFilter = (e) => {
-    const newFilter = e.target.value;
-    if (filter !== newFilter) {
+    const newFilter = Boolean(e.target.value);
+    if (unSolvedQuizBook !== newFilter) {
       dispatch(initQuizBookReducer());
       setPage(1);
-      newFilter === "all"
+      newFilter === false
         ? setUnSolvedQuizBook(false)
         : setUnSolvedQuizBook(true);
-      setFilter(newFilter);
+      setUnSolvedQuizBook(newFilter);
     }
   };
 
@@ -119,11 +118,11 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
         </S.CommonButtonWrapper>
       </S.SearchColumn>
       <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
-        <S.ButtonFilter active={filter === "all"}>
-          <S.FilterText value="all">전체 문제집</S.FilterText>
+        <S.ButtonFilter active={unSolvedQuizBook === false}>
+          <S.FilterText value={""}>전체 문제집</S.FilterText>
         </S.ButtonFilter>
-        <S.ButtonFilter active={filter === "unSolved"}>
-          <S.FilterText value="unSolved">안 푼 문제집</S.FilterText>
+        <S.ButtonFilter active={unSolvedQuizBook === true}>
+          <S.FilterText value={1}>안 푼 문제집</S.FilterText>
         </S.ButtonFilter>
       </S.FilterColumn>
       <S.DropDownFilterContainer>
