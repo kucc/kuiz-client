@@ -1,6 +1,6 @@
 import quizAPI from "@/common/lib/api/quiz";
 import quizbookAPI from "@/common/lib/api/quizbook";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import QuizModel from "@common/model/quiz";
 import QuizImage from "@/component/quiz-image/index";
 import QuizQuestion from "@/component/quiz-question/index";
@@ -9,12 +9,16 @@ import QuizProgressBar from "@/component/quiz-progress-bar/index";
 import * as S from "./styles";
 import { useHistory } from "react-router-dom";
 import LoadingSpinner from "@/component/common/loading-spinner";
+import { useDispatch } from "react-redux";
+import { showAlertModal } from "@/modules/modal";
+import CustomAlert from "@/component/custom-alert";
 
 export interface QuizProps {
   quizBookId: number;
 }
 
 const QuizContainer = ({ quizBookId }: QuizProps) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [quizList, setQuizList] = useState({} as QuizModel[]);
   const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);
@@ -31,6 +35,10 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
 
   const getQuizList = async () => {
     const quizList = await quizAPI.getAllQuiz(quizBookId);
+    if (!quizList.length) {
+      dispatch(showAlertModal("추가된 문제가 없습니다."));
+      return;
+    }
     setQuizList(quizList);
     setTotalQuizCount(Object.keys(quizList).length);
     setCurrentQuiz(quizList[0]);
@@ -126,6 +134,7 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
           </S.QuizWrapper>
         </S.QuizContainer>
       )}
+      <CustomAlert goBack={true} />
     </>
   );
 };
