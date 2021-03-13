@@ -11,7 +11,7 @@ export interface QuizProps {
 
 const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
   return (
-    <S.Wrapper>
+    <>
       <S.Container>
         <AddButton link={`/quiz-book/${quizBookId}/makequiz`} />
       </S.Container>
@@ -22,7 +22,7 @@ const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
             return <QuizBox key={quiz.id} quiz={quiz} />;
           })}
       </S.Container>
-    </S.Wrapper>
+    </>
   );
 };
 

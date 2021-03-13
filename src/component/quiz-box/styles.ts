@@ -44,7 +44,7 @@ export const QuizQuestion = styled.div`
   display: inline-block;
   padding-left: 10px;
 
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.6rem;
 
   width: 100%;

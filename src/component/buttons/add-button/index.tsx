@@ -1,10 +1,8 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import AddButtonProps from "./types";
 import * as S from "./styles";
-import { useHistory } from "react-router-dom";
-import { RouteComponentProps, useParams } from "react-router-dom";
 
-const AddButton = (props: AddButtonProps) => {
+const AddButton = (props: AddButtonProps): ReactElement => {
   return (
     <S.AddButton>
       <S.AddButtonContainer to={props.link}>
