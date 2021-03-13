@@ -3,9 +3,6 @@ import {
   EDIT_QUIZ,
   EDIT_QUIZ_SUCCESS,
   EDIT_QUIZ_ERROR,
-  GET_QUIZ,
-  GET_QUIZ_SUCCESS,
-  GET_QUIZ_ERROR,
   POST_QUIZ,
   POST_QUIZ_SUCCESS,
   POST_QUIZ_ERROR,
@@ -17,7 +14,6 @@ import {
   DELETE_QUIZ_SUCCESS,
 } from "./actions";
 import { QuizAction, QuizState } from "./types";
-import QuizModel from "@/common/model/quiz";
 
 const initialState: QuizState = {
   loading: false,
@@ -26,41 +22,28 @@ const initialState: QuizState = {
 };
 
 const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
-  [GET_QUIZ]: (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-    data: null,
-  }),
-
-  [GET_QUIZ_SUCCESS]: (state, action) => ({
-    ...state,
-    loading: false,
-    data: action.payload,
-  }),
-
-  [GET_QUIZ_ERROR]: (state, action) => ({
-    ...state,
-    loading: true,
-    error: action.payload,
-    data: null,
-  }),
-
   [EDIT_QUIZ]: (state) => ({
     ...state,
     loading: true,
     error: null,
   }),
 
-  [EDIT_QUIZ_SUCCESS]: (state) => {
+  [EDIT_QUIZ_SUCCESS]: (state, action) => {
     if (!state.data) {
       return { ...state };
     }
+    const updatedQuizList = state.data.map((quiz) => {
+      if (quiz.id === action.payload.id) {
+        return action.payload;
+      } else {
+        return quiz;
+      }
+    });
 
     return {
       ...state,
       loading: false,
-      data: state.data,
+      data: updatedQuizList,
       error: null,
     };
   },
@@ -78,17 +61,21 @@ const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
     loading: true,
     error: null,
   }),
+
   [POST_QUIZ_SUCCESS]: (state, action) => {
     if (!state.data) {
       return { ...state };
     }
+    const updatedQuizList = [...state.data, action.payload];
+
     return {
       ...state,
       loading: false,
-      data: action.payload,
+      data: updatedQuizList,
       error: null,
     };
   },
+
   [POST_QUIZ_ERROR]: (state, action) => ({
     ...state,
     loading: false,
@@ -121,7 +108,7 @@ const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
       return { ...state };
     }
 
-    const quizList = (state.data as QuizModel[]).filter((quiz) => {
+    const quizList = state.data.filter((quiz) => {
       return quiz.id !== action.payload;
     });
 
