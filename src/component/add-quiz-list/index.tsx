@@ -18,8 +18,10 @@ const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
 
       <S.Container>
         {quizList &&
-          quizList.map((quiz) => {
-            return <QuizBox key={quiz.id} quiz={quiz} />;
+          quizList.map((quiz, index) => {
+            return (
+              <QuizBox key={`quiz${quiz.id}`} quiz={quiz} index={index + 1} />
+            );
           })}
       </S.Container>
     </>

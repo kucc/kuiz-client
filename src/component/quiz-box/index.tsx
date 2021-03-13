@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteQuizAsync } from "@/modules/quiz";
 
-const QuizBox = ({ quiz }: QuizProps): ReactElement => {
+const QuizBox = ({ quiz, index }: QuizProps): ReactElement => {
   const deleteButton = useRef<HTMLImageElement>(null);
 
   const history = useHistory();
@@ -33,7 +33,9 @@ const QuizBox = ({ quiz }: QuizProps): ReactElement => {
         <S.QuizOption>{quiz.isChoice ? "객관식" : "주관식"}</S.QuizOption>
       </S.QuizColumn>
       <S.QuizColumn width={70}>
-        <S.QuizQuestion>Q. {quiz.question}</S.QuizQuestion>
+        <S.QuizQuestion>
+          Q{index}. {quiz.question}
+        </S.QuizQuestion>
       </S.QuizColumn>
       <S.QuizColumn width={15}>
         <S.QuizDeleteButton
