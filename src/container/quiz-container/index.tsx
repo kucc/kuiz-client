@@ -64,6 +64,7 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
     } else {
       setCorrect(false);
     }
+    postSolveQuizBook();
     setQuizCount(quizCount + 1);
   };
 
@@ -74,12 +75,12 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
     } else {
       setCorrect(false);
     }
+    postSolveQuizBook();
     setSolved(true);
     setQuizCount(quizCount + 1);
   };
 
   const goToNextQuiz = () => {
-    postSolveQuizBook();
     if (quizCount === totalQuizCount) {
       getResultPage();
     } else {
