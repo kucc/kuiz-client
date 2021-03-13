@@ -240,7 +240,7 @@ const QuizInputContainer = ({
 
       <S.ButtonContainer>
         <S.SubmitButton type="submit" onClick={handleSubmit}>
-          퀴즈 만들기
+          {quizBookId ? "퀴즈 만들기" : "수정하기"}
         </S.SubmitButton>
       </S.ButtonContainer>
     </S.Wrapper>
