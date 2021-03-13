@@ -15,13 +15,12 @@ export const MedalLog = styled.img`
 
 export const TopUserNameContainer = styled.div`
   display: flex;
-  background-color: #d4d4d4;
   margin-top: 1rem;
   width: 8rem;
-  height: 2.4rem;
-  border-radius: 10px;
+  height: 100%;
+  border-radius: 0.5rem;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   color: black;
 `;
 

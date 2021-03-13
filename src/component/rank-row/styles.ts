@@ -1,18 +1,21 @@
 import styled from "styled-components";
 import { spin } from "@common/keyframe";
 import { UserRankContainerProps } from "./types";
+import { THEME_COLOR } from "@/asset/constant";
 
 export const UserRankContainer = styled.div<UserRankContainerProps>`
   display: flex;
   flex-direction: row;
   justify-content: absolute;
   align-items: center;
-  border-radius: 10px;
-  background-color: ${(props) => (props.isSelfRank ? "#ffe783" : "#f6fbf7")};
-  width: 35rem;
+  border-radius: 0.5rem;
+  background-color: ${(props) => (props.isSelfRank ? "#ffee93" : `${THEME_COLOR.GRAY}`)};
+  width: 38rem;
   height: ${(props) => (props.isSelfRank ? "7.6rem" : "7rem")};
   padding: 0.8rem 2.5rem 0.8rem 1.5rem;
-  border-bottom: 0.5px groove;
+  border-bottom: 0.5px ${THEME_COLOR.GRAY} groove;
+  box-shadow: 0px 0px 5px -2px gray;
+
 `;
 
 export const RankNumberColumn = styled.div`
