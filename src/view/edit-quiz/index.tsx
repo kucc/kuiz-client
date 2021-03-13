@@ -16,34 +16,28 @@ const EditQuizPage = (): ReactElement => {
   const dispatch = useDispatch();
   const { quizId } = useParams<QuizId>();
   const [data, setData] = useState<QuizModel>();
-  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     if (!parseInt(quizId)) history.push("/");
 
     const getQuiz = async () => {
       const quiz = await quizAPI.getQuiz(parseInt(quizId)).catch(() => {
-        setError(true);
+        dispatch(showAlertModal("해당 문제집의 수정 및 삭제 권한이 없습니다."));
       });
       if (quiz) setData(quiz);
     };
     getQuiz();
   }, []);
 
-  useEffect(() => {
-    dispatch(showAlertModal("해당 문제집의 수정 및 삭제 권한이 없습니다."));
-  }, [error]);
-
   return (
     <>
-      {error ? (
-        <CustomAlert redirect={"/"} />
-      ) : (
+      {data && (
         <QuizInputContainer
           data={data as QuizModel}
           quizId={parseInt(quizId)}
         />
       )}
+      <CustomAlert redirect={"/"} />
     </>
   );
 };

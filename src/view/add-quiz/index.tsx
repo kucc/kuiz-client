@@ -29,7 +29,9 @@ const AddQuizPage = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    dispatch(showAlertModal("해당 문제집의 수정 및 삭제 권한이 없습니다."));
+    if (error) {
+      dispatch(showAlertModal("해당 문제집의 수정 및 삭제 권한이 없습니다."));
+    }
   }, [error]);
 
   return (
