@@ -53,12 +53,28 @@ export const UserEmail = styled.div`
   }
 `;
 
+export const PointInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0rem 0.5rem;
+`;
+
 export const UserPoint = styled.div`
   font-size: 2.5rem;
   color: ${THEME_COLOR.PRIMARY};
-  margin: 0.5rem 0rem 0.5rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
     font-size: 2.4rem;
+  }
+`;
+
+export const HelpIcon = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.7;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -69,11 +85,6 @@ export const IconContainer = styled.div`
 export const LevelIcon = styled.img`
   width: 5rem;
   height: 5rem;
-  margin: 1rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 7rem;
-    height: 7rem;
-  }
 `;
 
 export const ProfilePointBarContainer = styled.div`

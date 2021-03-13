@@ -7,11 +7,11 @@ const TopRank = ({ user, rank }: TopRankProps) => {
   const getUserMedalImg = (rank: number) => {
     switch (rank) {
       case 1:
-        return STATIC_URL.Gold_Medal;
+        return STATIC_URL.GOLD_MEDAL;
       case 2:
-        return STATIC_URL.Silver_Medal;
+        return STATIC_URL.SILVER_MEDAL;
       case 3:
-        return STATIC_URL.Bronze_Medal;
+        return STATIC_URL.BRONZE_MEDAL;
     }
   };
 
