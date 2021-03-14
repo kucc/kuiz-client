@@ -1,4 +1,3 @@
-import QuizBookModel from "@common/model/quiz-book";
 import {
   getUserQuizBookAsync,
   GET_USER_QUIZBOOK,
@@ -7,16 +6,18 @@ import {
 } from "./actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import quizbookAPI from "@/common/lib/api/quizbook";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 function* getUserQuizBookSaga(
   action: ReturnType<typeof getUserQuizBookAsync.request>
 ) {
   try {
-    const { path, isDone } = action.payload;
-    const userQuizBook: QuizBookModel[] = yield call(
+    const { path, isDone, page } = action.payload;
+    const userQuizBook: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.getUserQuizBook,
       path,
-      isDone
+      isDone,
+      page
     );
     yield put(getUserQuizBookAsync.success(userQuizBook));
   } catch (e) {

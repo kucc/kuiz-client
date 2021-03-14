@@ -2,6 +2,7 @@ import endpoints from "@/common/endpoints";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import axios from "../axios";
+import QuizBookModel from "@/common/model/quiz-book";
 
 const quizbookAPI = {
   getQuizBookList: async (
@@ -26,15 +27,14 @@ const quizbookAPI = {
   },
   getSolvingQuizBook: async (isDone: boolean, page: number) => {
     const { data: solveQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/solving?isDone=${isDone}&page=${page}`
+      `${endpoints.QUIZBOOK_API}/my/solving?isDone=${isDone}&page=${page}`
     );
     return solveQuizBook;
   },
   getUserQuizBook: async (path: string, isDone: boolean, page: number) => {
     const { data: userQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}&page=${page}`
+      `${endpoints.QUIZBOOK_API}/my/${path}?isDone=${isDone}&page=${page}`
     );
-
     return userQuizBook;
   },
 
@@ -43,11 +43,9 @@ const quizbookAPI = {
     page: number,
     isSortByDate: boolean
   ) => {
-
     const { data: unsolvedQuizBookList } = await axios.get<
       QuizBookwithLikedModel[]
     >(
-
       `${endpoints.QUIZBOOK_API}/unsolved?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
 
