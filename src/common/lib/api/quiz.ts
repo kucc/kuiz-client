@@ -2,7 +2,6 @@ import endpoints from "@/common/endpoints";
 import QuizModel from "@/common/model/quiz";
 import QuizRequestBody from "@/common/model/quiz-request-body";
 import axios from "../axios";
-import checkQuizInput from "../check-quiz-input";
 
 const quizAPI = {
   getAllQuiz: async (quizbookId: number) => {
@@ -46,6 +45,19 @@ const quizAPI = {
     alert("문제 수정에 성공하였습니다.");
 
     return quiz;
+  },
+
+  deleteQuiz: async (quizId: number): Promise<number | undefined> => {
+    const { data } = await axios.delete<{ result: boolean }>(
+      `${endpoints.QUIZ_API}/${quizId}`
+    );
+
+    if (!data.result) {
+      alert("내부 오류입니다. 잠시 후 다시시도해주세요.");
+      return;
+    }
+
+    return quizId;
   },
 };
 

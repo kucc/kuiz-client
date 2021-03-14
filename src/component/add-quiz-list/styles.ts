@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import { BREAKPOINT, THEME_COLOR } from "@asset/constant";
 
+export const Container = styled.div`
+  width: 100%;
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+// not using
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,14 +25,6 @@ export const Wrapper = styled.div`
     width: 80%;
     padding: 0rem 5rem;
   }
-`;
-
-export const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const CategoryContainer = styled.div`

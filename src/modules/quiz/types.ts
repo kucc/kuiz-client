@@ -9,7 +9,7 @@ export type QuizAction = ActionType<typeof actions>;
 export type QuizState = {
   loading: boolean;
   error: Error | null;
-  data: QuizModel | null;
+  data: QuizModel | QuizModel[] | null;
 };
 
 export type GetQuizAPIPayload = {

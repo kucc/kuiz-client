@@ -108,7 +108,9 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
       ) : (
         <S.QuizContainer>
           <S.QuizWrapper>
-            <QuizImage imageURL={currentQuiz.imageURL} />
+            {currentQuiz.imageURL && (
+              <QuizImage imageURL={currentQuiz.imageURL} />
+            )}
             <QuizQuestion question={currentQuiz.question} />
             <QuizOption
               quiz={currentQuiz}
