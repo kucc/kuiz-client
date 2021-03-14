@@ -12,9 +12,6 @@ export const STATIC_URL = {
   PROFILE: `https://user-images.githubusercontent.com/60877502/87563353-12ef0780-c6fa-11ea-9c23-4674cb2f3b56.png`,
   MINIGAME: `https://user-images.githubusercontent.com/60877502/87544826-09f23c00-c6e2-11ea-98b2-1127263e7a82.png`,
   BACKGROUND: `https://user-images.githubusercontent.com/60877502/87565153-3dda5b00-c6fc-11ea-9497-107cdba965d4.png`,
-  Gold_Medal: `https://user-images.githubusercontent.com/60877502/87629556-3784c700-c76e-11ea-9ea8-0047c0d78b18.png`,
-  Silver_Medal: `https://user-images.githubusercontent.com/60877502/87629596-48353d00-c76e-11ea-89ad-536178858cff.png`,
-  Bronze_Medal: `https://user-images.githubusercontent.com/60877502/87629611-4ec3b480-c76e-11ea-91ec-9a6d7eea3c0a.png`,
   BACKGROUND_BLACK: `https://user-images.githubusercontent.com/60877502/87670447-b13aa600-c7aa-11ea-91f0-d1956985f288.png`,
   Level1_Icon: `https://user-images.githubusercontent.com/60877502/87673331-56f01400-c7af-11ea-9ccd-92545061bf62.png`,
   Level2_Icon: `https://user-images.githubusercontent.com/60877502/87679434-23b18300-c7b7-11ea-9141-856fa74a2b15.png`,
@@ -30,6 +27,11 @@ export const STATIC_URL = {
     "https://user-images.githubusercontent.com/44545922/109840770-c4dc4380-7c8b-11eb-98bf-eeaf88ad2d63.png",
   UNLIKE_ICON:
     "https://user-images.githubusercontent.com/44545922/109837628-b6d8f380-7c88-11eb-9ba5-9d4250e0579f.png",
+  QUESTION_MARK: `https://user-images.githubusercontent.com/50616334/110240036-4df5c200-7f8d-11eb-8bd3-89db54d78543.png`,
+  CANCEL_ICON: `https://user-images.githubusercontent.com/50616334/110313835-5cee7a00-804a-11eb-91e8-6a404506e374.png`,
+  GOLD_MEDAL: `https://user-images.githubusercontent.com/50616334/98394677-754f8780-209e-11eb-8df9-9249fcd76e5d.png`,
+  SILVER_MEDAL: `https://user-images.githubusercontent.com/50616334/98394728-8a2c1b00-209e-11eb-81a5-785f4a6c8ebd.png`,
+  BRONZE_MEDAL: `https://user-images.githubusercontent.com/50616334/98394780-99ab6400-209e-11eb-8ec8-8f5685147568.png`,
 };
 
 export const THEME_COLOR = {
@@ -51,3 +53,11 @@ export const USER_SOLVING_QUIZBOOK_MENU = "내가 풀고 있는 문제집";
 export const USER_SOLVED_QUIZBOOK_MENU = "내가 푼 문제집";
 export const USER_MAKING_QUIZBOOK_MENU = "내가 만들고 있는 문제집";
 export const USER_MADE_QUIZBOOK_MENU = "내가 만든 문제집";
+
+export const MAX_LEVEL_POINT = {
+  1: 150,
+  2: 600,
+  3: 1500,
+  4: 3000,
+  5: 100000,
+};
