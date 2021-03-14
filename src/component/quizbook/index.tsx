@@ -25,8 +25,14 @@ const QuizBook = React.forwardRef(
     const [dropDown, setDropDown] = useState(false);
 
     useEffect(() => {
-      if (!error) return;
-      dispatch(showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!"));
+      if (error) {
+        const statusCode = error.message.split(" ").splice(-1)[0];
+        if (Number(statusCode) === 400) {
+          dispatch(
+            showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!")
+          );
+        }
+      }
     }, [error]);
 
     const onClick = async (e) => {
