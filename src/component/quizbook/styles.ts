@@ -88,7 +88,7 @@ export const QuizBookSetButton = styled.img`
 export const LikeIcon = styled.img<LikedProps>`
   @media only screen {
     display: block;
-    width: ${(props) => (props.liked == true ? "3rem" : "3rem")};
+    width: ${(props) => (props.liked == true ? "1.8rem" : "1.8rem")};
   }
 `;
 

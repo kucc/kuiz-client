@@ -79,7 +79,7 @@ const QuizBook = React.forwardRef(
             {!isUserQuizBook ? (
               <S.QuizBookLike>
                 <S.LikeIconWrapper>
-                  {quizBook.liked == true ? (
+                  {quizBook.liked ? (
                     <S.LikeIcon
                       liked={quizBook.liked}
                       src={STATIC_URL.LIKE_ICON}

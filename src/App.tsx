@@ -16,7 +16,7 @@ import QuizPage from "@view/quiz/index";
 import QuizResultPage from "@view/quiz-result/index";
 import Layout from "@component/common/layout";
 import QuizBookListPage from "@view/quizbook-list";
-import QuizBookPage from "@view/quiz-book/index";
+import QuizBookPage from "@/view/make-quiz-book/index";
 import Auth from "@component/common/auth";
 import AddQuizPage from "@view/add-quiz/index";
 import UserQuizBookListPage from "./view/user-quizbook";
@@ -53,7 +53,7 @@ const App: React.FC = () => (
           <Route path="/profile" exact component={Auth(ProfilePage, false)} />
           <Route path="/quiz-book" exact component={Auth(QuizBookPage, true)} />
           <Route
-            path="/quiz-book/:quizbookId"
+            path="/quiz-book/:quizBookId"
             component={Auth(AddQuizPage, true)}
           />
           <Route path="/result" exact component={QuizResultPage} />
