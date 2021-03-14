@@ -1,6 +1,8 @@
 import React from "react";
 import AddButtonProps from "./types";
 import * as S from "./styles";
+import { useHistory } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 
 const AddButton = (props: AddButtonProps) => {
   return (

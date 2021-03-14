@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import * as S from "./styles";
 import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import {
   defaultQuizOption,
   saveAnswer,
@@ -56,7 +57,7 @@ const QuizInputContainer = ({
 
       if (quizBookId) {
         dispatch(postQuizAsync.request({ quizBookId, body: formData }));
-        history.push("/addquiz");
+        history.push(`/quiz-book/${quizBookId}`);
       }
     } catch {
       return;

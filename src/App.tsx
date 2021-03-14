@@ -53,10 +53,9 @@ const App: React.FC = () => (
             component={Auth(UserQuizBookListPage, false)}
           />
           <Route
-            path="/quiz-book/:quizbookId"
+            path="/quiz-book/:quizBookId"
             component={Auth(AddQuizPage, true)}
           />
-
           <Route path="/result" exact component={QuizResultPage} />
           <Route path="/rank" exact component={RankPage} />
           <Route path="/" exact component={MainPage} />
