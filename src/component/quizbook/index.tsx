@@ -65,7 +65,6 @@ const QuizBook = React.forwardRef(
     };
     return (
       <>
-        (
         <S.QuizBookWrapper onClick={onClick} ref={ref}>
           <S.QuizBookRow height={4}>
             <S.QuizBookName>

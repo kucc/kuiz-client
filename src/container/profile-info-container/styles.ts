@@ -25,7 +25,6 @@ export const UserInfoContainer = styled.div`
   }
 `;
 
-
 export const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
