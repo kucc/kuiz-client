@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { CustomAlertProps } from "./types";
 import { resetErrorByModal } from "../../modules/quiz-book";
 
-const CustomAlert = ({ redirect }: CustomAlertProps) => {
+const CustomAlert = ({ redirect, goBack }: CustomAlertProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { show, message } = useSelector((state: RootState) => state.modal);
@@ -16,6 +16,9 @@ const CustomAlert = ({ redirect }: CustomAlertProps) => {
     dispatch(hideAlertModal());
     if (redirect) {
       history.push(redirect);
+    }
+    if (goBack) {
+      history.goBack();
     }
     dispatch(resetErrorByModal());
   };
