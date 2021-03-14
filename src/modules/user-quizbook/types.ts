@@ -1,4 +1,5 @@
 import { ActionType } from "typesafe-actions";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import * as actions from "./actions";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
@@ -13,6 +14,7 @@ export type UserQuizBookState = {
 export type UserQuizBookAPIPayload = {
   isDone: boolean;
   path: string;
+  page: number;
 };
 
 export type DeleteQuizBookAPIPayload = {

@@ -25,7 +25,6 @@ const quizbookAPI = {
     );
     return quizBookList;
   },
-
   getUserQuizBook: async (
     path: string,
     isDone: boolean
@@ -33,7 +32,6 @@ const quizbookAPI = {
     const { data: userQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
       `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
     );
-
     return userQuizBook;
   },
 
