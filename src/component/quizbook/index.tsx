@@ -66,32 +66,33 @@ const QuizBook = React.forwardRef(
     };
     return (
       <>
-        (
         <S.QuizBookWrapper onClick={onClick} ref={ref}>
           <S.QuizBookRow height={4}>
             <S.QuizBookName>
               <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
             </S.QuizBookName>
-            <S.QuizBookLike>
-              <S.LikeIconWrapper>
-                {quizBook.liked == true ? (
-                  <S.LikeIcon
-                    liked={quizBook.liked}
-                    src={STATIC_URL.LIKE_ICON}
-                    alt="LikeIcon"
-                    ref={likeButton}
-                  />
-                ) : (
-                  <S.LikeIcon
-                    liked={quizBook.liked}
-                    src={STATIC_URL.UNLIKE_ICON}
-                    alt="UnlikeIcon"
-                    ref={likeButton}
-                  />
-                )}
-              </S.LikeIconWrapper>
-              <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
-            </S.QuizBookLike>
+            {!isUserQuizBook ? (
+              <S.QuizBookLike>
+                <S.LikeIconWrapper>
+                  {quizBook.liked == true ? (
+                    <S.LikeIcon
+                      liked={quizBook.liked}
+                      src={STATIC_URL.LIKE_ICON}
+                      alt="LikeIcon"
+                      ref={likeButton}
+                    />
+                  ) : (
+                    <S.LikeIcon
+                      liked={quizBook.liked}
+                      src={STATIC_URL.UNLIKE_ICON}
+                      alt="UnlikeIcon"
+                      ref={likeButton}
+                    />
+                  )}
+                </S.LikeIconWrapper>
+                <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
+              </S.QuizBookLike>
+            ) : null}
           </S.QuizBookRow>
           <S.QuizBookRow height={3}>
             <S.QuizCount>
