@@ -26,9 +26,10 @@ function* getQuizSaga(action: ReturnType<typeof getQuizAsync.request>) {
 
 function* editQuizSaga(action: ReturnType<typeof editQuizAsync.request>) {
   try {
-    const { quizId, body } = action.payload;
+    const { quizId, body, history } = action.payload;
     const quiz: QuizModel = yield call(quizAPI.editQuiz, quizId, body);
     yield put(editQuizAsync.success(quiz));
+    history.goBack();
   } catch (e) {
     yield put(editQuizAsync.failure(e));
   }
@@ -36,11 +37,12 @@ function* editQuizSaga(action: ReturnType<typeof editQuizAsync.request>) {
 
 function* postQuizSaga(action: ReturnType<typeof postQuizAsync.request>) {
   try {
-    const { quizBookId, body } = action.payload;
+    const { quizBookId, body, history } = action.payload;
     const quiz: QuizModel = yield call(quizAPI.postQuiz, quizBookId, body);
-    yield put(editQuizAsync.success(quiz));
+    yield put(postQuizAsync.success(quiz));
+    history.goBack();
   } catch (e) {
-    yield put(editQuizAsync.failure(e));
+    yield put(postQuizAsync.failure(e));
   }
 }
 

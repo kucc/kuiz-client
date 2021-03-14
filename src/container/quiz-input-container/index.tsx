@@ -1,12 +1,11 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as S from "./styles";
 import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
-import { RouteComponentProps, useParams } from "react-router-dom";
 import {
   defaultQuizOption,
   saveAnswer,
-  useFetchQuiz,
+  defaultQuizRequest,
   useQuizTypeRef,
 } from "./hooks";
 import QuizInputOption from "@/component/quiz-input/quiz-input-option";
@@ -18,18 +17,24 @@ import {
 import { useHistory } from "react-router-dom";
 import checkQuizInput from "@/common/lib/check-quiz-input";
 import { QuizInputContainerProps } from "./types";
-import TextareaAutosize from 'react-textarea-autosize';
+import TextareaAutosize from "react-textarea-autosize";
+import QuizRequestBody from "@/common/model/quiz-request-body";
 
 const QuizInputContainer = ({
   quizBookId,
   quizId,
-}: QuizInputContainerProps) => {
+  data,
+}: QuizInputContainerProps): ReactElement => {
   const history = useHistory();
-  const { data, body, setBody } = useFetchQuiz(quizId);
+  const dispatch = useDispatch();
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
   const [file, setFile] = useState("");
-  const dispatch = useDispatch();
+  const [body, setBody] = useState<QuizRequestBody>(defaultQuizRequest);
+
+  useEffect(() => {
+    setBody({ ...body, ...data });
+  }, [data]);
 
   let fileInput;
   const fileHandler = (event) => {
@@ -51,13 +56,16 @@ const QuizInputContainer = ({
       const formData = handleFormData();
 
       if (quizId) {
-        dispatch(editQuizAsync.request({ quizId, body: formData }));
+        dispatch(editQuizAsync.request({ quizId, body: formData, history }));
+        alert("문제 수정에 성공하였습니다.");
         return;
       }
 
       if (quizBookId) {
-        dispatch(postQuizAsync.request({ quizBookId, body: formData }));
-        history.push(`/quiz-book/${quizBookId}`);
+        dispatch(
+          postQuizAsync.request({ quizBookId, body: formData, history })
+        );
+        alert("문제 제출에 성공하였습니다.");
       }
     } catch {
       return;
@@ -141,7 +149,7 @@ const QuizInputContainer = ({
           <S.SubTitle>문제</S.SubTitle>
         </S.TitleContainer>
         <S.ProblemContainer>
-          <TextareaAutosize 
+          <TextareaAutosize
             className="textarea"
             name="question"
             placeholder="문제를 입력해 주세요."
@@ -221,18 +229,18 @@ const QuizInputContainer = ({
         <S.TitleContainer>
           <S.SubTitle>설명</S.SubTitle>
         </S.TitleContainer>
-        <TextareaAutosize 
-            className="textarea"
-            name="description"
-            placeholder="퀴즈에 대한 설명을 입력해 주세요."
-            onChange={(e) => handleInput(e)}
-            defaultValue={data?.description}
-          />
+        <TextareaAutosize
+          className="textarea"
+          name="description"
+          placeholder="퀴즈에 대한 설명을 입력해 주세요."
+          onChange={(e) => handleInput(e)}
+          defaultValue={data?.description}
+        />
       </S.Container>
 
       <S.ButtonContainer>
         <S.SubmitButton type="submit" onClick={handleSubmit}>
-          퀴즈 만들기
+          {quizBookId ? "퀴즈 만들기" : "수정하기"}
         </S.SubmitButton>
       </S.ButtonContainer>
     </S.Wrapper>
