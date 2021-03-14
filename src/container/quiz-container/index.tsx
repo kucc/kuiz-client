@@ -79,7 +79,6 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
   };
 
   const goToNextQuiz = () => {
-    postSolveQuizBook();
     if (quizCount === totalQuizCount) {
       getResultPage();
     } else {
@@ -100,6 +99,10 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
       },
     });
   };
+
+  useEffect(() => {
+    if (quizCount) postSolveQuizBook();
+  }, [quizCount]);
 
   return (
     <>
