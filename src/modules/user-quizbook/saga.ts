@@ -1,3 +1,4 @@
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import {
   getUserQuizBookAsync,
   GET_USER_QUIZBOOK,
@@ -12,7 +13,7 @@ function* getUserQuizBookSaga(
   action: ReturnType<typeof getUserQuizBookAsync.request>
 ) {
   try {
-    const { path, isDone, page } = action.payload;
+    const { path, isDone } = action.payload;
     const userQuizBook: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.getUserQuizBook,
       path,

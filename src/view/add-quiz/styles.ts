@@ -10,10 +10,11 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 0rem 2rem;
+  padding: 1rem 2rem;
+  background-color: white;
+
   @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 50%;
-    padding: 0rem 5rem;
   }
 `;
 
@@ -32,9 +33,9 @@ export const TitleContainer = styled.div`
 
 export const Title = styled.div`
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem 0;
 
   @media only screen and (min-width: ${BREAKPOINT}px) {
     font-size: 2rem;
@@ -42,8 +43,8 @@ export const Title = styled.div`
 `;
 
 export const SaveButton = styled.button`
-  width: 10rem;
-  height: 4rem;
+  width: 9rem;
+  height: 3.8rem;
 
   display: flex;
   justify-content: center;
@@ -60,17 +61,16 @@ export const SaveButton = styled.button`
 `;
 
 export const SubmitButton = styled.button`
-  width: 10rem;
-  height: 4rem;
-
-  margin-left: 3rem;
+  width: 9rem;
+  height: 3.8rem;
+  margin-left: 1.4rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   outline: none;
-  border: none;
+  border: solid 1.5px transparent;
   border-radius: 0.7rem;
 
   background-color: ${THEME_COLOR.PRIMARY};
@@ -78,10 +78,12 @@ export const SubmitButton = styled.button`
 
   font-size: 1.4rem;
 `;
+
 export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
 
-  margin-top: 2rem;
-  margin-left: 30rem;
+  justify-content: flex-end;
+  margin-top: 3rem;
 `;

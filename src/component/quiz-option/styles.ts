@@ -24,7 +24,7 @@ export const ChoiceOption = styled.option`
   display: flex;
   width: 20rem;
   height: 4.5rem;
-  background-color: "white";
+  background-color: ${(props) => props.color};
   margin-bottom: 2rem;
   font-size: 1.4rem;
   font-weight: bold;

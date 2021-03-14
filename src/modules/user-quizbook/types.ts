@@ -1,6 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import * as actions from "./actions";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 export type UserQuizBookAction = ActionType<typeof actions>;
 

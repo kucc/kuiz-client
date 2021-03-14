@@ -9,7 +9,7 @@ const quizbookAPI = {
     categoryId: number,
     page: number,
     isSortByDate: boolean
-  ) => {
+  ): Promise<QuizBookwithLikedModel[]> => {
     const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
       `${endpoints.QUIZBOOK_API}?categoryId=${categoryId}&page=${page}&isSortByDate=${isSortByDate}`
     );
@@ -19,21 +19,18 @@ const quizbookAPI = {
     categoryId: number,
     page: number,
     keyword: string
-  ) => {
+  ): Promise<QuizBookwithLikedModel[]> => {
     const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
       `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&page=${page}&keyword=${keyword}`
     );
     return quizBookList;
   },
-  getSolvingQuizBook: async (isDone: boolean, page: number) => {
-    const { data: solveQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/my/solving?isDone=${isDone}&page=${page}`
-    );
-    return solveQuizBook;
-  },
-  getUserQuizBook: async (path: string, isDone: boolean, page: number) => {
+  getUserQuizBook: async (
+    path: string,
+    isDone: boolean
+  ): Promise<QuizBookwithLikedModel[]> => {
     const { data: userQuizBook } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/my/${path}?isDone=${isDone}&page=${page}`
+      `${endpoints.QUIZBOOK_API}/${path}?isDone=${isDone}`
     );
     return userQuizBook;
   },
@@ -42,7 +39,7 @@ const quizbookAPI = {
     categoryId: number,
     page: number,
     isSortByDate: boolean
-  ) => {
+  ): Promise<QuizBookwithLikedModel[]> => {
     const { data: unsolvedQuizBookList } = await axios.get<
       QuizBookwithLikedModel[]
     >(
@@ -52,7 +49,11 @@ const quizbookAPI = {
     return unsolvedQuizBookList;
   },
 
-  postSolveQuizBook: async (quizbookId, quizId, isCorrect) => {
+  postSolveQuizBook: async (
+    quizbookId: number,
+    quizId: number,
+    isCorrect: boolean
+  ): Promise<SolveQuizBookModel> => {
     const { data: solveQuizBook } = await axios.post<SolveQuizBookModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/solve`,
       { quizId: quizId, isCorrect: isCorrect }
@@ -60,37 +61,42 @@ const quizbookAPI = {
     return solveQuizBook;
   },
 
-  postQuizBookLike: async (quizbookId: number) => {
+  postQuizBookLike: async (
+    quizbookId: number
+  ): Promise<QuizBookwithLikedModel> => {
     const { data: likeResult } = await axios.patch<QuizBookwithLikedModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/like`
     );
     return likeResult;
   },
 
-  deleteQuizBook: async (quizbookId: number) => {
-    const { data } = await axios.delete<{ result: boolean }>(
-      `${endpoints.QUIZBOOK_API}/${quizbookId}`
-    );
-
-    if (!data.result) {
-      alert("내부 오류입니다. 잠시 후 다시시도해주세요.");
-      return;
-    }
+  deleteQuizBook: async (quizbookId: number): Promise<number> => {
+    await axios
+      .delete<{ result: boolean }>(`${endpoints.QUIZBOOK_API}/${quizbookId}`)
+      .catch(() => {
+        throw new Error();
+      });
 
     return quizbookId;
   },
-  postNewQuizBook: async (title: string, categoryId: number) => {
+
+  postNewQuizBook: async (
+    title: string,
+    categoryId: number
+  ): Promise<QuizBookModel> => {
     const { data: newQuizBook } = await axios.post<QuizBookModel>(
       endpoints.QUIZBOOK_API,
       { title, categoryId }
     );
 
-    if (!newQuizBook.id) {
-      alert("문제집 생성 실패");
-      return;
-    }
-
     return newQuizBook;
+  },
+
+  checkAuth: async (quizbookId: number): Promise<boolean> => {
+    const { data: isAuth } = await axios.get<boolean>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}/authorize`
+    );
+    return isAuth;
   },
 };
 

@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { THEME_COLOR } from "@asset/constant";
 import { Link } from "react-router-dom";
 
 export const AddButton = styled.div`
   display: flex;
-
-  width: 80%;
-  height: 6rem;
+  width: 30rem;
+  height: 6.5rem;
 `;
+
 export const AddButtonContainer = styled(Link)`
   display: flex;
   width: 100%;

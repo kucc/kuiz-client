@@ -3,12 +3,15 @@ import {
   EDIT_QUIZ,
   EDIT_QUIZ_SUCCESS,
   EDIT_QUIZ_ERROR,
-  GET_QUIZ,
-  GET_QUIZ_SUCCESS,
-  GET_QUIZ_ERROR,
   POST_QUIZ,
   POST_QUIZ_SUCCESS,
   POST_QUIZ_ERROR,
+  GET_QUIZ_LIST,
+  GET_QUIZ_LIST_ERROR,
+  GET_QUIZ_LIST_SUCCESS,
+  DELETE_QUIZ,
+  DELETE_QUIZ_ERROR,
+  DELETE_QUIZ_SUCCESS,
 } from "./actions";
 import { QuizAction, QuizState } from "./types";
 
@@ -19,26 +22,6 @@ const initialState: QuizState = {
 };
 
 const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
-  [GET_QUIZ]: (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-    data: null,
-  }),
-
-  [GET_QUIZ_SUCCESS]: (state, action) => ({
-    ...state,
-    loading: false,
-    data: action.payload,
-  }),
-
-  [GET_QUIZ_ERROR]: (state, action) => ({
-    ...state,
-    loading: true,
-    error: action.payload,
-    data: null,
-  }),
-
   [EDIT_QUIZ]: (state) => ({
     ...state,
     loading: true,
@@ -46,14 +29,21 @@ const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
   }),
 
   [EDIT_QUIZ_SUCCESS]: (state, action) => {
-    if (!state.data || state.data.id !== action.payload.id) {
+    if (!state.data) {
       return { ...state };
     }
+    const updatedQuizList = state.data.map((quiz) => {
+      if (quiz.id === action.payload.id) {
+        return action.payload;
+      } else {
+        return quiz;
+      }
+    });
 
     return {
       ...state,
       loading: false,
-      data: state.data,
+      data: updatedQuizList,
       error: null,
     };
   },
@@ -71,18 +61,64 @@ const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
     loading: true,
     error: null,
   }),
+
   [POST_QUIZ_SUCCESS]: (state, action) => {
     if (!state.data) {
       return { ...state };
     }
+    const updatedQuizList = [...state.data, action.payload];
+
     return {
       ...state,
       loading: false,
-      data: action.payload,
+      data: updatedQuizList,
       error: null,
     };
   },
+
   [POST_QUIZ_ERROR]: (state, action) => ({
+    ...state,
+    loading: false,
+    error: action.payload,
+  }),
+
+  [GET_QUIZ_LIST]: (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  }),
+  [GET_QUIZ_LIST_SUCCESS]: (state, action) => ({
+    ...state,
+    loading: false,
+    data: action.payload,
+  }),
+  [GET_QUIZ_LIST_ERROR]: (state, action) => ({
+    ...state,
+    loading: false,
+    error: action.payload,
+  }),
+
+  [DELETE_QUIZ]: (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  }),
+  [DELETE_QUIZ_SUCCESS]: (state, action) => {
+    if (!state.data) {
+      return { ...state };
+    }
+
+    const quizList = state.data.filter((quiz) => {
+      return quiz.id !== action.payload;
+    });
+
+    return {
+      ...state,
+      loading: false,
+      data: quizList,
+    };
+  },
+  [DELETE_QUIZ_ERROR]: (state, action) => ({
     ...state,
     loading: false,
     error: action.payload,

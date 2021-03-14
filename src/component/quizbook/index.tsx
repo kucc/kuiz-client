@@ -52,8 +52,7 @@ const QuizBook = React.forwardRef(
     };
 
     const editQuizBook = () => {
-      history.push(`/addquiz`);
-      //TODO: 편집 문제 선택페이지
+      history.push(`/quiz-book/${quizBook.id}`);
     };
 
     const deleteQuizBook = () => {
