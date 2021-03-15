@@ -2,14 +2,17 @@ import React, { ReactElement } from "react";
 import * as S from "./styles";
 import AddButton from "@component/buttons/add-button/index";
 import QuizModel from "@common/model/quiz";
-import QuizBox from "../quiz-box";
+import QuizBox from "../../component/quiz-box";
 
 export interface QuizProps {
   quizBookId: number;
   quizList: QuizModel[];
 }
 
-const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
+const AddQuizContainer = ({
+  quizBookId,
+  quizList,
+}: QuizProps): ReactElement => {
   return (
     <>
       <S.Container>
@@ -28,4 +31,4 @@ const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
   );
 };
 
-export default AddQuizList;
+export default AddQuizContainer;

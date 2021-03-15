@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import * as S from "./styles";
-import AddQuizList from "@component/add-quiz-list/index";
+import AddQuizContainer from "@/container/add-quiz-container/index";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuizListAsync } from "@/modules/quiz";
@@ -45,7 +45,7 @@ const AddQuizPage = (): ReactElement => {
               <S.Title>문제</S.Title>
             </S.TitleContainer>
 
-            <AddQuizList
+            <AddQuizContainer
               quizList={data as QuizModel[]}
               quizBookId={parseInt(quizBookId)}
             />
