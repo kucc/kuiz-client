@@ -1,13 +1,30 @@
-import React, { useCallback, useState } from "react";
+import React, { ReactElement } from "react";
 import * as S from "./styles";
-import AddButton from "../buttons/add-button/index";
-const AddQuizList = () => {
+import AddButton from "@component/buttons/add-button/index";
+import QuizModel from "@common/model/quiz";
+import QuizBox from "../quiz-box";
+
+export interface QuizProps {
+  quizBookId: number;
+  quizList: QuizModel[];
+}
+
+const AddQuizList = ({ quizBookId, quizList }: QuizProps): ReactElement => {
   return (
-    <S.Wrapper>
+    <>
       <S.Container>
-        <AddButton link={"/quiz-book/1/makequiz"} />
+        <AddButton link={`/quiz-book/${quizBookId}/makequiz`} />
       </S.Container>
-    </S.Wrapper>
+
+      <S.Container>
+        {quizList &&
+          quizList.map((quiz, index) => {
+            return (
+              <QuizBox key={`quiz${quiz.id}`} quiz={quiz} index={index + 1} />
+            );
+          })}
+      </S.Container>
+    </>
   );
 };
 

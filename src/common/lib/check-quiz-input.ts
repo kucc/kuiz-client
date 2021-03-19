@@ -1,7 +1,7 @@
 import QuizRequestBody from "@/common/model/quiz-request-body";
 import { optionIndexArray, OPTION_PREFIX } from "./quiz-constants";
 
-const checkQuizInput = (body: QuizRequestBody) => {
+const checkQuizInput = (body: QuizRequestBody): void => {
   const { question, answer, description, isChoice } = body;
 
   if (!question) {

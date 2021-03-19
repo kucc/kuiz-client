@@ -13,6 +13,7 @@ import {
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import debounce from "@common/lib/debounce";
+import CustomAlert from "@/component/custom-alert";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const searchQuizBookList = useCallback(
     (keyword: string) => {
-      dispatch(searchQuizBookListAsync.request({ categoryId, keyword }));
+      dispatch(searchQuizBookListAsync.request({ categoryId, page, keyword }));
     },
     [keyword]
   );
@@ -110,68 +111,71 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   };
 
   return (
-    <S.QuizBookContainer>
-      <S.SearchColumn>
-        <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
-        <S.CommonButtonWrapper>
-          <CommonButton onClick={() => onClickHandler} text={"검색"} />
-        </S.CommonButtonWrapper>
-      </S.SearchColumn>
-      <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
-        <S.ButtonFilter active={unSolvedQuizBook === false}>
-          <S.FilterText value={""}>전체 문제집</S.FilterText>
-        </S.ButtonFilter>
-        <S.ButtonFilter active={unSolvedQuizBook === true}>
-          <S.FilterText value={1}>안 푼 문제집</S.FilterText>
-        </S.ButtonFilter>
-      </S.FilterColumn>
-      <S.DropDownFilterContainer>
-        <S.FilterColumn align={"flex-end"}>
-          <S.Filter onClick={toggleDropDown}>
-            {isSortByDate ? "최신순" : "인기순"} ▽
-          </S.Filter>
+    <>
+      <S.QuizBookContainer>
+        <S.SearchColumn>
+          <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
+          <S.CommonButtonWrapper>
+            <CommonButton onClick={() => onClickHandler()} text={"검색"} />
+          </S.CommonButtonWrapper>
+        </S.SearchColumn>
+        <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
+          <S.ButtonFilter active={unSolvedQuizBook === false}>
+            <S.FilterText value={""}>전체 문제집</S.FilterText>
+          </S.ButtonFilter>
+          <S.ButtonFilter active={unSolvedQuizBook === true}>
+            <S.FilterText value={1}>안 푼 문제집</S.FilterText>
+          </S.ButtonFilter>
         </S.FilterColumn>
-        <DropDown
-          show={show}
-          text1={"최신순"}
-          text2={"인기순"}
-          clickEvent1={
-            isSortByDate
-              ? () => {
-                  setShow(false);
-                }
-              : () => {
-                  setPage(1);
-                  setIsSortByDate(true);
-                  dispatch(initQuizBookReducer());
-                }
-          }
-          clickEvent2={
-            isSortByDate
-              ? () => {
-                  setPage(1);
-                  setIsSortByDate(false);
-                  dispatch(initQuizBookReducer());
-                }
-              : () => {
-                  setShow(false);
-                }
-          }
-        />
-      </S.DropDownFilterContainer>
+        <S.DropDownFilterContainer>
+          <S.FilterColumn align={"flex-end"}>
+            <S.Filter onClick={toggleDropDown}>
+              {isSortByDate ? "최신순" : "인기순"} ▽
+            </S.Filter>
+          </S.FilterColumn>
+          <DropDown
+            show={show}
+            text1={"최신순"}
+            text2={"인기순"}
+            clickEvent1={
+              isSortByDate
+                ? () => {
+                    setShow(false);
+                  }
+                : () => {
+                    setPage(1);
+                    setIsSortByDate(true);
+                    dispatch(initQuizBookReducer());
+                  }
+            }
+            clickEvent2={
+              isSortByDate
+                ? () => {
+                    setPage(1);
+                    setIsSortByDate(false);
+                    dispatch(initQuizBookReducer());
+                  }
+                : () => {
+                    setShow(false);
+                  }
+            }
+          />
+        </S.DropDownFilterContainer>
 
-      {data &&
-        data.map((quizBook) => {
-          return (
-            <QuizBook
-              key={`quiz${quizBook.id}`}
-              quizBook={quizBook}
-              isUserQuizBook={false}
-              ref={target}
-            ></QuizBook>
-          );
-        })}
-    </S.QuizBookContainer>
+        {data &&
+          data.map((quizBook) => {
+            return (
+              <QuizBook
+                key={`quiz${quizBook.id}`}
+                quizBook={quizBook}
+                isUserQuizBook={false}
+                ref={target}
+              ></QuizBook>
+            );
+          })}
+      </S.QuizBookContainer>
+      <CustomAlert />
+    </>
   );
 };
 

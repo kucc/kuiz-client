@@ -1,5 +1,5 @@
+/* eslint-disable */
 import QuizModel from "@/common/model/quiz";
-import QuizRequestBody from "@/common/model/quiz-request-body";
 import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
@@ -9,19 +9,22 @@ export type QuizAction = ActionType<typeof actions>;
 export type QuizState = {
   loading: boolean;
   error: Error | null;
-  data: QuizModel | null;
+  data: QuizModel[] | null;
 };
 
-export type GetQuizAPIPayload = {
-  quizId: number;
+export type GetQuizListAPIPayload = {
+  quizBookId: number;
+  checkAuth: boolean;
 };
 
 export type PostQuizAPIPayload = {
+  history: any;
   quizBookId: number;
-  body: QuizRequestBody | FormData;
+  body: FormData;
 };
 
 export type PatchQuizAPIPayload = {
+  history: any;
   quizId: number;
-  body: QuizRequestBody | FormData | undefined;
+  body: FormData;
 };

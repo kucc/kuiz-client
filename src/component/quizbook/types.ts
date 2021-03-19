@@ -1,7 +1,7 @@
-import QuizBookModel from "@/common/model/quiz-book";
+import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 export interface QuizBookProps {
-  quizBook: QuizBookModel;
+  quizBook: QuizBookwithLikedModel;
   isUserQuizBook: boolean;
 }
 
@@ -11,4 +11,8 @@ export interface QuizBookRowProps {
 
 export interface QuizTextProps {
   bold: boolean;
+}
+
+export interface LikedProps {
+  liked: boolean;
 }

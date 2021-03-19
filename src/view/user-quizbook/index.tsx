@@ -13,7 +13,6 @@ import parseBool from "@/common/lib/parse-bool";
 const UserQuizBookListPage = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[PARSE_QUIZBOOK_PATH_INDEX];
-
   if (path !== USER_SOLVE_QUIZBOOK_PATH && path !== USER_MAKE_QUIZBOOK_PATH) {
     throw new Error("잘못된 URL");
   }
@@ -25,7 +24,7 @@ const UserQuizBookListPage = () => {
 
   return (
     <>
-      <UserSolveQuizBookContainer path={path} isDone={isDone} />
+      <UserSolveQuizBookContainer path={path} isDone={isDone} page={1} />
     </>
   );
 };

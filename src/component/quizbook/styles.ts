@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { QuizBookRowProps, QuizTextProps } from "./types";
+import { LikedProps, QuizBookRowProps, QuizTextProps } from "./types";
 
 export const QuizBookWrapper = styled.div`
   display: flex;
@@ -83,4 +83,15 @@ export const QuizBookSetButton = styled.img`
   padding: 10% 2% 10% 10%;
   width: 25%;
   /* border: 1px solid black; */
+`;
+
+export const LikeIcon = styled.img<LikedProps>`
+  @media only screen {
+    display: block;
+    width: ${(props) => (props.liked == true ? "1.8rem" : "1.8rem")};
+  }
+`;
+
+export const LikeIconWrapper = styled.div`
+  width: 100%;
 `;

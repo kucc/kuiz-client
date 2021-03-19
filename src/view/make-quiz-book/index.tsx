@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@component/logo";
 import * as S from "./styles";
 import NextButton from "@component/buttons/next-button/index";

@@ -16,6 +16,7 @@ import {
 const UserQuizBookContainer = ({
   path,
   isDone,
+  page,
 }: UserQuizBookContainerProps) => {
   const isOwner = path === USER_MAKE_QUIZBOOK_PATH;
   const { data, loading, error } = useSelector(
@@ -24,12 +25,12 @@ const UserQuizBookContainer = ({
 
   const dispatch = useDispatch();
 
-  const getUserQuizBook = ({ path, isDone }) => {
-    dispatch(getUserQuizBookAsync.request({ path, isDone }));
+  const getUserQuizBook = ({ path, isDone, page }) => {
+    dispatch(getUserQuizBookAsync.request({ path, isDone, page }));
   };
 
   useEffect(() => {
-    getUserQuizBook({ path, isDone });
+    getUserQuizBook({ path, isDone, page });
   }, [dispatch]);
 
   return (
@@ -45,7 +46,7 @@ const UserQuizBookContainer = ({
           data.map((entity) => {
             return (
               <React.Fragment key={entity.id}>
-                <QuizBook quizBook={entity} isUserQuizBook={isOwner}></QuizBook>
+                <QuizBook quizBook={entity} isUserQuizBook={isOwner} />
               </React.Fragment>
             );
           })
