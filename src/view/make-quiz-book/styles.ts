@@ -36,7 +36,7 @@ export const Agree = styled.div`
 `;
 
 export const CategoryContainer = styled.div`
-  width: 60%;
+  width: 90%;
   height: 10rem;
   display: flex;
   flex-direction: row;
@@ -44,7 +44,7 @@ export const CategoryContainer = styled.div`
 `;
 
 export const NameContainer = styled.div`
-  width: 60%;
+  width: 90%;
   height: 10rem;
   display: flex;
   flex-direction: row;
