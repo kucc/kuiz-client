@@ -1,31 +1,38 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useMemo } from "react";
 import * as S from "./styles";
-import AddQuizContainer from "@/container/add-quiz-container/index";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-// import { getQuizListAsync } from "@/modules/quiz";
 import { RootState } from "@/modules";
-import QuizModel from "@/common/model/quiz";
 import { showAlertModal } from "@/modules/modal";
 import CustomAlert from "@/component/custom-alert";
+import {
+  getQuizBookwithQuizAsync,
+  initQuizBookReducer,
+} from "@/modules/quiz-book";
+import { getCategoryAsync } from "@/modules/category";
+import EditQuizBookContainer from "@/container/edit-quizbook-container";
 
 interface QuizBookId {
   quizBookId: string;
 }
+
 const EditQuizBookPage = (): ReactElement => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { quizBookId } = useParams<QuizBookId>();
-  const { data, error } = useSelector((state: RootState) => state.quiz);
+  const quizBookIdNumber = useMemo(() => parseInt(quizBookId), [quizBookId]);
+
+  const { data: quizBook, error } = useSelector(
+    (state: RootState) => state.quizBookwithQuiz
+  );
 
   useEffect(() => {
-    if (!parseInt(quizBookId)) history.push("/");
-    // dispatch(
-    //   getQuizListAsync.request({
-    //     quizBookId: parseInt(quizBookId),
-    //     checkAuth: true,
-    //   })
-    // );
+    if (!quizBookIdNumber) history.push("/");
+    dispatch(initQuizBookReducer());
+    dispatch(getCategoryAsync.request());
+    dispatch(
+      getQuizBookwithQuizAsync.request({ quizBookId: quizBookIdNumber })
+    );
   }, []);
 
   useEffect(() => {
@@ -36,27 +43,17 @@ const EditQuizBookPage = (): ReactElement => {
 
   return (
     <>
-      {error ? (
-        <CustomAlert redirect="/" />
-      ) : (
+      {quizBook && (
         <S.Wrapper>
           <S.Container>
-            <S.TitleContainer>
-              <S.Title>문제</S.Title>
-            </S.TitleContainer>
-
-            <AddQuizContainer
-              quizList={data as QuizModel[]}
-              quizBookId={parseInt(quizBookId)}
+            <EditQuizBookContainer
+              quizBookId={quizBookIdNumber}
+              quizBook={quizBook}
             />
-
-            <S.ButtonContainer>
-              <S.SaveButton>임시저장</S.SaveButton>
-              <S.SubmitButton>제출</S.SubmitButton>
-            </S.ButtonContainer>
           </S.Container>
         </S.Wrapper>
       )}
+      {error && <CustomAlert redirect="/" />}
     </>
   );
 };
