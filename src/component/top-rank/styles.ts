@@ -16,7 +16,7 @@ export const MedalLog = styled.img`
 export const TopUserNameContainer = styled.div`
   display: flex;
   margin-top: 1rem;
-  width: 8rem;
+  width: 10rem;
   height: 100%;
   border-radius: 0.5rem;
   align-items: center;
