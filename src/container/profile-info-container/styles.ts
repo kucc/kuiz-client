@@ -8,23 +8,14 @@ export const ProfileInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  margin: 2rem 2rem 4rem 2rem;
-`;
-
-export const UserInfoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 30rem;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 1rem;
+  /* margin: 2rem 2rem 4rem 2rem; */
 `;
 
 export const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
   width: 22rem;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 0.5rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
@@ -40,15 +31,18 @@ export const UserBasicInfoWrapper = styled.div`
   margin-right: 1rem;
 `;
 
+export const UserNameContainer = styled.div``;
+
 export const UserName = styled.div`
   font-size: 1.6rem;
   margin-right: 1.2rem;
 `;
 
 export const UserEmail = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   margin-top: 0.5rem;
-  @media only screen and (min-width: ${BREAKPOINT}px) {
+  @media only screen {
     font-size: 1.5rem;
   }
 `;
@@ -61,7 +55,8 @@ export const PointInfoWrapper = styled.div`
 `;
 
 export const UserPoint = styled.div`
-  font-size: 2.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   color: ${THEME_COLOR.PRIMARY};
   @media only screen and (min-width: ${BREAKPOINT}px) {
     font-size: 2.4rem;
@@ -87,7 +82,7 @@ export const LevelIcon = styled.img`
   height: 5rem;
 `;
 
-export const ProfilePointBarContainer = styled.div`
+export const PointBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -116,14 +111,17 @@ export const PointBar = styled.div<PointBarProps>`
 
 export const Point = styled.div`
   align-self: flex-end;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
 `;
 
 export const UserInfoWrapper = styled.div`
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1.4rem;
 `;
 
 export const UpdateButtonContainer = styled.div`
@@ -137,3 +135,4 @@ export const UpdateButtonContainer = styled.div`
   }
   cursor: pointer;
 `;
+

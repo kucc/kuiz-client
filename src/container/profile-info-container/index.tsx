@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/modules";
 import { getUserInfoAsync } from "@/modules/user";
@@ -16,7 +16,7 @@ import { STATIC_URL } from "@/asset/constant";
 import CustomAlert from "@/component/custom-alert";
 import { showAlertModal } from "@/modules/modal";
 
-const ProfileInfoContainer = () => {
+const ProfileInfoContainer = (): ReactElement => {
   const [showModal, setShowModal] = useState(false);
   const [updateNickname, setUpdateNickname] = useState(false);
   const { data } = useSelector((state: RootState) => state.user);
@@ -58,11 +58,10 @@ const ProfileInfoContainer = () => {
   const toggleModal = () => setShowModal(!showModal);
 
   return (
-    data && (
-      <>
+    <>
+      {data && (
         <S.ProfileInfoContainer>
           <S.UserInfoWrapper>
-            <S.UserInfoContainer>
               <S.UserBasicInfoWrapper>
                 <S.UserNameRow>
                   {updateNickname ? (
@@ -98,9 +97,8 @@ const ProfileInfoContainer = () => {
                   alt="Icon"
                 ></S.LevelIcon>
               </S.IconContainer>
-            </S.UserInfoContainer>
           </S.UserInfoWrapper>
-          <S.ProfilePointBarContainer>
+          <S.PointBarContainer>
             <S.PointBarWrapper>
               <S.PointInfoWrapper>
                 <S.UserPoint> {data.point} P</S.UserPoint>
@@ -110,25 +108,23 @@ const ProfileInfoContainer = () => {
                   onClick={toggleModal}
                 />
               </S.PointInfoWrapper>
-                <S.BackgroundBar>
-                  <S.PointBar
-                    width={(data.point * 100) / MAX_LEVEL_POINT[data.level]}
-                  />
-                </S.BackgroundBar>
+              <S.BackgroundBar>
+                <S.PointBar
+                  width={(data.point * 100) / MAX_LEVEL_POINT[data.level]}
+                />
+              </S.BackgroundBar>
             </S.PointBarWrapper>
             <S.Point>
               ( {data.point} / {MAX_LEVEL_POINT[data.level]} )
             </S.Point>
-          </S.ProfilePointBarContainer>
-          <ProfileModal 
-            showModal={showModal}
-            setShowModal={setShowModal}
-          />
+            <ProfileModal showModal={showModal} setShowModal={setShowModal} />
+          </S.PointBarContainer>
         </S.ProfileInfoContainer>
-        <CustomAlert />
+      )}
+      <CustomAlert />
     </>
-    )
   );
 };
 
 export default ProfileInfoContainer;
+
