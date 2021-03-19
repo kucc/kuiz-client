@@ -40,7 +40,7 @@ const RankContainer = () => {
   }, []);
 
   return (
-    <>
+    <S.RankWrapper>
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -71,7 +71,7 @@ const RankContainer = () => {
           </S.TotalRankContainer>
         </>
       )}
-    </>
+    </S.RankWrapper>
   );
 };
 

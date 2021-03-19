@@ -3,9 +3,7 @@ import React from "react";
 
 const RankPage = () => {
   return (
-    <>
       <RankContainer />
-    </>
   );
 };
 

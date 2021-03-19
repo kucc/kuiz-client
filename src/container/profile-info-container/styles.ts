@@ -11,24 +11,11 @@ export const ProfileInfoContainer = styled.div`
   margin: 2rem 2rem 4rem 2rem;
 `;
 
-export const UserInfoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 30rem;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 1rem;
-
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 50%;
-  }
-`;
-
 export const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
   width: 22rem;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 0.5rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
@@ -130,9 +117,11 @@ export const Point = styled.div`
 
 export const UserInfoWrapper = styled.div`
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1.4rem;
 `;
 
 export const UpdateButtonContainer = styled.div`
@@ -146,3 +135,4 @@ export const UpdateButtonContainer = styled.div`
   }
   cursor: pointer;
 `;
+
