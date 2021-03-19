@@ -4,6 +4,8 @@ import { BREAKPOINT, THEME_COLOR } from "../../asset/constant";
 export const RankWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-bottom: 5rem;
 `;
 
 export const SelfRankContainer = styled.div`
@@ -11,7 +13,11 @@ export const SelfRankContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 1rem 0rem 3rem 0rem;
+  margin: 1rem 0rem 2rem 0rem;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    margin: 1rem 0rem 3rem 0rem;  
+  }
 `;
 
 export const TotalRankContainer = styled.div`
@@ -25,14 +31,17 @@ export const TotalRankContainer = styled.div`
 export const TopThreeContainer = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* border: 1px solid ${THEME_COLOR.GRAYER}; */
+
   border-radius: 0.5rem;
   background-color: white;
-  padding: 1.4rem;
-  /* box-shadow: 0px 0px 5px -2px gray; */
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 `;

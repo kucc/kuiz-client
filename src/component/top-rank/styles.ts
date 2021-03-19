@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BREAKPOINT } from "@/asset/constant";
 
 export const MedalColumn = styled.div`
   display: flex;
@@ -8,9 +9,15 @@ export const MedalColumn = styled.div`
 `;
 
 export const MedalLog = styled.img`
-  width: 6rem;
-  height: 6rem;
-  margin: 0rem 3rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0rem 1rem;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 6rem;
+    height: 6rem;
+    margin: 0rem 3rem;
+  }
 `;
 
 export const TopUserNameContainer = styled.div`
@@ -25,6 +32,10 @@ export const TopUserNameContainer = styled.div`
 `;
 
 export const TopUserName = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    font-size: 1.6rem;
+  }
 `;
