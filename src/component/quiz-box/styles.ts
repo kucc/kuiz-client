@@ -29,12 +29,25 @@ export const QuizInfo = styled.div`
   display: inline-block;
 `;
 
-export const QuizOption = styled.div`
+export const ChoiceOption = styled.div`
   margin: auto;
   display: inline-block;
 
   color: #295ac2;
   border: 1px solid #295ac2;
+  font-size: 1.1rem;
+
+  border-radius: 20%;
+  padding: 2px 2px;
+`;
+
+export const ShortAnswerOption = styled.div`
+  margin: auto;
+  display: inline-block;
+
+  color: #d95a0b;
+  border: 1px solid #d95a0b;
+
   border-radius: 20%;
   padding: 2px 2px;
 `;
