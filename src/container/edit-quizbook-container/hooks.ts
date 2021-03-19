@@ -98,7 +98,6 @@ export const useUpdateQuizBook = (
     if (!quizBook) return;
 
     const newInfo = setQuizBookInfo();
-    console.log(newInfo);
     dispatch(
       editQuizBookAsync.request({
         quizBookId,
