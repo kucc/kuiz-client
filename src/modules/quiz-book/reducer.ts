@@ -1,6 +1,12 @@
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import { createReducer } from "typesafe-actions";
 import {
+  GET_AUTH_QUIZBOOK,
+  GET_AUTH_QUIZBOOK_ERROR,
+  GET_AUTH_QUIZBOOK_SUCCESS,
+  EDIT_QUIZBOOK,
+  EDIT_QUIZBOOK_ERROR,
+  EDIT_QUIZBOOK_SUCCESS,
   GET_QUIZBOOK_LIST,
   GET_QUIZBOOK_LIST_ERROR,
   GET_QUIZBOOK_LIST_SUCCESS,
@@ -15,8 +21,11 @@ import {
   SEARCH_QUIZBOOK_LIST,
   SEARCH_QUIZBOOK_LIST_ERROR,
   SEARCH_QUIZBOOK_LIST_SUCCESS,
+  DELETE_QUIZBOOK_QUIZ,
+  DELETE_QUIZBOOK_QUIZ_ERROR,
+  DELETE_QUIZBOOK_QUIZ_SUCCESS,
 } from "./actions";
-import { QuizBookAction, QuizBookState } from "./types";
+import { QuizBookAction, QuizBookState, QuizBookwithQuizState } from "./types";
 
 const initialState: QuizBookState = {
   loading: false,
@@ -156,4 +165,85 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
   }
 );
 
-export default quizBookReducer;
+export const quizBookwithQuizReducer = createReducer<
+  QuizBookwithQuizState,
+  QuizBookAction
+>(
+  { loading: false, error: null, data: null },
+  {
+    [INIT_QUIZBOOK_REDUCER]: () => {
+      return { loading: false, error: null, data: null };
+    },
+    [GET_AUTH_QUIZBOOK]: (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    },
+    [GET_AUTH_QUIZBOOK_SUCCESS]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+    },
+    [GET_AUTH_QUIZBOOK_ERROR]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    },
+
+    [EDIT_QUIZBOOK]: (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    },
+    [EDIT_QUIZBOOK_SUCCESS]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+    },
+    [EDIT_QUIZBOOK_ERROR]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    },
+
+    [DELETE_QUIZBOOK_QUIZ]: (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }),
+    [DELETE_QUIZBOOK_QUIZ_SUCCESS]: (state, action) => {
+      if (!state.data) {
+        return { ...state };
+      }
+
+      const quizList = state.data.quiz.filter((quiz) => {
+        return quiz.id !== action.payload;
+      });
+
+      return {
+        ...state,
+        loading: false,
+        data: { ...state.data, quiz: quizList },
+      };
+    },
+    [DELETE_QUIZBOOK_QUIZ_ERROR]: (state, action) => ({
+      ...state,
+      loading: false,
+      error: action.payload,
+    }),
+  }
+);
+
+export default { quizBookReducer, quizBookwithQuizReducer };

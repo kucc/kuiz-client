@@ -3,6 +3,10 @@ import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 
 import * as actions from "./actions";
 import { AxiosError } from "axios";
+import {
+  QuizBookwithQuizModel,
+  QuizBookPatchBody,
+} from "@/common/model/quiz-book";
 
 export type QuizBookAction = ActionType<typeof actions>;
 
@@ -24,4 +28,16 @@ export type SearchAPIPayload = {
   categoryId: number;
   page: number;
   keyword: string;
+};
+
+export type QuizBookwithQuizState = {
+  loading: boolean;
+  error: AxiosError | null;
+  data: QuizBookwithQuizModel | null;
+};
+
+export type PatchQuizBookAPIPayload = {
+  quizBookId: number;
+  body: QuizBookPatchBody;
+  history?: any;
 };
