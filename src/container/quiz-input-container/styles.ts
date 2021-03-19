@@ -12,7 +12,6 @@ export const Wrapper = styled.div`
   background-color: white;
   border-radius: 0.5rem;
 
-  margin: 2rem 0rem;
   padding: 2rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 50%;
