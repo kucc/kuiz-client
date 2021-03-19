@@ -1,5 +1,4 @@
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
 import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
 
 export const QuizCategoryItem = styled.div`
@@ -9,11 +8,13 @@ export const QuizCategoryItem = styled.div`
 `;
 
 export const TypeOptions = styled.select`
-  width: 50rem;
+  /* width: 50rem; */
+  width: 100%;
   height: 4rem;
 
   font-size: 1.4rem;
   color: ${THEME_COLOR.PRIMARY};
+  background-color: white;
 
   border: 1px solid ${THEME_COLOR.PRIMARY};
   border-radius: 0.7rem;
