@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { BREAKPOINT, THEME_COLOR } from "@asset/constant";
+import { THEME_COLOR } from "@asset/constant";
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
-  margin-top: 20px;
+  height: 100%;
+  margin-top: 0.5rem;
 
   display: flex;
   flex-direction: column;
@@ -11,20 +12,15 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-// not using
-export const Wrapper = styled.div`
+export const QuizContainer = styled.div`
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 2.2rem;
+
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-  width: 80%;
-  height: 100%;
-
-  @media only screen and (min-width: ${BREAKPOINT}px) {
-    width: 80%;
-    padding: 0rem 5rem;
-  }
 `;
 
 export const CategoryContainer = styled.div`
