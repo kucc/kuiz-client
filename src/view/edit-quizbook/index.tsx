@@ -3,7 +3,7 @@ import * as S from "./styles";
 import AddQuizContainer from "@/container/add-quiz-container/index";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuizListAsync } from "@/modules/quiz";
+// import { getQuizListAsync } from "@/modules/quiz";
 import { RootState } from "@/modules";
 import QuizModel from "@/common/model/quiz";
 import { showAlertModal } from "@/modules/modal";
@@ -12,7 +12,7 @@ import CustomAlert from "@/component/custom-alert";
 interface QuizBookId {
   quizBookId: string;
 }
-const AddQuizPage = (): ReactElement => {
+const EditQuizBookPage = (): ReactElement => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { quizBookId } = useParams<QuizBookId>();
@@ -20,12 +20,12 @@ const AddQuizPage = (): ReactElement => {
 
   useEffect(() => {
     if (!parseInt(quizBookId)) history.push("/");
-    dispatch(
-      getQuizListAsync.request({
-        quizBookId: parseInt(quizBookId),
-        checkAuth: true,
-      })
-    );
+    // dispatch(
+    //   getQuizListAsync.request({
+    //     quizBookId: parseInt(quizBookId),
+    //     checkAuth: true,
+    //   })
+    // );
   }, []);
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const AddQuizPage = (): ReactElement => {
   );
 };
 
-export default AddQuizPage;
+export default EditQuizBookPage;
