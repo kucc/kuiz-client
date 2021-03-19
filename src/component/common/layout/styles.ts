@@ -7,6 +7,7 @@ export const Layout = styled.div`
   min-height: 100%;
   height: 100vh;
   position: relative;
+  overflow-y: scroll;
   &:before {
     content: "";
     background-image: url(${STATIC_URL.BACKGROUND});
@@ -25,7 +26,16 @@ export const Layout = styled.div`
 export const LayoutBorder = styled.div`
   width: 100%;
   height: 5px;
+  display: flex;
   background-color: ${THEME_COLOR.PRIMARY};
+`;
+
+export const LayoutTop = styled.div`
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const LayoutContainer = styled.div`
