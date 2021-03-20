@@ -63,9 +63,17 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
 
   const searchQuizBookList = useCallback(
     (keyword: string) => {
-      dispatch(searchQuizBookListAsync.request({ categoryId, page, keyword }));
+      if (!keyword) return;
+      dispatch(
+        searchQuizBookListAsync.request({
+          categoryId,
+          page,
+          keyword,
+          isSortByDate,
+        })
+      );
     },
-    [keyword]
+    [keyword, page, isSortByDate]
   );
 
   useEffect(() => {
@@ -75,10 +83,10 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
         (entries: IntersectionObserverEntry[]) => {
           if (entries[0].intersectionRatio <= 0) return;
           setPage(page + 1);
+          observer.disconnect();
         },
         {
           root: null,
-          rootMargin: "0px 0px 0px 10px",
           threshold: 0.3,
         }
       );
@@ -88,8 +96,9 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, [data]);
 
   useEffect(() => {
+    if (keyword) return;
     getQuizBookList(page);
-  }, [dispatch, unSolvedQuizBook, isSortByDate, page]);
+  }, [dispatch, unSolvedQuizBook, isSortByDate, page, keyword]);
 
   useEffect(() => {
     return () => {
@@ -98,25 +107,34 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, []);
 
   const delayedQueryCall = useRef(
-    debounce((keyword: string) => searchQuizBookList(keyword), 500)
+    debounce((keyword: string) => {
+      searchQuizBookList(keyword);
+    }, 500)
   ).current;
 
-  const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const searchOnKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setPage(1);
     setKeyword(e.currentTarget.value);
+    if (e.key === "Backspace") return;
     delayedQueryCall(e.currentTarget.value);
   };
 
-  const onClickHandler = () => {
+  const searchQuizBookDirectly = () => {
     searchQuizBookList(keyword);
   };
+
+  useEffect(() => {
+    if (page === 1 || !keyword) return;
+    searchQuizBookList(keyword);
+  }, [keyword, page]);
 
   return (
     <>
       <S.QuizBookContainer>
         <S.SearchColumn>
-          <S.InputBox onChange={onChangeHandler} placeholder={"문제집검색"} />
+          <S.InputBox onKeyUp={searchOnKeyUp} placeholder={"문제집검색"} />
           <S.CommonButtonWrapper>
-            <CommonButton onClick={() => onClickHandler()} text={"검색"} />
+            <CommonButton onClick={searchQuizBookDirectly} text={"검색"} />
           </S.CommonButtonWrapper>
         </S.SearchColumn>
         <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
@@ -146,6 +164,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
                     setPage(1);
                     setIsSortByDate(true);
                     dispatch(initQuizBookReducer());
+                    setShow(false);
                   }
             }
             clickEvent2={
@@ -154,6 +173,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
                     setPage(1);
                     setIsSortByDate(false);
                     dispatch(initQuizBookReducer());
+                    setShow(false);
                   }
                 : () => {
                     setShow(false);

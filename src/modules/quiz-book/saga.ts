@@ -65,12 +65,13 @@ function* searchQuizBookListSaga(
   action: ReturnType<typeof searchQuizBookListAsync.request>
 ) {
   try {
-    const { categoryId, page, keyword } = action.payload;
+    const { categoryId, page, keyword, isSortByDate } = action.payload;
     const quizbookList: QuizBookwithLikedModel[] = yield call(
       quizbookAPI.searchQuizBookList,
       categoryId,
       page,
-      keyword
+      keyword,
+      isSortByDate
     );
     yield put(searchQuizBookListAsync.success(quizbookList));
   } catch (e) {

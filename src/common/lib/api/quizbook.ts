@@ -18,10 +18,11 @@ const quizbookAPI = {
   searchQuizBookList: async (
     categoryId: number,
     page: number,
-    keyword: string
+    keyword: string,
+    isSortByDate: boolean
   ): Promise<QuizBookwithLikedModel[]> => {
     const { data: quizBookList } = await axios.get<QuizBookwithLikedModel[]>(
-      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&page=${page}&keyword=${keyword}`
+      `${endpoints.QUIZBOOK_API}/search?categoryId=${categoryId}&page=${page}&keyword=${keyword}&isSortByDate=${isSortByDate}`
     );
     return quizBookList;
   },
