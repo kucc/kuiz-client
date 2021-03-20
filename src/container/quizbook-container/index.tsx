@@ -76,6 +76,23 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     [keyword, page, isSortByDate]
   );
 
+  const delayedQueryCall = useRef(
+    debounce((keyword: string) => {
+      searchQuizBookList(keyword);
+    }, 500)
+  ).current;
+
+  const searchOnKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setPage(1);
+    setKeyword(e.currentTarget.value);
+    if (e.key === "Backspace") return;
+    delayedQueryCall(e.currentTarget.value);
+  };
+
+  const searchQuizBookDirectly = () => {
+    searchQuizBookList(keyword);
+  };
+
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target.current) {
@@ -96,6 +113,11 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, [data]);
 
   useEffect(() => {
+    if (page === 1 || !keyword) return;
+    searchQuizBookList(keyword);
+  }, [keyword, page]);
+
+  useEffect(() => {
     if (keyword) return;
     getQuizBookList(page);
   }, [dispatch, unSolvedQuizBook, isSortByDate, page, keyword]);
@@ -105,28 +127,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
       dispatch(initQuizBookReducer());
     };
   }, []);
-
-  const delayedQueryCall = useRef(
-    debounce((keyword: string) => {
-      searchQuizBookList(keyword);
-    }, 500)
-  ).current;
-
-  const searchOnKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setPage(1);
-    setKeyword(e.currentTarget.value);
-    if (e.key === "Backspace") return;
-    delayedQueryCall(e.currentTarget.value);
-  };
-
-  const searchQuizBookDirectly = () => {
-    searchQuizBookList(keyword);
-  };
-
-  useEffect(() => {
-    if (page === 1 || !keyword) return;
-    searchQuizBookList(keyword);
-  }, [keyword, page]);
 
   return (
     <>
