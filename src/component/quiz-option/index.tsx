@@ -15,8 +15,6 @@ const QuizOption = (props: QuizOptionProps) => {
     goToNextQuiz,
   } = props;
 
-  //useEffect(() => {}), [solved, selectedOption];
-
   const optionArray = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
   const isChoice = quiz.isChoice;
 
@@ -41,9 +39,9 @@ const QuizOption = (props: QuizOptionProps) => {
             <S.ChoiceOption
               key={idx}
               onClick={checkChoiceAnswer}
-              value={option}
+              value={idx + 1}
               disabled={solved ? true : false}
-              color={getOptionColor(solved, option)}
+              color={getOptionColor(solved, String(idx + 1))}
             >
               {option}
             </S.ChoiceOption>
