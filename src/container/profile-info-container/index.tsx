@@ -62,7 +62,6 @@ const ProfileInfoContainer = (): ReactElement => {
       {data && (
         <S.ProfileInfoContainer>
           <S.UserInfoWrapper>
-            <S.UserInfoContainer>
               <S.UserBasicInfoWrapper>
                 <S.UserNameRow>
                   {updateNickname ? (
@@ -98,7 +97,6 @@ const ProfileInfoContainer = (): ReactElement => {
                   alt="Icon"
                 ></S.LevelIcon>
               </S.IconContainer>
-            </S.UserInfoContainer>
           </S.UserInfoWrapper>
           <S.PointBarContainer>
             <S.PointBarWrapper>
@@ -129,3 +127,4 @@ const ProfileInfoContainer = (): ReactElement => {
 };
 
 export default ProfileInfoContainer;
+

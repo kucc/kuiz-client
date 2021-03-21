@@ -1,24 +1,47 @@
 import styled from "styled-components";
-import { THEME_COLOR } from "../../asset/constant";
+import { BREAKPOINT, THEME_COLOR } from "../../asset/constant";
+
+export const RankWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 5rem;
+`;
 
 export const SelfRankContainer = styled.div`
-  margin: 1rem 0rem 3rem 0rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0rem 2rem 0rem;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    margin: 1rem 0rem 3rem 0rem;  
+  }
 `;
 
 export const TotalRankContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
 `;
 
 export const TopThreeContainer = styled.div`
   display: flex;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
   flex-direction: row;
-  border: 1px solid ${THEME_COLOR.GRAYER};
+  align-items: center;
+  justify-content: center;
+
   border-radius: 0.5rem;
-  background-color: ${THEME_COLOR.GRAY};
-  padding: 1.4rem;
-  box-shadow: 0px 0px 5px -2px gray;
+  background-color: white;
+
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 `;
