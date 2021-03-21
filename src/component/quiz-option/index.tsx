@@ -15,10 +15,18 @@ const QuizOption = (props: QuizOptionProps) => {
     goToNextQuiz,
   } = props;
 
-  //useEffect(() => {}), [solved, selectedOption];
+  const defaultOptionArray = [
+    { index: "1", content: quiz.option1 },
+    { index: "2", content: quiz.option2 },
+    { index: "3", content: quiz.option3 },
+    { index: "4", content: quiz.option4 },
+  ];
 
-  const optionArray = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
   const isChoice = quiz.isChoice;
+
+  const optionArray = defaultOptionArray.filter((option) => {
+    return option.content;
+  });
 
   const getOptionColor = (solved: boolean, option?: string) => {
     const CORRECT_ANSWER = option === quiz.answer;
@@ -37,15 +45,15 @@ const QuizOption = (props: QuizOptionProps) => {
     <>
       {isChoice ? (
         <S.ChoiceOptionContainer>
-          {optionArray.map((option, idx) => (
+          {optionArray.map((option) => (
             <S.ChoiceOption
-              key={idx}
+              key={option.index}
               onClick={checkChoiceAnswer}
-              value={option}
+              value={option.index}
               disabled={solved ? true : false}
-              color={getOptionColor(solved, option)}
+              color={getOptionColor(solved, option.index)}
             >
-              {option}
+              {option.content}
             </S.ChoiceOption>
           ))}
         </S.ChoiceOptionContainer>
