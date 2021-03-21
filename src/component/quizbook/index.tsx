@@ -13,7 +13,7 @@ import { postQuizBookLikeAsync } from "@/modules/quiz-book";
 // eslint-disable-next-line react/display-name
 const QuizBook = React.forwardRef(
   (
-    { quizBook, isUserQuizBook }: QuizBookProps,
+    { quizBook, isUserQuizBook, isDone }: QuizBookProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
     const history = useHistory();
@@ -70,10 +70,10 @@ const QuizBook = React.forwardRef(
             <S.QuizBookName>
               <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
             </S.QuizBookName>
-            {!isUserQuizBook ? (
+            {isDone ? (
               <S.QuizBookLike>
                 <S.LikeIconWrapper>
-                  {quizBook.liked == true ? (
+                  {quizBook.liked ? (
                     <S.LikeIcon
                       liked={quizBook.liked}
                       src={STATIC_URL.LIKE_ICON}
@@ -91,7 +91,11 @@ const QuizBook = React.forwardRef(
                 </S.LikeIconWrapper>
                 <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
               </S.QuizBookLike>
-            ) : null}
+            ) : (
+              <S.QuizBookLike>
+                <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
+              </S.QuizBookLike>
+            )}
           </S.QuizBookRow>
           <S.QuizBookRow height={3}>
             <S.QuizCount>

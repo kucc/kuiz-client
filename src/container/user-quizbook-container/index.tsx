@@ -46,7 +46,11 @@ const UserQuizBookContainer = ({
           data.map((entity) => {
             return (
               <React.Fragment key={entity.id}>
-                <QuizBook quizBook={entity} isUserQuizBook={isOwner} />
+                <QuizBook
+                  quizBook={entity}
+                  isUserQuizBook={isOwner}
+                  isDone={isDone}
+                />
               </React.Fragment>
             );
           })

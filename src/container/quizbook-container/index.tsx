@@ -169,6 +169,7 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
                 key={`quiz${quizBook.id}`}
                 quizBook={quizBook}
                 isUserQuizBook={false}
+                isDone={true}
                 ref={target}
               ></QuizBook>
             );
