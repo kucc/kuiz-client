@@ -14,6 +14,7 @@ import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
 import debounce from "@common/lib/debounce";
 import CustomAlert from "@/component/custom-alert";
+import { hideAlertModal } from "@/modules/modal";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
@@ -113,6 +114,14 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, [data]);
 
   useEffect(() => {
+    dispatch(hideAlertModal());
+    dispatch(initQuizBookReducer());
+    return () => {
+      dispatch(initQuizBookReducer());
+    };
+  }, []);
+
+  useEffect(() => {
     if (page === 1 || !keyword) return;
     searchQuizBookList(keyword);
   }, [keyword, page]);
@@ -121,12 +130,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
     if (keyword) return;
     getQuizBookList(page);
   }, [dispatch, unSolvedQuizBook, isSortByDate, page, keyword]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(initQuizBookReducer());
-    };
-  }, []);
 
   return (
     <>
