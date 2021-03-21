@@ -92,7 +92,8 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
         error: null,
         type: "unSolved",
         keyword: null,
-        isSameCondition: previousState === "unSolved",
+        isSameCondition:
+          previousState === "unSolved" && action.payload.page !== 1,
       };
     },
     [GET_UNSOLVED_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
@@ -161,7 +162,8 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
         keyword: action.payload.keyword,
         isSameCondition:
           previousState === "search" &&
-          previousKeyword === action.payload.keyword,
+          previousKeyword === action.payload.keyword &&
+          action.payload.page !== 1,
       };
     },
     [SEARCH_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
