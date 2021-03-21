@@ -43,15 +43,16 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
   initialState,
   {
     [INIT_QUIZBOOK_REDUCER]: () => initialState,
-    [GET_QUIZBOOK_LIST]: (state) => {
+    [GET_QUIZBOOK_LIST]: (state, action) => {
       const { type: previousState } = state;
+
       return {
         ...state,
         loading: true,
         error: null,
         type: "all",
         keyword: null,
-        isSameCondition: previousState === "all",
+        isSameCondition: previousState === "all" && action.payload.page !== 1,
       };
     },
     [GET_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
