@@ -2,7 +2,11 @@ import endpoints from "@/common/endpoints";
 import SolveQuizBookModel from "@/common/model/solve-quiz-book";
 import QuizBookwithLikedModel from "@/common/model/quiz-book-with-liked";
 import axios from "../axios";
-import QuizBookModel from "@/common/model/quiz-book";
+import {
+  QuizBookModel,
+  QuizBookPatchBody,
+  QuizBookwithQuizModel,
+} from "@/common/model/quiz-book";
 
 const quizbookAPI = {
   getQuizBookList: async (
@@ -93,11 +97,25 @@ const quizbookAPI = {
     return newQuizBook;
   },
 
-  checkAuth: async (quizbookId: number): Promise<boolean> => {
-    const { data: isAuth } = await axios.get<boolean>(
-      `${endpoints.QUIZBOOK_API}/${quizbookId}/authorize`
+  getQuizBookwithQuiz: async (
+    quizbookId: number
+  ): Promise<QuizBookwithQuizModel> => {
+    const { data: quizBook } = await axios.get<QuizBookwithQuizModel>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}`
     );
-    return isAuth;
+
+    return quizBook;
+  },
+
+  editQuizBook: async (
+    quizbookId: number,
+    body: QuizBookPatchBody
+  ): Promise<QuizBookwithQuizModel> => {
+    const { data: quizBook } = await axios.patch<QuizBookwithQuizModel>(
+      `${endpoints.QUIZBOOK_API}/${quizbookId}`,
+      body
+    );
+    return quizBook;
   },
 };
 

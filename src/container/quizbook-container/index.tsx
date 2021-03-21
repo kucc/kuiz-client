@@ -17,7 +17,7 @@ import CustomAlert from "@/component/custom-alert";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
-  const { data } = useSelector((state: RootState) => state.quizbook);
+  const { data } = useSelector((state: RootState) => state.quizBook);
   const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
   const [isSortByDate, setIsSortByDate] = useState(true);
   const [show, setShow] = useState(false);

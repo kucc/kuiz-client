@@ -18,7 +18,7 @@ const QuizBook = React.forwardRef(
   ) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { error } = useSelector((state: RootState) => state.quizbook);
+    const { error } = useSelector((state: RootState) => state.quizBook);
     const likeButton = useRef<HTMLImageElement>(null);
     const settingButton = useRef<HTMLImageElement>(null);
     const dropDownContainer = useRef<HTMLDivElement>(null);

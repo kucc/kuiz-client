@@ -3,5 +3,7 @@ import CategoryModel from "@/common/model/category";
 
 export interface QuizCategorySelectProps {
   options: CategoryModel[];
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  defaultOption?: number;
+  disabled?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

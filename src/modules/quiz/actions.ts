@@ -1,11 +1,7 @@
 import { createAsyncAction } from "typesafe-actions";
 import QuizModel from "@common/model/quiz";
 import { AxiosError } from "axios";
-import {
-  GetQuizListAPIPayload,
-  PostQuizAPIPayload,
-  PatchQuizAPIPayload,
-} from "./types";
+import { PostQuizAPIPayload, PatchQuizAPIPayload } from "./types";
 
 export const GET_QUIZ = "quiz/GET_QUIZ" as const;
 export const GET_QUIZ_SUCCESS = "quiz/GET_QUIZ_SUCCESS" as const;
@@ -38,15 +34,3 @@ export const postQuizAsync = createAsyncAction(
   POST_QUIZ_SUCCESS,
   POST_QUIZ_ERROR
 )<PostQuizAPIPayload, QuizModel, AxiosError>();
-
-export const getQuizListAsync = createAsyncAction(
-  GET_QUIZ_LIST,
-  GET_QUIZ_LIST_SUCCESS,
-  GET_QUIZ_LIST_ERROR
-)<GetQuizListAPIPayload, QuizModel[], AxiosError>();
-
-export const deleteQuizAsync = createAsyncAction(
-  DELETE_QUIZ,
-  DELETE_QUIZ_SUCCESS,
-  DELETE_QUIZ_ERROR
-)<{ quizId: number }, number, AxiosError>();

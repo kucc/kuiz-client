@@ -12,10 +12,16 @@ import { categorySaga } from "./category";
 import { userQuizBookSaga } from "./user-quizbook";
 import { quizSaga } from "./quiz";
 
+const {
+  quizBookReducer: quizBook,
+  quizBookwithQuizReducer: quizBookwithQuiz,
+} = quizbook;
+
 const rootReducer = combineReducers({
   user,
   quiz,
-  quizbook,
+  quizBook,
+  quizBookwithQuiz,
   category,
   userQuizBook,
   modal,
@@ -25,6 +31,7 @@ export default rootReducer;
 
 export type RootState = ReturnType<typeof rootReducer>;
 
+// eslint-disable-next-line
 export function* rootSaga() {
   yield all([
     userSaga(),
