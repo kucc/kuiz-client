@@ -13,7 +13,7 @@ import { postQuizBookLikeAsync } from "@/modules/quiz-book";
 // eslint-disable-next-line react/display-name
 const QuizBook = React.forwardRef(
   (
-    { quizBook, isUserQuizBook }: QuizBookProps,
+    { quizBook, isUserQuizBook, isDone }: QuizBookProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
     const history = useHistory();
@@ -27,7 +27,7 @@ const QuizBook = React.forwardRef(
     useEffect(() => {
       if (error) {
         const statusCode = error.message.split(" ").splice(-1)[0];
-        if (Number(statusCode) === 400) {
+        if (Number(statusCode) === 403) {
           dispatch(
             showAlertModal("문제집을 풀어야 좋아요를 누를 수 있습니다!")
           );
@@ -76,7 +76,7 @@ const QuizBook = React.forwardRef(
             <S.QuizBookName>
               <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
             </S.QuizBookName>
-            {!isUserQuizBook ? (
+            {isDone ? (
               <S.QuizBookLike>
                 <S.LikeIconWrapper>
                   {quizBook.liked ? (
@@ -97,7 +97,11 @@ const QuizBook = React.forwardRef(
                 </S.LikeIconWrapper>
                 <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
               </S.QuizBookLike>
-            ) : null}
+            ) : (
+              <S.QuizBookLike>
+                <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
+              </S.QuizBookLike>
+            )}
           </S.QuizBookRow>
           <S.QuizBookRow height={3}>
             <S.QuizCount>
