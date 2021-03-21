@@ -10,7 +10,8 @@ export type QuizBookState = {
   loading: boolean;
   error: AxiosError | null;
   data: QuizBookwithLikedModel[] | null;
-  isUnsolved: boolean;
+  type: "all" | "unSolved" | "search";
+  keyword: string | null;
   isSameCondition: boolean;
 };
 
@@ -24,4 +25,5 @@ export type SearchAPIPayload = {
   categoryId: number;
   page: number;
   keyword: string;
+  isSortByDate: boolean;
 };
