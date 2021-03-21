@@ -8,7 +8,6 @@ export const QuizCategoryItem = styled.div`
 `;
 
 export const TypeOptions = styled.select`
-  /* width: 50rem; */
   width: 100%;
   height: 4rem;
 

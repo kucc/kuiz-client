@@ -34,15 +34,3 @@ export const postQuizAsync = createAsyncAction(
   POST_QUIZ_SUCCESS,
   POST_QUIZ_ERROR
 )<PostQuizAPIPayload, QuizModel, AxiosError>();
-
-// export const getQuizListAsync = createAsyncAction(
-//   GET_QUIZ_LIST,
-//   GET_QUIZ_LIST_SUCCESS,
-//   GET_QUIZ_LIST_ERROR
-// )<GetQuizListAPIPayload, QuizModel[], AxiosError>();
-
-// export const deleteQuizAsync = createAsyncAction(
-//   DELETE_QUIZ,
-//   DELETE_QUIZ_SUCCESS,
-//   DELETE_QUIZ_ERROR
-// )<{ quizId: number }, number, AxiosError>();
