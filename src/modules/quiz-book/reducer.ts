@@ -24,6 +24,9 @@ import {
   DELETE_QUIZBOOK_QUIZ,
   DELETE_QUIZBOOK_QUIZ_ERROR,
   DELETE_QUIZBOOK_QUIZ_SUCCESS,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST_SUCCESS,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST_ERROR,
 } from "./actions";
 import { QuizBookAction, QuizBookState, QuizBookwithQuizState } from "./types";
 
@@ -40,15 +43,16 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
   initialState,
   {
     [INIT_QUIZBOOK_REDUCER]: () => initialState,
-    [GET_QUIZBOOK_LIST]: (state) => {
+    [GET_QUIZBOOK_LIST]: (state, action) => {
       const { type: previousState } = state;
+
       return {
         ...state,
         loading: true,
         error: null,
         type: "all",
         keyword: null,
-        isSameCondition: previousState === "all",
+        isSameCondition: previousState === "all" && action.payload.page !== 1,
       };
     },
     [GET_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
@@ -88,7 +92,8 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
         error: null,
         type: "unSolved",
         keyword: null,
-        isSameCondition: previousState === "unSolved",
+        isSameCondition:
+          previousState === "unSolved" && action.payload.page !== 1,
       };
     },
     [GET_UNSOLVED_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
@@ -157,7 +162,8 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
         keyword: action.payload.keyword,
         isSameCondition:
           previousState === "search" &&
-          previousKeyword === action.payload.keyword,
+          previousKeyword === action.payload.keyword &&
+          action.payload.page !== 1,
       };
     },
     [SEARCH_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
@@ -185,7 +191,49 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
       ...state,
       loading: true,
       error: action.payload,
+      isSameCondition: false,
     }),
+    [SEARCH_UNSOLVED_QUIZBOOK_LIST]: (state, action) => {
+      const { type: previousState, keyword: previousKeyword } = state;
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        type: "search-unsolved",
+        keyword: action.payload.keyword,
+        isSameCondition:
+          previousState === "search-unsolved" &&
+          previousKeyword === action.payload.keyword,
+      };
+    },
+    [SEARCH_UNSOLVED_QUIZBOOK_LIST_SUCCESS]: (state, action) => {
+      const { isSameCondition, data: previousData } = state;
+      let mergedQuizBookList = [] as QuizBookwithLikedModel[];
+
+      if (isSameCondition && previousData) {
+        mergedQuizBookList = [...previousData.concat(action.payload)];
+        return {
+          ...state,
+          loading: false,
+          data: mergedQuizBookList,
+          isSameCondition: false,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          data: action.payload,
+          isSameCondition: false,
+        };
+      }
+    },
+    [SEARCH_UNSOLVED_QUIZBOOK_LIST_ERROR]: (state, action) => ({
+      ...state,
+      loading: true,
+      error: action.payload,
+      isSameCondition: false,
+    }),
+
     [RESET_ERROR_BY_MODAL]: (state) => ({
       ...state,
       loading: false,

@@ -24,6 +24,10 @@ export const SEARCH_QUIZBOOK_LIST = "quizbook/SEARCH_QUIZBOOK_LIST" as const;
 export const SEARCH_QUIZBOOK_LIST_SUCCESS = "quizbook/SEARCH_QUIZBOOK_LIST_SUCCESS" as const;
 export const SEARCH_QUIZBOOK_LIST_ERROR = "quizbook/SEARCH_QUIZBOOK_LIST_ERROR" as const;
 
+export const SEARCH_UNSOLVED_QUIZBOOK_LIST = "quizbook/SEARCH_UNSOLVED_QUIZBOOK_LIST" as const;
+export const SEARCH_UNSOLVED_QUIZBOOK_LIST_SUCCESS = "quizbook/SEARCH_UNSOLVED_QUIZBOOK_LIST_SUCCESS" as const;
+export const SEARCH_UNSOLVED_QUIZBOOK_LIST_ERROR = "quizbook/SEARCH_UNSOLVED_QUIZBOOK_LIST_ERROR" as const;
+
 export const RESET_ERROR_BY_MODAL = "quizbook/RESET_ERROR_BY_MODAL" as const;
 export const INIT_QUIZBOOK_REDUCER = "quizbook/INIT_QUIZBOOK_REDUCER" as const;
 
@@ -61,6 +65,12 @@ export const searchQuizBookListAsync = createAsyncAction(
   SEARCH_QUIZBOOK_LIST,
   SEARCH_QUIZBOOK_LIST_SUCCESS,
   SEARCH_QUIZBOOK_LIST_ERROR
+)<SearchAPIPayload, QuizBookwithLikedModel[], AxiosError>();
+
+export const serachUnSolvedQuizBookListAsync = createAsyncAction(
+  SEARCH_UNSOLVED_QUIZBOOK_LIST,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST_SUCCESS,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST_ERROR
 )<SearchAPIPayload, QuizBookwithLikedModel[], AxiosError>();
 
 export const resetErrorByModal = () => ({

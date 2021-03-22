@@ -16,6 +16,8 @@ import {
   getUnsolvedQuizBookListAsync,
   DELETE_QUIZBOOK_QUIZ,
   deleteQuizBookQuizAsync,
+  serachUnSolvedQuizBookListAsync,
+  SEARCH_UNSOLVED_QUIZBOOK_LIST,
 } from "./actions";
 import { QuizBookwithQuizModel } from "@/common/model/quiz-book";
 import quizAPI from "@/common/lib/api/quiz";
@@ -79,7 +81,27 @@ function* searchQuizBookListSaga(
       categoryId,
       page,
       keyword,
-      isSortByDate
+      isSortByDate,
+      false
+    );
+    yield put(searchQuizBookListAsync.success(quizbookList));
+  } catch (e) {
+    yield put(searchQuizBookListAsync.failure(e));
+  }
+}
+
+function* searchUnSolvedQuizBookListSaga(
+  action: ReturnType<typeof serachUnSolvedQuizBookListAsync.request>
+) {
+  try {
+    const { categoryId, page, keyword, isSortByDate } = action.payload;
+    const quizbookList: QuizBookwithLikedModel[] = yield call(
+      quizbookAPI.searchQuizBookList,
+      categoryId,
+      page,
+      keyword,
+      isSortByDate,
+      true
     );
     yield put(searchQuizBookListAsync.success(quizbookList));
   } catch (e) {
@@ -142,6 +164,10 @@ export function* quizBookSaga() {
   yield takeEvery(GET_UNSOLVED_QUIZBOOK_LIST, getUnSolvedQuizBookListSaga);
   yield takeEvery(POST_QUIZBOOK_LIKE, postQuizBookLikeSaga);
   yield takeEvery(SEARCH_QUIZBOOK_LIST, searchQuizBookListSaga);
+  yield takeEvery(
+    SEARCH_UNSOLVED_QUIZBOOK_LIST,
+    searchUnSolvedQuizBookListSaga
+  );
   yield takeEvery(GET_AUTH_QUIZBOOK, getQuizBookSaga);
   yield takeEvery(EDIT_QUIZBOOK, editQuizBookSaga);
   yield takeEvery(DELETE_QUIZBOOK_QUIZ, deleteQuizBookQuizSaga);

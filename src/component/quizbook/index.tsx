@@ -76,7 +76,7 @@ const QuizBook = React.forwardRef(
             <S.QuizBookName>
               <S.QuizBoldText>{quizBook.title}</S.QuizBoldText>
             </S.QuizBookName>
-            {isDone ? (
+            {isDone && (
               <S.QuizBookLike>
                 <S.LikeIconWrapper>
                   {quizBook.liked ? (
@@ -95,11 +95,7 @@ const QuizBook = React.forwardRef(
                     />
                   )}
                 </S.LikeIconWrapper>
-                <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
-              </S.QuizBookLike>
-            ) : (
-              <S.QuizBookLike>
-                <S.QuizText bold>{quizBook.likedCount}</S.QuizText>
+                <S.QuizText bold> {quizBook.likedCount}</S.QuizText>
               </S.QuizBookLike>
             )}
           </S.QuizBookRow>

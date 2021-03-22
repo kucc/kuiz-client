@@ -9,25 +9,30 @@ import {
   getUnsolvedQuizBookListAsync,
   initQuizBookReducer,
   searchQuizBookListAsync,
+  serachUnSolvedQuizBookListAsync,
 } from "@/modules/quiz-book";
 import * as S from "./styles";
 import { QuizBookContainerProps } from "./types";
-import debounce from "@common/lib/debounce";
 import CustomAlert from "@/component/custom-alert";
+import { hideAlertModal } from "@/modules/modal";
+import useDebounce from "@/common/hooks/useDebounce";
+import useToggle from "@/common/hooks/useToggle";
 
 const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.quizBook);
-  const [unSolvedQuizBook, setUnSolvedQuizBook] = useState(false);
+  const [isUnSolved, setIsUnSolved] = useState(false);
   const [isSortByDate, setIsSortByDate] = useState(true);
-  const [show, setShow] = useState(false);
+  const [show, setShow, toggleDropDown] = useToggle(false);
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const target = useRef<HTMLDivElement>(null);
 
+  const debouncedKeyword = useDebounce(keyword, 500);
+
   const getQuizBookList = useCallback(
     (page) => {
-      if (unSolvedQuizBook) {
+      if (isUnSolved) {
         dispatch(
           getUnsolvedQuizBookListAsync.request({
             categoryId,
@@ -35,35 +40,39 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
             isSortByDate,
           })
         );
-      } else {
-        dispatch(
-          getQuizBookListAsync.request({ categoryId, page, isSortByDate })
-        );
+        return;
       }
-      setShow(false);
+      dispatch(
+        getQuizBookListAsync.request({ categoryId, page, isSortByDate })
+      );
     },
-    [unSolvedQuizBook, isSortByDate]
+    [isUnSolved, isSortByDate]
   );
-
-  const toggleDropDown = useCallback(() => {
-    setShow(!show);
-  }, [show]);
 
   const changeFilter = (e) => {
     const newFilter = Boolean(e.target.value);
-    if (unSolvedQuizBook !== newFilter) {
+    if (isUnSolved !== newFilter) {
       dispatch(initQuizBookReducer());
       setPage(1);
-      newFilter === false
-        ? setUnSolvedQuizBook(false)
-        : setUnSolvedQuizBook(true);
-      setUnSolvedQuizBook(newFilter);
+      newFilter === false ? setIsUnSolved(false) : setIsUnSolved(true);
+      setIsUnSolved(newFilter);
     }
   };
 
   const searchQuizBookList = useCallback(
     (keyword: string) => {
       if (!keyword) return;
+      if (isUnSolved) {
+        dispatch(
+          serachUnSolvedQuizBookListAsync.request({
+            categoryId,
+            page,
+            keyword,
+            isSortByDate,
+          })
+        );
+        return;
+      }
       dispatch(
         searchQuizBookListAsync.request({
           categoryId,
@@ -73,25 +82,22 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
         })
       );
     },
-    [keyword, page, isSortByDate]
+    [isUnSolved, debouncedKeyword, page, isSortByDate]
   );
-
-  const delayedQueryCall = useRef(
-    debounce((keyword: string) => {
-      searchQuizBookList(keyword);
-    }, 500)
-  ).current;
 
   const searchOnKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     setPage(1);
     setKeyword(e.currentTarget.value);
-    if (e.key === "Backspace") return;
-    delayedQueryCall(e.currentTarget.value);
   };
 
   const searchQuizBookDirectly = () => {
     searchQuizBookList(keyword);
   };
+
+  useEffect(() => {
+    if (!debouncedKeyword) return;
+    searchQuizBookList(debouncedKeyword);
+  }, [debouncedKeyword, isUnSolved, isSortByDate]);
 
   useEffect(() => {
     let observer: IntersectionObserver;
@@ -113,20 +119,22 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   }, [data]);
 
   useEffect(() => {
-    if (page === 1 || !keyword) return;
-    searchQuizBookList(keyword);
-  }, [keyword, page]);
-
-  useEffect(() => {
-    if (keyword) return;
-    getQuizBookList(page);
-  }, [dispatch, unSolvedQuizBook, isSortByDate, page, keyword]);
-
-  useEffect(() => {
+    dispatch(hideAlertModal());
+    dispatch(initQuizBookReducer());
     return () => {
       dispatch(initQuizBookReducer());
     };
   }, []);
+
+  useEffect(() => {
+    if (page === 1 || !debouncedKeyword) return;
+    searchQuizBookList(debouncedKeyword);
+  }, [debouncedKeyword, page]);
+
+  useEffect(() => {
+    if (keyword) return;
+    getQuizBookList(page);
+  }, [dispatch, isUnSolved, isSortByDate, page, keyword]);
 
   return (
     <>
@@ -138,10 +146,10 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
           </S.CommonButtonWrapper>
         </S.SearchColumn>
         <S.FilterColumn align={"flex-start"} onClick={changeFilter}>
-          <S.ButtonFilter active={unSolvedQuizBook === false}>
+          <S.ButtonFilter active={isUnSolved === false}>
             <S.FilterText value={""}>전체 문제집</S.FilterText>
           </S.ButtonFilter>
-          <S.ButtonFilter active={unSolvedQuizBook === true}>
+          <S.ButtonFilter active={isUnSolved === true}>
             <S.FilterText value={1}>안 푼 문제집</S.FilterText>
           </S.ButtonFilter>
         </S.FilterColumn>
