@@ -88,7 +88,6 @@ const QuizBookContainer = ({ categoryId }: QuizBookContainerProps) => {
   const searchOnKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     setPage(1);
     setKeyword(e.currentTarget.value);
-    if (e.key === "Backspace") return;
   };
 
   const searchQuizBookDirectly = () => {
