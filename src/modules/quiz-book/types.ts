@@ -14,7 +14,7 @@ export type QuizBookState = {
   loading: boolean;
   error: AxiosError | null;
   data: QuizBookwithLikedModel[] | null;
-  type: "all" | "unSolved" | "search";
+  type: "all" | "unSolved" | "search" | "search-unsolved";
   keyword: string | null;
   isSameCondition: boolean;
 };
