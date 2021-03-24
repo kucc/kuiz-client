@@ -84,7 +84,7 @@ const quizBookReducer = createReducer<QuizBookState, QuizBookAction>(
         isSameCondition: false,
       };
     },
-    [GET_UNSOLVED_QUIZBOOK_LIST]: (state) => {
+    [GET_UNSOLVED_QUIZBOOK_LIST]: (state, action) => {
       const { type: previousState } = state;
       return {
         ...state,
