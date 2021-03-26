@@ -94,4 +94,5 @@ export const LikeIcon = styled.img<LikedProps>`
 
 export const LikeIconWrapper = styled.div`
   width: 100%;
+  margin-right: 0.4rem;
 `;
