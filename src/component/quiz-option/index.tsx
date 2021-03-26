@@ -79,6 +79,9 @@ const QuizOption = (props: QuizOptionProps) => {
 
       {solved ? (
         <>
+          <S.AnswerContainer {...props}>
+            <S.Answer>정답은 {quiz.answer}입니다.</S.Answer>
+          </S.AnswerContainer>
           <S.DescriptionContainer>
             <S.Description>{quiz.description}</S.Description>
           </S.DescriptionContainer>
