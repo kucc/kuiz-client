@@ -9,4 +9,5 @@ export interface QuizOptionProps {
   checkChoiceAnswer: (e: any) => void;
   checkWriteAnswer: (e: any) => void;
   goToNextQuiz: () => void;
+  pressEnterKey: (e: any) => void;
 }
