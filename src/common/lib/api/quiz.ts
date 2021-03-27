@@ -1,13 +1,17 @@
 import endpoints from "@/common/endpoints";
 import QuizModel from "@/common/model/quiz";
+import { QuizBookwithQuizModel } from "@/common/model/quiz-book";
 import axios from "../axios";
 
 const quizAPI = {
-  getAllQuiz: async (quizbookId: number): Promise<QuizModel[]> => {
-    const { data: quizList } = await axios.get<QuizModel[]>(
+  getQuizBookwithSolvingQuiz: async (
+    quizbookId: number
+  ): Promise<QuizBookwithQuizModel> => {
+    const { data: quizBook } = await axios.get<QuizBookwithQuizModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`
     );
-    return quizList;
+
+    return quizBook;
   },
 
   postQuiz: async (quizbookId: number, body: FormData): Promise<QuizModel> => {

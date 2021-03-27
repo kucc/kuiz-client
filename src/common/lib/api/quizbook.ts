@@ -98,7 +98,7 @@ const quizbookAPI = {
     return newQuizBook;
   },
 
-  getQuizBookwithQuiz: async (
+  getAuthQuizBookwithQuiz: async (
     quizbookId: number
   ): Promise<QuizBookwithQuizModel> => {
     const { data: quizBook } = await axios.get<QuizBookwithQuizModel>(
