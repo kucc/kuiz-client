@@ -7,11 +7,12 @@ import QuizPoint from "@component/quiz-result-point";
 export type LocationState = {
   totalQuizCount: number;
   correctQuizCount: number;
+  allSolved: boolean;
 };
 
 const QuizResultContainer: React.FC = () => {
   const location = useLocation<LocationState>();
-  const { totalQuizCount, correctQuizCount } = location.state;
+  const { totalQuizCount, correctQuizCount, allSolved } = location.state;
   const [percentage, setPercentage] = useState(0);
   const [progressBar, setProgressBar] = useState(0);
   const correctRate = (correctQuizCount / totalQuizCount) * 100;
@@ -39,7 +40,7 @@ const QuizResultContainer: React.FC = () => {
           correctQuizCount={correctQuizCount}
           totalQuizCount={totalQuizCount}
         />
-        <QuizPoint correctQuizCount={correctQuizCount} />
+        {!allSolved && <QuizPoint correctQuizCount={correctQuizCount} />}
         <S.MainPageButton to={"/"}>메인 화면으로</S.MainPageButton>
       </S.QuizResultWrapper>
     </S.QuizResultContainer>

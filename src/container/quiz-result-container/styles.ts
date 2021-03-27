@@ -26,7 +26,7 @@ export const QuizResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 
   @media only screen and (min-width: ${BREAKPOINT}px) {
     width: 40%;
