@@ -16,16 +16,18 @@ const initialState: QuizState = {
 };
 
 const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
-  [EDIT_QUIZ]: (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  }),
-
+  [EDIT_QUIZ]: (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  },
   [EDIT_QUIZ_SUCCESS]: (state, action) => {
     if (!state.data) {
-      return { ...state };
+      return { ...state, loading: false };
     }
+
     const updatedQuizList = state.data.map((quiz) => {
       if (quiz.id === action.payload.id) {
         return action.payload;
@@ -50,16 +52,19 @@ const quizReducer = createReducer<QuizState, QuizAction>(initialState, {
     };
   },
 
-  [POST_QUIZ]: (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  }),
+  [POST_QUIZ]: (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  },
 
   [POST_QUIZ_SUCCESS]: (state, action) => {
     if (!state.data) {
-      return { ...state };
+      return { ...state, loading: false };
     }
+
     const updatedQuizList = [...state.data, action.payload];
 
     return {

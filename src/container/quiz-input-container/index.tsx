@@ -1,5 +1,5 @@
 import React, { useState, useMemo, ReactElement, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 import { editQuizAsync, postQuizAsync } from "@/modules/quiz";
 import {
@@ -19,6 +19,8 @@ import checkQuizInput from "@/common/lib/check-quiz-input";
 import { QuizInputContainerProps } from "./types";
 import TextareaAutosize from "react-textarea-autosize";
 import QuizRequestBody from "@/common/model/quiz-request-body";
+import { RootState } from "@/modules";
+import LoadingSpinner from "@/component/common/loading-spinner";
 
 const QuizInputContainer = ({
   quizBookId,
@@ -27,9 +29,11 @@ const QuizInputContainer = ({
 }: QuizInputContainerProps): ReactElement => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.quiz);
+
   const { isChoiceContainer, isTextContainer } = useQuizTypeRef(data);
   const { shortAnswer, choiceAnswer } = useMemo(() => saveAnswer(data), [data]);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<Blob | null>();
   const [body, setBody] = useState<QuizRequestBody>(defaultQuizRequest);
 
   useEffect(() => {
@@ -57,7 +61,6 @@ const QuizInputContainer = ({
 
       if (quizId) {
         dispatch(editQuizAsync.request({ quizId, body: formData, history }));
-        alert("문제 수정에 성공하였습니다.");
         return;
       }
 
@@ -65,9 +68,8 @@ const QuizInputContainer = ({
         dispatch(
           postQuizAsync.request({ quizBookId, body: formData, history })
         );
-        alert("문제 제출에 성공하였습니다.");
       }
-    } catch {
+    } catch (e) {
       return;
     }
   };
@@ -76,7 +78,7 @@ const QuizInputContainer = ({
     const isText = parseInt(event.target.value);
     if (isText) {
       setBody({ ...body, imageURL: NULL_STRING });
-      setFile("");
+      setFile(null);
       return;
     }
 
@@ -114,136 +116,142 @@ const QuizInputContainer = ({
   };
 
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.TitleContainer>
-          <S.SubTitle>퀴즈 유형</S.SubTitle>
-        </S.TitleContainer>
-        <S.SubContainer>
-          <S.TypeContainer>
-            <S.SubText>문제 유형</S.SubText>
-            <S.TypeOptions
-              onChange={(e) => handleQuizType(e)}
-              ref={isTextContainer}
-            >
-              <S.Option value={1}>텍스트</S.Option>
-              <S.Option value={0}>이미지</S.Option>
-            </S.TypeOptions>
-          </S.TypeContainer>
-          <S.TypeContainer>
-            <S.SubText>답안 유형</S.SubText>
-            <S.TypeOptions
-              name="isChoice"
+    <>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <S.Wrapper>
+          <S.Container>
+            <S.TitleContainer>
+              <S.SubTitle>퀴즈 유형</S.SubTitle>
+            </S.TitleContainer>
+            <S.SubContainer>
+              <S.TypeContainer>
+                <S.SubText>문제 유형</S.SubText>
+                <S.TypeOptions
+                  onChange={(e) => handleQuizType(e)}
+                  ref={isTextContainer}
+                >
+                  <S.Option value={1}>텍스트</S.Option>
+                  <S.Option value={0}>이미지</S.Option>
+                </S.TypeOptions>
+              </S.TypeContainer>
+              <S.TypeContainer>
+                <S.SubText>답안 유형</S.SubText>
+                <S.TypeOptions
+                  name="isChoice"
+                  onChange={(e) => handleInput(e)}
+                  ref={isChoiceContainer}
+                >
+                  <S.Option value={1}>객관식</S.Option>
+                  <S.Option value={0}>주관식</S.Option>
+                </S.TypeOptions>
+              </S.TypeContainer>
+            </S.SubContainer>
+          </S.Container>
+
+          <S.Container>
+            <S.TitleContainer>
+              <S.SubTitle>문제</S.SubTitle>
+            </S.TitleContainer>
+            <S.ProblemContainer>
+              <TextareaAutosize
+                className="textarea"
+                name="question"
+                placeholder="문제를 입력해 주세요."
+                onChange={(e) => handleInput(e)}
+                defaultValue={data?.question}
+              />
+              {body?.imageURL && (
+                <S.ImageBox>
+                  {file ? (
+                    <S.PreviewImg src={URL.createObjectURL(file)} />
+                  ) : (
+                    data?.imageURL && <S.PreviewImg src={data?.imageURL} />
+                  )}
+
+                  <label>
+                    <S.ImageInput
+                      type="file"
+                      accept="image/jpeg, image/jpg, image/png, image/gif"
+                      onChange={(e) => fileHandler(e)}
+                      ref={(f) => {
+                        fileInput = f;
+                      }}
+                    />
+                    <S.ImageButton onClick={() => fileInput.click()}>
+                      이미지 등록
+                    </S.ImageButton>
+                  </label>
+                  {!file && !data?.imageURL && (
+                    <>
+                      <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
+                      <S.ImageWarning>
+                        권장사이즈: 가로 335px, 세로 188px
+                      </S.ImageWarning>
+                    </>
+                  )}
+                </S.ImageBox>
+              )}
+
+              <S.InputWarning>
+                문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
+              </S.InputWarning>
+            </S.ProblemContainer>
+          </S.Container>
+
+          <S.Container>
+            <S.TitleContainer>
+              <S.SubTitle>답안</S.SubTitle>
+            </S.TitleContainer>
+            {body?.isChoice ? (
+              <S.AnswerContainer>
+                {optionIndexArray.map((index) => {
+                  return (
+                    <QuizInputOption
+                      key={index}
+                      quiz={data}
+                      index={index}
+                      handleInput={handleInput}
+                    />
+                  );
+                })}
+                <S.InputWarning>
+                  답안의 내용이 모두 같거나, 정당한 풀이 행위 외 답을 암시하는
+                  답안은 삭제될 수 있어요.
+                </S.InputWarning>
+              </S.AnswerContainer>
+            ) : (
+              <S.InputBox
+                placeholder="답을 입력해 주세요."
+                name="answer"
+                onChange={(e) => handleInput(e)}
+                defaultValue={data?.isChoice ? choiceAnswer : shortAnswer}
+              />
+            )}
+          </S.Container>
+
+          <S.Container>
+            <S.TitleContainer>
+              <S.SubTitle>설명</S.SubTitle>
+            </S.TitleContainer>
+            <TextareaAutosize
+              className="textarea"
+              name="description"
+              placeholder="퀴즈에 대한 설명을 입력해 주세요."
               onChange={(e) => handleInput(e)}
-              ref={isChoiceContainer}
-            >
-              <S.Option value={1}>객관식</S.Option>
-              <S.Option value={0}>주관식</S.Option>
-            </S.TypeOptions>
-          </S.TypeContainer>
-        </S.SubContainer>
-      </S.Container>
+              defaultValue={data?.description}
+            />
+          </S.Container>
 
-      <S.Container>
-        <S.TitleContainer>
-          <S.SubTitle>문제</S.SubTitle>
-        </S.TitleContainer>
-        <S.ProblemContainer>
-          <TextareaAutosize
-            className="textarea"
-            name="question"
-            placeholder="문제를 입력해 주세요."
-            onChange={(e) => handleInput(e)}
-            defaultValue={data?.question}
-          />
-          {body?.imageURL && (
-            <S.ImageBox>
-              {file ? (
-                <S.PreviewImg src={URL.createObjectURL(file)} />
-              ) : (
-                data?.imageURL && <S.PreviewImg src={data?.imageURL} />
-              )}
-
-              <label>
-                <S.ImageInput
-                  type="file"
-                  accept="image/jpeg, image/jpg, image/png, image/gif"
-                  onChange={fileHandler}
-                  ref={(f) => {
-                    fileInput = f;
-                  }}
-                />
-                <S.ImageButton onClick={() => fileInput.click()}>
-                  이미지 등록
-                </S.ImageButton>
-              </label>
-              {!file && !data?.imageURL && (
-                <>
-                  <S.ImageWarning>파일형식: JPG,PNG,GIF</S.ImageWarning>
-                  <S.ImageWarning>
-                    권장사이즈: 가로 335px, 세로 188px
-                  </S.ImageWarning>
-                </>
-              )}
-            </S.ImageBox>
-          )}
-
-          <S.InputWarning>
-            문제에서 답을 노출하는 경우 퀴즈가 삭제될 수 있어요.
-          </S.InputWarning>
-        </S.ProblemContainer>
-      </S.Container>
-
-      <S.Container>
-        <S.TitleContainer>
-          <S.SubTitle>답안</S.SubTitle>
-        </S.TitleContainer>
-        {body?.isChoice ? (
-          <S.AnswerContainer>
-            {optionIndexArray.map((index) => {
-              return (
-                <QuizInputOption
-                  key={index}
-                  quiz={data}
-                  index={index}
-                  handleInput={handleInput}
-                />
-              );
-            })}
-            <S.InputWarning>
-              답안의 내용이 모두 같거나, 정당한 풀이 행위 외 답을 암시하는
-              답안은 삭제될 수 있어요.
-            </S.InputWarning>
-          </S.AnswerContainer>
-        ) : (
-          <S.InputBox
-            placeholder="답을 입력해 주세요."
-            name="answer"
-            onChange={(e) => handleInput(e)}
-            defaultValue={data?.isChoice ? choiceAnswer : shortAnswer}
-          />
-        )}
-      </S.Container>
-
-      <S.Container>
-        <S.TitleContainer>
-          <S.SubTitle>설명</S.SubTitle>
-        </S.TitleContainer>
-        <TextareaAutosize
-          className="textarea"
-          name="description"
-          placeholder="퀴즈에 대한 설명을 입력해 주세요."
-          onChange={(e) => handleInput(e)}
-          defaultValue={data?.description}
-        />
-      </S.Container>
-
-      <S.ButtonContainer>
-        <S.SubmitButton type="submit" onClick={handleSubmit}>
-          {quizBookId ? "퀴즈 만들기" : "수정하기"}
-        </S.SubmitButton>
-      </S.ButtonContainer>
-    </S.Wrapper>
+          <S.ButtonContainer>
+            <S.SubmitButton type="submit" onClick={handleSubmit}>
+              {quizBookId ? "퀴즈 만들기" : "수정하기"}
+            </S.SubmitButton>
+          </S.ButtonContainer>
+        </S.Wrapper>
+      )}
+    </>
   );
 };
 
