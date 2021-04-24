@@ -1,6 +1,6 @@
 import axios from "axios";
 import endpoints from "../../endpoints";
-import QuizBookModel from "../../model/quiz-book";
+import { QuizBookModel } from "../../model/quiz-book";
 
 const ProfileAPI = {
   getQuizBookListByOwner: async (isDone: boolean) => {
