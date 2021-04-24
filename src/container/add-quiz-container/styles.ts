@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 export const QuizContainer = styled.div`
   width: 100%;
   margin-bottom: 2rem;
-  margin-top: 2.2rem;
+  /* margin-top: 2.2rem; */
 
   display: flex;
   flex-direction: column;

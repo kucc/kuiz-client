@@ -5,6 +5,8 @@ export const AddButton = styled.div`
   display: flex;
   width: 30rem;
   height: 6.5rem;
+
+  margin-bottom: 2.2rem;
 `;
 
 export const AddButtonContainer = styled(Link)`
