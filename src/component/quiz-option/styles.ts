@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
-import { QuizOptionProps } from "./types";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { THEME_COLOR, BREAKPOINT } from '@asset/constant';
+import { QuizOptionProps } from './types';
 
 export const ChoiceOptionContainer = styled.div`
   display: flex;
@@ -24,8 +24,10 @@ export const WriteOptionContainer = styled.div`
 export const ChoiceOption = styled.option`
   text-decoration: none;
   display: flex;
-  width: 20rem;
-  height: 4.5rem;
+  width: auto;
+  min-width: 25rem;
+  height: auto;
+  min-height: 5rem;
   background-color: ${(props) => props.color};
   margin-bottom: 2rem;
   font-size: 1.4rem;
@@ -33,8 +35,11 @@ export const ChoiceOption = styled.option`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  padding: 2rem 1rem;
+  white-space: normal;
+
   &:hover {
-    background-color: ${(props) => !props.disabled && "#c4c4c4"};
+    background-color: ${(props) => !props.disabled && '#c4c4c4'};
   }
   &:active {
     transform: translateY(-1px);
