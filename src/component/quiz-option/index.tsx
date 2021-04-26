@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { QuizOptionProps } from "./types";
 import { THEME_COLOR } from "@asset/constant";
 import * as S from "./styles";
@@ -46,17 +46,19 @@ const QuizOption = (props: QuizOptionProps) => {
     <>
       {isChoice ? (
         <S.ChoiceOptionContainer>
-          {optionArray.map((option) => (
-            <S.ChoiceOption
+          {optionArray.map((option) => 
+             (      
+              <S.ChoiceOption 
               key={option.index}
               onClick={checkChoiceAnswer}
               value={option.index}
               disabled={solved ? true : false}
               color={getOptionColor(solved, option.index)}
-            >
+              >
               {option.content}
             </S.ChoiceOption>
-          ))}
+          ))
+        }
         </S.ChoiceOptionContainer>
       ) : (
         <S.WriteOptionContainer>

@@ -92,7 +92,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
     checkUserAnswer(selected);
   };
 
-  const checkWriteAnswer = (e: any) => {
+  const checkWriteAnswer = () => {
     checkUserAnswer(shortAnswer);
   };
 
@@ -109,7 +109,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   };
 
   const pressEnterKey = (e: any) => {
-    if (e.key === "Enter") checkWriteAnswer(e);
+    if (e.key === "Enter") checkWriteAnswer();
   };
 
   const getResultPage = () => {
