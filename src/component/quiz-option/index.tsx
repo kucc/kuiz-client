@@ -12,6 +12,7 @@ const QuizOption = (props: QuizOptionProps) => {
     getUserAnswer,
     checkWriteAnswer,
     checkChoiceAnswer,
+    pressEnterKey,
     goToNextQuiz,
   } = props;
 
@@ -70,6 +71,7 @@ const QuizOption = (props: QuizOptionProps) => {
               <S.InputBox
                 placeholder={"정답을 입력하세요"}
                 onChange={getUserAnswer}
+                onKeyUp={pressEnterKey}
               />
               <S.SubmitButton onClick={checkWriteAnswer}>제출</S.SubmitButton>
             </>
@@ -79,6 +81,9 @@ const QuizOption = (props: QuizOptionProps) => {
 
       {solved ? (
         <>
+          <S.AnswerContainer {...props}>
+            <S.Answer>정답은 {quiz.answer}입니다.</S.Answer>
+          </S.AnswerContainer>
           <S.DescriptionContainer>
             <S.Description>{quiz.description}</S.Description>
           </S.DescriptionContainer>

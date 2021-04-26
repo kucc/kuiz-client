@@ -98,6 +98,10 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
     }
   };
 
+  const pressEnterKey = (e: any) => {
+    if (e.key === "Enter") checkWriteAnswer(e);
+  };
+
   const getResultPage = () => {
     history.push({
       pathname: "/result",
@@ -132,6 +136,7 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
               checkChoiceAnswer={checkChoiceAnswer}
               checkWriteAnswer={checkWriteAnswer}
               goToNextQuiz={goToNextQuiz}
+              pressEnterKey={pressEnterKey}
             />
             <QuizProgressBar completed={completed} />
           </S.QuizWrapper>

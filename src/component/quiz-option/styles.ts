@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { THEME_COLOR, BREAKPOINT } from "@asset/constant";
+import { QuizOptionProps } from "./types";
 
 export const ChoiceOptionContainer = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ export const ChoiceOptionContainer = styled.div`
 export const WriteOptionContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 70%;
   margin: 3rem 0rem;
   @media only screen and (min-width: ${BREAKPOINT}px) {
@@ -76,6 +78,28 @@ export const CorrectSign = styled.div`
   color: ${(props) => props.color};
 `;
 
+export const AnswerContainer = styled.div<QuizOptionProps>`
+  width: 70%;
+  height: calc(5 * length(${(props) => props.quiz.answer}) / 11) rem;
+  display: flex;
+  background-color: ${THEME_COLOR.GRAYER};
+  border-radius: 2rem;
+  margin-top: 4rem;
+  justify-content: center;
+  padding: 2rem;
+  @media only screen and (min-width: ${BREAKPOINT}px) {
+    width: 30%;
+  }
+`;
+
+export const Answer = styled.div`
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 2.5rem;
+  display: flex;
+  align-items: center;
+`;
+
 export const DescriptionContainer = styled.div`
   width: 70%;
   display: flex;
@@ -91,7 +115,8 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const Description = styled.div`
-  display: block;
+  display: flex;
+  text-align: center;
   font-size: 1.6rem;
   font-weight: bold;
   margin-top: 3rem;
