@@ -17,4 +17,6 @@ const DropDown = React.forwardRef(
   }
 );
 
+DropDown.displayName = "DropDown";
+
 export default DropDown;

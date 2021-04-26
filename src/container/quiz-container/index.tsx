@@ -12,44 +12,57 @@ import LoadingSpinner from "@/component/common/loading-spinner";
 import { useDispatch } from "react-redux";
 import { showAlertModal } from "@/modules/modal";
 import CustomAlert from "@/component/custom-alert";
+import { QuizBookwithQuizModel } from "@/common/model/quiz-book";
 
 export interface QuizProps {
   quizBookId: number;
 }
 
-const QuizContainer = ({ quizBookId }: QuizProps) => {
+const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const [quizList, setQuizList] = useState({} as QuizModel[]);
-  const [currentQuiz, setCurrentQuiz] = useState({} as QuizModel);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [quizCount, setQuizCount] = useState(0);
-  const [totalQuizCount, setTotalQuizCount] = useState(0);
-  const [completed, setCompleted] = useState(0);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [userAnswer, setUserAnswer] = useState("");
-  const [solved, setSolved] = useState(false);
-  const [correct, setCorrect] = useState(false);
-  const [correctQuizCount, setCorrectQuizCount] = useState(0);
   const history = useHistory();
 
+  const [quizBook, setQuizBook] = useState<QuizBookwithQuizModel>();
+  const [currentQuiz, setCurrentQuiz] = useState<QuizModel>({} as QuizModel);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [solvedQuizCount, setSolvedQuizCount] = useState(0);
+
+  const [completed, setCompleted] = useState(0);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [shortAnswer, setShortAnswer] = useState("");
+  const [solved, setSolved] = useState(false);
+  const [correctQuizCount, setCorrectQuizCount] = useState(0);
+
   const getQuizList = async () => {
-    const quizList = await quizAPI.getAllQuiz(quizBookId);
-    if (!quizList.length) {
+    const quizBook = await quizAPI.getQuizBookwithSolvingQuiz(quizBookId);
+    if (!quizBook.quiz.length) {
       dispatch(showAlertModal("추가된 문제가 없습니다."));
       return;
     }
-    setQuizList(quizList);
-    setTotalQuizCount(Object.keys(quizList).length);
-    setCurrentQuiz(quizList[0]);
-    setLoading(false);
+
+    setQuizBook(quizBook);
+    setCurrentQuiz(quizBook.quiz[0]);
   };
 
   useEffect(() => {
     getQuizList();
   }, []);
 
-  const postSolveQuizBook = async () => {
+  useEffect(() => {
+    if (quizBook?.savedCorrectCount != null && !quizBook.allSolved) {
+      alert("문제를 이어서 푸시겠어요?");
+      setSolvedQuizCount(quizBook.quizCount - quizBook.quiz.length);
+      setCorrectQuizCount(quizBook.savedCorrectCount);
+    }
+  }, [quizBook]);
+
+  useEffect(() => {
+    if (quizBook)
+      setCompleted(Math.round((solvedQuizCount / quizBook.quizCount) * 100));
+  }, [solvedQuizCount]);
+
+  const postSolveQuizBook = async (correct: boolean) => {
+    if (!quizBook) return;
     const solveQuizBook = await quizbookAPI.postSolveQuizBook(
       quizBookId,
       currentQuiz.id,
@@ -59,41 +72,38 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
   };
 
   const getUserAnswer = (e: any) => {
-    setUserAnswer(e.target.value);
+    setShortAnswer(e.target.value);
+  };
+
+  const checkUserAnswer = (userAnswer: string) => {
+    setSolved(true);
+    if (userAnswer === currentQuiz?.answer) {
+      postSolveQuizBook(true);
+      setCorrectQuizCount(correctQuizCount + 1);
+    } else {
+      postSolveQuizBook(false);
+    }
+    setSolvedQuizCount(solvedQuizCount + 1);
   };
 
   const checkChoiceAnswer = (e: any) => {
     const selected = e.target.value;
-    setSolved(true);
     setSelectedOption(selected);
-    if (selected === currentQuiz.answer) {
-      setCorrect(true);
-      setCorrectQuizCount(correctQuizCount + 1);
-    } else {
-      setCorrect(false);
-    }
-    setQuizCount(quizCount + 1);
+    checkUserAnswer(selected);
   };
 
   const checkWriteAnswer = (e: any) => {
-    if (userAnswer === currentQuiz.answer) {
-      setCorrect(true);
-      setCorrectQuizCount(correctQuizCount + 1);
-    } else {
-      setCorrect(false);
-    }
-    setSolved(true);
-    setQuizCount(quizCount + 1);
+    checkUserAnswer(shortAnswer);
   };
 
   const goToNextQuiz = () => {
-    if (quizCount === totalQuizCount) {
+    if (!quizBook) return;
+    if (solvedQuizCount === quizBook.quizCount) {
       getResultPage();
     } else {
-      setCompleted(Math.round((quizCount / totalQuizCount) * 100));
+      setCompleted(Math.round((solvedQuizCount / quizBook.quizCount) * 100));
       setSolved(false);
-      setCorrect(false);
-      setCurrentQuiz(quizList[currentIdx + 1]);
+      setCurrentQuiz(quizBook.quiz[currentIdx + 1]);
       setCurrentIdx(currentIdx + 1);
     }
   };
@@ -106,19 +116,16 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
     history.push({
       pathname: "/result",
       state: {
-        totalQuizCount: totalQuizCount,
+        totalQuizCount: quizBook?.quizCount,
         correctQuizCount: correctQuizCount,
+        allSolved: quizBook?.allSolved,
       },
     });
   };
 
-  useEffect(() => {
-    if (quizCount) postSolveQuizBook();
-  }, [quizCount]);
-
   return (
     <>
-      {loading ? (
+      {!quizBook ? (
         <LoadingSpinner />
       ) : (
         <S.QuizContainer>
@@ -131,7 +138,10 @@ const QuizContainer = ({ quizBookId }: QuizProps) => {
               quiz={currentQuiz}
               selectedOption={selectedOption}
               solved={solved}
-              correct={correct}
+              correct={
+                selectedOption === currentQuiz.answer ||
+                shortAnswer === currentQuiz.answer
+              }
               getUserAnswer={getUserAnswer}
               checkChoiceAnswer={checkChoiceAnswer}
               checkWriteAnswer={checkWriteAnswer}

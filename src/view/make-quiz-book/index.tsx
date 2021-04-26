@@ -10,6 +10,8 @@ import { getCategoryAsync } from "@/modules/category";
 import { RootState } from "@/modules";
 import quizbookAPI from "@/common/lib/api/quizbook";
 import { useHistory } from "react-router-dom";
+import { showAlertModal } from "@/modules/modal";
+import CustomAlert from "@/component/custom-alert";
 
 const QuizBookPage = () => {
   const dispatch = useDispatch();
@@ -35,10 +37,16 @@ const QuizBookPage = () => {
   };
 
   const nextButtonHandler = async () => {
-    if (!isAgreed) {
-      alert("동의해주세요");
+    if (title.length > 30) {
+      dispatch(showAlertModal("제목은 30글자 이하로 작성해주세요."));
       return;
     }
+
+    if (!isAgreed) {
+      dispatch(showAlertModal("동의해주세요"));
+      return;
+    }
+
     const newQuizBook = await quizbookAPI.postNewQuizBook(title, category);
     if (!newQuizBook) {
       alert("서버 에러.. 퀴즈북 생성 실패... 죄송합니다.");
@@ -81,6 +89,7 @@ const QuizBookPage = () => {
           />
         </S.ButtonContainer>
       </S.Container>
+      <CustomAlert />
     </S.Wrapper>
   );
 };

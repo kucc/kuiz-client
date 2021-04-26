@@ -115,7 +115,7 @@ function* getQuizBookSaga(
   try {
     const { quizBookId } = action.payload;
     const quizbook: QuizBookwithQuizModel = yield call(
-      quizbookAPI.getQuizBookwithQuiz,
+      quizbookAPI.getAuthQuizBookwithQuiz,
       quizBookId
     );
     yield put(getQuizBookwithQuizAsync.success(quizbook));

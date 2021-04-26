@@ -1,4 +1,4 @@
-import QuizBookModel from "./quiz-book";
+import { QuizBookModel } from "./quiz-book";
 
 export default interface UserSolveQuizBookModel {
   id: number;

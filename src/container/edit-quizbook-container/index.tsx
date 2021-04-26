@@ -60,7 +60,6 @@ const EditQuizBookContainer = ({
                 defaultOption={categoryId ? categoryId : quizBook.categoryId}
                 options={category}
                 onChange={selectCategory}
-                disabled={isEditing ? false : true}
               />
             )}
           </S.QuizBookRow>
@@ -88,7 +87,7 @@ const EditQuizBookContainer = ({
           </S.QuizBookRow>
 
           <S.QuizBookRow>
-            <S.Label>문제 추가</S.Label>
+            <S.Label>문제</S.Label>
             <AddQuizContainer
               quizList={quizBook.quiz}
               quizBookId={quizBookId}
@@ -96,7 +95,9 @@ const EditQuizBookContainer = ({
           </S.QuizBookRow>
 
           <S.ButtonContainer>
-            <S.SaveButton onClick={saveQuizBook}>임시저장</S.SaveButton>
+            {!quizBook.completed && (
+              <S.SaveButton onClick={saveQuizBook}>임시저장</S.SaveButton>
+            )}
             <S.SubmitButton onClick={submitQuizBook}>제출</S.SubmitButton>
           </S.ButtonContainer>
         </S.QuizBook>
