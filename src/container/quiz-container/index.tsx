@@ -32,6 +32,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   const [shortAnswer, setShortAnswer] = useState("");
   const [solved, setSolved] = useState(false);
   const [correctQuizCount, setCorrectQuizCount] = useState(0);
+  const [point, setPoint] = useState(0);
 
   const getQuizList = async () => {
     const quizBook = await quizAPI.getQuizBookwithSolvingQuiz(quizBookId);
@@ -68,6 +69,8 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
       currentQuiz.id,
       correct
     );
+
+    if (solveQuizBook.point) setPoint(solveQuizBook.point);
   };
 
   const getUserAnswer = (e: any) => {
@@ -141,6 +144,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
                 selectedOption === currentQuiz.answer ||
                 shortAnswer === currentQuiz.answer
               }
+              point={point}
               getUserAnswer={getUserAnswer}
               checkChoiceAnswer={checkChoiceAnswer}
               checkWriteAnswer={checkWriteAnswer}

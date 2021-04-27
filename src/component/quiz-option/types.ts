@@ -5,6 +5,7 @@ export interface QuizOptionProps {
   selectedOption: string;
   solved: boolean;
   correct: boolean;
+  point: number;
   getUserAnswer: (e: any) => void;
   checkChoiceAnswer: (e: any) => void;
   checkWriteAnswer: (e: any) => void;

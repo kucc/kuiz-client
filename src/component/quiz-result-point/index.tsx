@@ -4,8 +4,7 @@ import { QuizPointProps } from "./types";
 import { STATIC_URL } from "@asset/constant";
 
 const QuizPoint = (props: QuizPointProps) => {
-  const { correctQuizCount } = props;
-  const point = correctQuizCount * 30;
+  const { point } = props;
 
   return (
     <S.PointContainer>
