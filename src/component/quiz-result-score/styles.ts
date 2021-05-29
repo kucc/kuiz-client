@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import { QuizScoreProps } from "./types";
 
+export const ScoreText = styled.h1`
+  width: 100%;
+  text-align: center;
+`;
+
 export const ScoreContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  text-align: center;
 `;
 
 export const DefaultCircle = styled.circle`

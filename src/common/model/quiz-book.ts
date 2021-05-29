@@ -24,8 +24,18 @@ export interface QuizBookwithQuizModel {
   likedCount: number;
   createdAt: Date;
   completed: boolean;
+  quiz: QuizModel[];
+}
+
+export interface QuizBookwithSolvingQuizModel {
+  id: number;
+  quizCount: number;
+  savedCorrectCount: number;
   allSolved: boolean;
-  savedCorrectCount: number | null;
+  lastQuizId: number;
+  savedQuizId: number;
+  updatedAt: Date;
+  solvedAt: Date;
   quiz: QuizModel[];
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import { QuizOptionProps } from "./types";
 import { THEME_COLOR } from "@asset/constant";
 import * as S from "./styles";
+import QuizPoint from "../quiz-result-point";
 
 const QuizOption = (props: QuizOptionProps) => {
   const {
@@ -9,6 +10,7 @@ const QuizOption = (props: QuizOptionProps) => {
     selectedOption,
     solved,
     correct,
+    point,
     getUserAnswer,
     checkWriteAnswer,
     checkChoiceAnswer,
@@ -46,19 +48,17 @@ const QuizOption = (props: QuizOptionProps) => {
     <>
       {isChoice ? (
         <S.ChoiceOptionContainer>
-          {optionArray.map((option) => 
-             (      
-              <S.ChoiceOption 
+          {optionArray.map((option) => (
+            <S.ChoiceOption
               key={option.index}
               onClick={checkChoiceAnswer}
               value={option.index}
               disabled={solved ? true : false}
               color={getOptionColor(solved, option.index)}
-              >
+            >
               {option.content}
             </S.ChoiceOption>
-          ))
-        }
+          ))}
         </S.ChoiceOptionContainer>
       ) : (
         <S.WriteOptionContainer>
@@ -80,15 +80,12 @@ const QuizOption = (props: QuizOptionProps) => {
           )}
         </S.WriteOptionContainer>
       )}
-
       {solved ? (
         <>
-          <S.AnswerContainer {...props}>
-            <S.Answer>정답은 {quiz.answer}입니다.</S.Answer>
-          </S.AnswerContainer>
           <S.DescriptionContainer>
             <S.Description>{quiz.description}</S.Description>
           </S.DescriptionContainer>
+          {correct && point !== 0 && <QuizPoint point={30} />}
           <S.NextButtonContainer>
             <S.NextButton onClick={goToNextQuiz}>다음 문제로</S.NextButton>
           </S.NextButtonContainer>

@@ -1,3 +1,3 @@
 export interface QuizPointProps {
-  correctQuizCount: number;
+  point: number;
 }

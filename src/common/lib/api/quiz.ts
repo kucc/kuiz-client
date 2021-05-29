@@ -1,13 +1,13 @@
 import endpoints from "@/common/endpoints";
 import QuizModel from "@/common/model/quiz";
-import { QuizBookwithQuizModel } from "@/common/model/quiz-book";
+import { QuizBookwithSolvingQuizModel } from "@/common/model/quiz-book";
 import axios from "../axios";
 
 const quizAPI = {
   getQuizBookwithSolvingQuiz: async (
     quizbookId: number
-  ): Promise<QuizBookwithQuizModel> => {
-    const { data: quizBook } = await axios.get<QuizBookwithQuizModel>(
+  ): Promise<QuizBookwithSolvingQuizModel> => {
+    const { data: quizBook } = await axios.get<QuizBookwithSolvingQuizModel>(
       `${endpoints.QUIZBOOK_API}/${quizbookId}/quiz`
     );
 

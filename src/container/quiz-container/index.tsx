@@ -12,7 +12,7 @@ import LoadingSpinner from "@/component/common/loading-spinner";
 import { useDispatch } from "react-redux";
 import { showAlertModal } from "@/modules/modal";
 import CustomAlert from "@/component/custom-alert";
-import { QuizBookwithQuizModel } from "@/common/model/quiz-book";
+import { QuizBookwithSolvingQuizModel } from "@/common/model/quiz-book";
 
 export interface QuizProps {
   quizBookId: number;
@@ -22,7 +22,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [quizBook, setQuizBook] = useState<QuizBookwithQuizModel>();
+  const [quizBook, setQuizBook] = useState<QuizBookwithSolvingQuizModel>();
   const [currentQuiz, setCurrentQuiz] = useState<QuizModel>({} as QuizModel);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [solvedQuizCount, setSolvedQuizCount] = useState(0);
@@ -32,6 +32,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   const [shortAnswer, setShortAnswer] = useState("");
   const [solved, setSolved] = useState(false);
   const [correctQuizCount, setCorrectQuizCount] = useState(0);
+  const [point, setPoint] = useState(0);
 
   const getQuizList = async () => {
     const quizBook = await quizAPI.getQuizBookwithSolvingQuiz(quizBookId);
@@ -49,8 +50,9 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (quizBook?.savedCorrectCount != null && !quizBook.allSolved) {
-      alert("문제를 이어서 푸시겠어요?");
+    if (!quizBook) return;
+    if (quizBook.quizCount > quizBook.quiz.length) {
+      alert("안 푼 문제부터 시작합니다.");
       setSolvedQuizCount(quizBook.quizCount - quizBook.quiz.length);
       setCorrectQuizCount(quizBook.savedCorrectCount);
     }
@@ -62,13 +64,13 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   }, [solvedQuizCount]);
 
   const postSolveQuizBook = async (correct: boolean) => {
-    if (!quizBook) return;
     const solveQuizBook = await quizbookAPI.postSolveQuizBook(
       quizBookId,
       currentQuiz.id,
       correct
     );
-    return solveQuizBook;
+
+    if (solveQuizBook.point) setPoint(solveQuizBook.point);
   };
 
   const getUserAnswer = (e: any) => {
@@ -77,7 +79,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
 
   const checkUserAnswer = (userAnswer: string) => {
     setSolved(true);
-    if (userAnswer === currentQuiz?.answer) {
+    if (userAnswer === currentQuiz.answer) {
       postSolveQuizBook(true);
       setCorrectQuizCount(correctQuizCount + 1);
     } else {
@@ -113,12 +115,12 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
   };
 
   const getResultPage = () => {
+    if (!quizBook) return;
     history.push({
       pathname: "/result",
       state: {
-        totalQuizCount: quizBook?.quizCount,
+        totalQuizCount: quizBook.quizCount,
         correctQuizCount: correctQuizCount,
-        allSolved: quizBook?.allSolved,
       },
     });
   };
@@ -142,6 +144,7 @@ const QuizContainer = ({ quizBookId }: QuizProps): ReactElement => {
                 selectedOption === currentQuiz.answer ||
                 shortAnswer === currentQuiz.answer
               }
+              point={point}
               getUserAnswer={getUserAnswer}
               checkChoiceAnswer={checkChoiceAnswer}
               checkWriteAnswer={checkWriteAnswer}

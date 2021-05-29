@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import * as S from "./styles";
 import { useLocation } from "react-router";
 import QuizScore from "@component/quiz-result-score";
-import QuizPoint from "@component/quiz-result-point";
 
 export type LocationState = {
   totalQuizCount: number;
   correctQuizCount: number;
-  allSolved: boolean;
 };
 
 const QuizResultContainer: React.FC = () => {
   const location = useLocation<LocationState>();
-  const { totalQuizCount, correctQuizCount, allSolved } = location.state;
+  const { totalQuizCount, correctQuizCount } = location.state;
   const [percentage, setPercentage] = useState(0);
   const [progressBar, setProgressBar] = useState(0);
   const correctRate = (correctQuizCount / totalQuizCount) * 100;
@@ -33,17 +31,20 @@ const QuizResultContainer: React.FC = () => {
   }, [progressBar]);
 
   return (
-    <S.QuizResultContainer>
-      <S.QuizResultWrapper>
-        <QuizScore
-          percentage={progressBar}
-          correctQuizCount={correctQuizCount}
-          totalQuizCount={totalQuizCount}
-        />
-        {!allSolved && <QuizPoint correctQuizCount={correctQuizCount} />}
-        <S.MainPageButton to={"/"}>메인 화면으로</S.MainPageButton>
-      </S.QuizResultWrapper>
-    </S.QuizResultContainer>
+    <>
+      <S.QuizResultContainer>
+        <S.QuizResultWrapper>
+          <QuizScore
+            percentage={progressBar}
+            correctQuizCount={correctQuizCount}
+            totalQuizCount={totalQuizCount}
+          />
+          <h1> 당신은 퀴즈왕 !</h1>
+          <S.MainPageButton to={"/"}>메인 화면으로</S.MainPageButton>
+        </S.QuizResultWrapper>
+      </S.QuizResultContainer>
+      <div>포인트는 해당 문제의 첫 시도에 대해서만 획득가능합니다.</div>
+    </>
   );
 };
 
